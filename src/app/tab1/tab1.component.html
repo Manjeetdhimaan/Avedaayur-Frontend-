@@ -1,0 +1,36 @@
+<ion-header class="ion-no-border">
+    <ion-toolbar>
+        <ion-title class="ion-text-center">
+            Services
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class=ion-padding overflow-scroll="false">
+
+    <!-- <h4 class="heading">Filter</h4>
+    <ion-item>
+        <ion-label>Service</ion-label>
+        <ion-select placeholder="All" [(ngModel)]="selectedService" (ionChange)="onServiceSelect($event)">
+            <ion-select-option value="All">All</ion-select-option>
+            <ion-select-option value="Web Developer">Web Developer</ion-select-option>
+            <ion-select-option value="Digital Marketing Specialist">Digital Marketing Specialist</ion-select-option>
+            <ion-select-option value="Bidder">Bidder</ion-select-option>
+            <ion-select-option value="HR">HR</ion-select-option>
+        </ion-select>
+    </ion-item> -->
+    <h4 class="heading">Browse</h4>
+    <ion-list>
+        <ion-item >
+            <ion-thumbnail slot="start">
+                <img src="{{users.pic}}" alt="">
+            </ion-thumbnail>
+            <ion-label>
+                <h3 class="heading">{{users.firstname}} {{users.lastname}}</h3>
+                <p>{{users.bio}}</p>
+                <ion-badge color="dark">{{users.service}}</ion-badge>
+            </ion-label>
+        </ion-item>
+        <ion-button color="dark" expand="block" (click)="logout()">Logout</ion-button>
+    </ion-list>
+</ion-content>
