@@ -43,8 +43,7 @@ export class Tab1Component implements OnInit {
             }
           })
         })
-        this.originalServiceProvider = res;
-        console.log("hello", this.users)
+        
       },
         error => {
           console.log(error)

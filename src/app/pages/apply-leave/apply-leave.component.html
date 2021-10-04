@@ -1,0 +1,66 @@
+<app-header></app-header>
+<div  class="col-md-12" style="margin-top: 2rem;">
+    <div  class="card ctm-border-radius shadow-sm grow">
+        <div  class="card-header">
+            <h4  class="card-title mb-0">Apply Leaves</h4>
+        </div>
+        <div  class="card-body">
+            <form  novalidate="" class="ng-untouched ng-pristine ng-invalid">
+                <div  class="row">
+                    <div  class="col-sm-6">
+                        <div  class="form-group"><label > Leave Type <span
+                                     class="text-danger">*</span></label><select
+                                 formcontrolname="leaveType"
+                                class="form-control select ng-untouched ng-pristine ng-invalid">
+                                <option >Select Leave</option>
+                                <option >Working From Home</option>
+                                <option >Sick Leave</option>
+                                <option >Parental Leave</option>
+                                <option >Annual Leave</option>
+                                <option >Normal Leave</option>
+                            </select>
+                            <!---->
+                        </div>
+                    </div>
+                    <div  class="col-sm-6 leave-col">
+                        <div  class="form-group"><label >Remaining
+                                Leaves</label><input  type="text" placeholder="10" disabled=""
+                                class="form-control"></div>
+                    </div>
+                </div>
+                <div  class="row">  
+                    <div  class="col-sm-6">
+                        <div  class="form-group"><label >From</label><input
+                                 type="date" formcontrolname="from" bsdatepicker=""
+                                class="form-control datetimepicker ng-untouched ng-pristine ng-invalid">
+                            <!---->
+                            <!---->
+                        </div>
+                    </div>
+                    <div  class="col-sm-6 leave-col">
+                        <div  class="form-group"><label >To</label><input
+                                 type="date" formcontrolname="to" bsdatepicker=""
+                                class="form-control datetimepicker ng-untouched ng-pristine ng-invalid">
+                            <!---->
+                            <!---->
+                        </div>
+                    </div>
+                </div>
+              
+                <div  class="row">
+                    <div  class="col-sm-12">
+                        <div  class="form-group mb-0"><label
+                                >Reason</label><textarea  rows="4"
+                                formcontrolname="reason"
+                                class="form-control ng-untouched ng-pristine ng-invalid"></textarea>
+                            <!---->
+                        </div>
+                    </div>
+                </div>
+                <div  class="text-center"><a  
+                        class="btn btn-theme button-1 text-white ctm-border-radius mt-4 mr-2">Apply</a><a
+                        class="btn btn-danger text-white ctm-border-radius mt-4">Cancel</a></div>
+            </form>
+        </div>
+    </div>
+</div>

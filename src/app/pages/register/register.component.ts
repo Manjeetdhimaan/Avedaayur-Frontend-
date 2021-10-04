@@ -17,6 +17,7 @@ export class RegisterComponent implements OnInit {
   pic: string;
   service: string = "none";
   bio: string;
+  joindate:any;
   isServiceProvider: boolean = false;
   isLoading: boolean = false;
   constructor(private http: HttpClient,
@@ -37,6 +38,7 @@ export class RegisterComponent implements OnInit {
       pic: this.pic,
       service: this.service,
       bio: this.bio,
+      joindate:this.joindate,
       isServiceProvider: this.isServiceProvider,
     }
     if(this.firstname==''){
@@ -46,7 +48,7 @@ export class RegisterComponent implements OnInit {
       .subscribe(res => {
         this.isLoading = false;
         localStorage.setItem('User', JSON.stringify(res))
-        this.router.navigateByUrl('tab1')
+        this.router.navigateByUrl('userprofile')
       },
         error => {
           this.isLoading = false

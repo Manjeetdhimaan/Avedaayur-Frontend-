@@ -10,6 +10,9 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { UserProfileComponent } from './user-profile/user-profile.component'
 import { LoginComponent } from './pages/login/login.component';
+import { HeaderComponent } from './core/header/header.component';
+import { ApplyLeaveComponent } from './pages/apply-leave/apply-leave.component';
+import { HomeComponent } from './core/home/home.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +21,9 @@ import { LoginComponent } from './pages/login/login.component';
     LoginComponent,
     RegisterComponent,
     UserProfileComponent,
+    HeaderComponent,
+    ApplyLeaveComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
