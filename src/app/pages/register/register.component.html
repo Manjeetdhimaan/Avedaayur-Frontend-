@@ -43,21 +43,22 @@
                     </span>
                 </div>
                 <div class="wrap-input100 validate-input">
-                    <input class="input100" [(ngModel)]="firstname" placeholder="First Name" type="text" name="firstname" required>
+                    <input class="input100" [(ngModel)]="fullname" placeholder="Full Name" type="text" name="fullname" required>
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                         <i class="fa fa-lock" aria-hidden="true"></i>
                     </span>
                 </div>
-                <div class="wrap-input100 validate-input">
+                <!-- <div class="wrap-input100 validate-input">
                     <input class="input100" [(ngModel)]="lastname" placeholder="Last Name" type="text" name="lastname" required>
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                         <i class="fa fa-lock" aria-hidden="true"></i>
                     </span>
-                </div>
+                </div> -->
+                
                 <div class="wrap-input100 validate-input">
-                    <input class="input100" [(ngModel)]="joindate" type="date" required placeholder="joining date">
+                    <input class="input100" [(ngModel)]="joindate" type="date" required placeholder="joining date" name="joiningDate" title="date of joining">
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                         <i class="fa fa-lock" aria-hidden="true"></i>
@@ -77,6 +78,22 @@
                         <i class="fa fa-lock" aria-hidden="true"></i>
                     </span>
                 </div>
+                <ion-item>
+                    <ion-label>Are you a service provider?</ion-label>
+                    <ion-select placeholder="select" (ionChange)="onServiceSelect($event)" > 
+                        <ion-select-option value="yes">Yes</ion-select-option>
+                        <ion-select-option value="no">No</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ion-item *ngIf="isServiceProvider">
+                    <ion-label>Service</ion-label>
+                    <ion-select placeholder="All" [(ngModel)]="service"> 
+                        <ion-select-option value="Web Developer">Web Developer</ion-select-option>
+                        <ion-select-option value="Digital Marketing Specialist">Digital Marketing Specialist</ion-select-option>
+                        <ion-select-option value="Bidder">Bidder</ion-select-option>
+                        <ion-select-option value="HR">HR</ion-select-option>
+                    </ion-select>
+                </ion-item>
                 
                 <div class="container-login100-form-btn">
                     <button class="login100-form-btn" (click)="register()" [disabled]="validateRequiredInputs()">

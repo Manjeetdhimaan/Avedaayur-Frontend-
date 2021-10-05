@@ -13,6 +13,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { HeaderComponent } from './core/header/header.component';
 import { ApplyLeaveComponent } from './pages/apply-leave/apply-leave.component';
 import { HomeComponent } from './core/home/home.component';
+import { AllUsersComponent } from './core/all-users/all-users.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { HomeComponent } from './core/home/home.component';
     HeaderComponent,
     ApplyLeaveComponent,
     HomeComponent,
+    AllUsersComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

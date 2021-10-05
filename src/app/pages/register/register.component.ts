@@ -10,8 +10,7 @@ import { AlertController } from '@ionic/angular';
 })
 export class RegisterComponent implements OnInit {
 
-  firstname: string;
-  lastname: string;
+  fullname: string;
   email: string;
   password: string;
   pic: string;
@@ -31,8 +30,7 @@ export class RegisterComponent implements OnInit {
   register() {
     this.isLoading = true;
     let user = {
-      firstname: this.firstname,
-      lastname: this.lastname,
+      fullname: this.fullname,
       email: this.email,
       password: this.password,
       pic: this.pic,
@@ -41,7 +39,7 @@ export class RegisterComponent implements OnInit {
       joindate:this.joindate,
       isServiceProvider: this.isServiceProvider,
     }
-    if(this.firstname==''){
+    if(this.fullname==''){
       console.log("error")
     }
     this.http.post('http://localhost:5000/users/register', user)
@@ -84,7 +82,7 @@ export class RegisterComponent implements OnInit {
   }
 
   validateRequiredInputs(){
-    if(this.firstname=='' || this.lastname=='' || this.email=='' || this.pic==''){
+    if(this.fullname==''  || this.email=='' || this.pic==''){
       return false
     }
    return 

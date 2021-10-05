@@ -1,33 +1,32 @@
-
-
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-user-profile',
-  templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.scss']
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.scss']
+
 })
-export class UserProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit {
   fullname: string;
   email: string;
   password: string;
   pic: string;
   service: string = "none";
   bio: string;
-  joindate:any;
+  joindate: any;
   isServiceProvider: boolean = false;
   isLoading: boolean = false;
-  id:any
+  id: any
   selectedService: any;
   users: any;
   originalServiceProvider: any
-  constructor(private router: Router, 
+  constructor(private router: Router,
     private route: ActivatedRoute,
     private http: HttpClient,
-     private alertController: AlertController) { }
+    private alertController: AlertController) { }
 
   ngOnInit(): void {
 
@@ -45,7 +44,7 @@ export class UserProfileComponent implements OnInit {
     //       console.log(error)
     //     })
     // }
-    
+
     // comparing data of database users with loggedIn user (credentials stored in local storage)
     if (user !== null) {
       const specificUser = JSON.parse(user)
@@ -59,7 +58,7 @@ export class UserProfileComponent implements OnInit {
             }
           })
         })
-        
+
       },
         error => {
           console.log(error)
@@ -84,8 +83,8 @@ export class UserProfileComponent implements OnInit {
     localStorage.removeItem('User');
     this.router.navigateByUrl('/login', { replaceUrl: true })
   }
-  update(event:any){
-    
+  update(event: any) {
+
     const loggedInUser = localStorage.getItem('User');
     let user = {
       fullname: this.fullname,
@@ -93,29 +92,29 @@ export class UserProfileComponent implements OnInit {
       password: this.password,
       service: this.service,
       bio: this.bio,
-      joindate:this.joindate,
+      joindate: this.joindate,
       isServiceProvider: this.isServiceProvider,
     }
-   
-    if(loggedInUser !==null){
+
+    if (loggedInUser !== null) {
       let parsedData = JSON.parse(loggedInUser);
       this.id = parsedData["_id"]
-      this.http.put('http://localhost:5000/users/update/:id', user).subscribe(res=>{
-    }, error=>{
-      console.log(error);
-    })
-    //  let data =  Object.values(parsedData)
-    
+      this.http.put('http://localhost:5000/users/update/:id', user).subscribe(res => {
+      }, error => {
+        console.log(error);
+      })
+      //  let data =  Object.values(parsedData)
+
       // for(let value in parsedData){
       //   if (parsedData.hasOwnProperty('_id')) {
       //     console.log(value + " = " + parsedData['_id']);
       // }
-     
+
       // }
 
     }
- 
-    
+
+
   }
 
 
@@ -145,3 +144,4 @@ export class UserProfileComponent implements OnInit {
     await alert.present();
   }
 }
+
