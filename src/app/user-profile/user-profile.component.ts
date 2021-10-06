@@ -101,6 +101,7 @@ export class UserProfileComponent implements OnInit {
       let parsedData = JSON.parse(loggedInUser);
       this.id = parsedData["_id"]
       this.http.put('http://localhost:5000/users/update/:id', user).subscribe(res=>{
+        console.log(res)
     }, error=>{
       console.log(error);
     })

@@ -13,7 +13,7 @@ export class RegisterComponent implements OnInit {
   fullname: string;
   email: string;
   password: string;
-  pic: string;
+  pic: string; 
   service: string = "none";
   bio: string;
   joindate:any;
@@ -39,14 +39,11 @@ export class RegisterComponent implements OnInit {
       joindate:this.joindate,
       isServiceProvider: this.isServiceProvider,
     }
-    if(this.fullname==''){
-      console.log("error")
-    }
     this.http.post('http://localhost:5000/users/register', user)
       .subscribe(res => {
         this.isLoading = false;
         localStorage.setItem('User', JSON.stringify(res))
-        this.router.navigateByUrl('userprofile')
+        this.router.navigateByUrl('userProfile')
       },
         error => {
           this.isLoading = false

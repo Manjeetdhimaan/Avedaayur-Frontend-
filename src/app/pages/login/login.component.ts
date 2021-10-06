@@ -26,12 +26,11 @@ export class LoginComponent implements OnInit {
     this.http.post('http://localhost:5000/users/login', credentials).subscribe(res=>{
       this.isLoading= false;
       localStorage.setItem('User', JSON.stringify(res));
-      this.router.navigateByUrl('userprofile')
+      this.router.navigateByUrl('userProfile')
     }, error=>{
       this.isLoading= false;
       this.presentAlert('Login failed', error.error.error)
     })
-    console.log(credentials)
   }
 
   async presentAlert(header:string, message: string) {
