@@ -13,8 +13,8 @@ export class AllUsersComponent implements OnInit {
   constructor(private router:Router, private http:HttpClient) { }
 
   ngOnInit(): void {
-    const user = localStorage.getItem('admin');
-    if (user == null) {
+    const admin = localStorage.getItem('admin');
+    if (admin == null) {
       this.router.navigateByUrl('/adminlogin', { replaceUrl: true })
 
     }

@@ -8,7 +8,7 @@ import { Tab1Component } from './tab1/tab1.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { UserProfileComponent } from './user-profile/user-profile.component'
+import { UserProfileComponent } from './editUser-profile/user-profile.component'
 import { LoginComponent } from './pages/login/login.component';
 import { HeaderComponent } from './core/header/header.component';
 import { ApplyLeaveComponent } from './pages/apply-leave/apply-leave.component';

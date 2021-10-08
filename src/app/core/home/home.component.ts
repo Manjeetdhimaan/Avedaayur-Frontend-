@@ -12,9 +12,9 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     const user = localStorage.getItem('User');
-    if (user == null) {
+    const admin = localStorage.getItem('admin');
+    if (user === null && admin === null) {
       this.router.navigateByUrl('/userlogin', { replaceUrl: true })
-
     }
   }
 

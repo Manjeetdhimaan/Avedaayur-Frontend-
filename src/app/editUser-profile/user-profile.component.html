@@ -53,22 +53,23 @@
             </ul>
             <div class="tab-content pt-3">
               <div class="tab-pane active">
-                <form class="form" novalidate="" id="controls">
+                <!-- form -->
+                <div class="form" novalidate="" id="controls">
                   <div class="row">
                     <div class="col">
                       <div class="row">
                         <div class="col">
                           <div class="form-group">
                             <label>Full Name</label>
-                            <input class="form-control" type="text"  [(ngModel)]="fullname" 
-                              value="{{users.fullname}}">
+                            <input class="form-control" type="text" [(ngModel)]="fullname"
+                              placeholder="{{users.fullname}}" value="{{users.fullname}}">
                           </div>
                         </div>
                         <div class="col">
                           <div class="col">
                             <div class="form-group">
                               <label>Email</label>
-                              <input class="form-control" type="text" [(ngModel)]="email"  placeholder="{{users.email}}"
+                              <input class="form-control" type="text" [(ngModel)]="email" placeholder="{{users.email}}"
                                 value="{{users.email}}">
                             </div>
                           </div>
@@ -93,8 +94,8 @@
                         <div class="col mb-3">
                           <div class="form-group">
                             <label>About</label>
-                            <textarea type="text" class="form-control" rows="5" value="{{users.bio}}" [(ngModel)]="bio" placeholder="{{users.bio}}"
-                              ></textarea>
+                            <textarea type="text" class="form-control" rows="5" value="{{users.bio}}" [(ngModel)]="bio"
+                              placeholder="{{users.bio}}"></textarea>
                           </div>
                         </div>
                       </div>
@@ -156,7 +157,8 @@
                     <div class="col d-flex justify-content-end">
                     </div>
                   </div>
-                </form>
+                  <!-- form -->
+                </div>
               </div>
             </div>
           </div>
@@ -185,5 +187,4 @@
       </div>
     </div>
   </div>
-
 </div>

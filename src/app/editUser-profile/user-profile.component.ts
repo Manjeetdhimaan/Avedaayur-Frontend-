@@ -11,6 +11,7 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./user-profile.component.scss']
 })
 export class UserProfileComponent implements OnInit {
+  input:any;
   fullname: string;
   email: string;
   password: string;
@@ -27,7 +28,21 @@ export class UserProfileComponent implements OnInit {
 
   constructor(private router: Router,
     private http: HttpClient,
-    private alertController: AlertController) { }
+    private alertController: AlertController) {
+      this.input = {
+        fullname: "",
+        email: "",
+        password: "",
+        pic: "",
+        service:"none",
+        bio: "",
+        joindate: "",
+        isServiceProvider:false,
+        isLoading: false,
+        id: "",
+        selectedService: ""
+      }
+     }
 
   ngOnInit(): void {
 
@@ -98,16 +113,34 @@ export class UserProfileComponent implements OnInit {
       joindate: this.joindate,
       isServiceProvider: this.isServiceProvider,
     }
+    console.log(user)
+
 
     if (loggedInUser !== null) {
       let parsedData = JSON.parse(loggedInUser);
-      this.id = parsedData["_id"]
+      this.id = parsedData["_id"];
       this.http.put(`http://localhost:5000/users/update/${this.id}`, user).subscribe(res => {
         console.log(user)
+        this.presentAlert("Success", "Changes saved succussfully")
       }, error => {
+        this.presentAlert("Error", error.statusText)
         console.log(error);
       })
     }
+  }
+  async presentAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: header,
+      // subHeader: 'Subtitle',
+      message: message,
+      buttons: ['OK']
+    });
+
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+
   }
 
 

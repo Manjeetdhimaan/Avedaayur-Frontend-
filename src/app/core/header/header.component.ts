@@ -7,13 +7,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  loggedIn=false
+  loggedIn=false;
   constructor(private router:Router) { }
-
   ngOnInit(): void {
   }
   logout() {
     localStorage.removeItem('User');
-    this.router.navigateByUrl('/login', { replaceUrl: true })
+    this.router.navigateByUrl('/userlogin', { replaceUrl: true });
   }
 }

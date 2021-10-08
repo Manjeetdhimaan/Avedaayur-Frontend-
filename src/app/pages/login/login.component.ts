@@ -26,10 +26,11 @@ login() {
     this.http.post(`http://localhost:5000/users/login`, credentials).subscribe(res => {
       this.isLoading = false;
       localStorage.setItem('User', JSON.stringify(res));
-      this.router.navigateByUrl('profile',  { replaceUrl: true });
+    
+      this.router.navigateByUrl('profile', {replaceUrl:true });
     }, error => {
       this.isLoading = false;
-      this.presentAlert('Login failed', error.error.error)
+      this.presentAlert('Login failed', error.error.error);
     })
   }
 
