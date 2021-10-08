@@ -15,6 +15,8 @@ import { ApplyLeaveComponent } from './pages/apply-leave/apply-leave.component';
 import { HomeComponent } from './core/home/home.component';
 import { AllUsersComponent } from './core/all-users/all-users.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AdminLoginComponent } from './pages/admin-login/admin-login.component';
+import { UsersComponent } from './UI/users/users.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { ProfileComponent } from './profile/profile.component';
     HomeComponent,
     AllUsersComponent,
     ProfileComponent,
+    AdminLoginComponent,
+    UsersComponent,
   ],
   imports: [
     BrowserModule,

@@ -2,7 +2,7 @@
 
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 
 @Component({
@@ -17,17 +17,17 @@ export class UserProfileComponent implements OnInit {
   pic: string;
   service: string = "none";
   bio: string;
-  joindate:any;
+  joindate: any;
   isServiceProvider: boolean = false;
   isLoading: boolean = false;
-  id:any
+  id: any
   selectedService: any;
   users: any;
   originalServiceProvider: any
-  constructor(private router: Router, 
-    private route: ActivatedRoute,
+
+  constructor(private router: Router,
     private http: HttpClient,
-     private alertController: AlertController) { }
+    private alertController: AlertController) { }
 
   ngOnInit(): void {
 
@@ -45,21 +45,21 @@ export class UserProfileComponent implements OnInit {
     //       console.log(error)
     //     })
     // }
-    
+
+
     // comparing data of database users with loggedIn user (credentials stored in local storage)
     if (user !== null) {
-      const specificUser = JSON.parse(user)
-      this.http.get('http://localhost:5000/users').subscribe(res => {
-        this.users = [res];
-        this.users.map((val: any) => {
-          val.map((a: any) => {
-            if (specificUser.email == a.email) {
-              this.users = a;
-              // console.log(a._id)
-            }
-          })
-        })
-        
+      const loggedInUser = JSON.parse(user)
+      delete loggedInUser.password
+      this.http.get(`http://localhost:5000/users/${loggedInUser._id}`).subscribe(res => {
+        this.users = res;
+        // this.users.map((val: any) => {
+        //   val.map((a: any) => {
+        //     if (specificUser.email == a.email) {
+        //       this.users = a;
+        //     }
+        //   })
+        // })
       },
         error => {
           console.log(error)
@@ -80,12 +80,14 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
+
   logout() {
     localStorage.removeItem('User');
-    this.router.navigateByUrl('/login', { replaceUrl: true })
+    this.router.navigateByUrl('/userlogin', { replaceUrl: true })
   }
-  update(event:any){
-    
+
+
+  onUpdateValues(event: any) {
     const loggedInUser = localStorage.getItem('User');
     let user = {
       fullname: this.fullname,
@@ -93,30 +95,19 @@ export class UserProfileComponent implements OnInit {
       password: this.password,
       service: this.service,
       bio: this.bio,
-      joindate:this.joindate,
+      joindate: this.joindate,
       isServiceProvider: this.isServiceProvider,
     }
-   
-    if(loggedInUser !==null){
+
+    if (loggedInUser !== null) {
       let parsedData = JSON.parse(loggedInUser);
       this.id = parsedData["_id"]
-      this.http.put('http://localhost:5000/users/update/:id', user).subscribe(res=>{
-        console.log(res)
-    }, error=>{
-      console.log(error);
-    })
-    //  let data =  Object.values(parsedData)
-    
-      // for(let value in parsedData){
-      //   if (parsedData.hasOwnProperty('_id')) {
-      //     console.log(value + " = " + parsedData['_id']);
-      // }
-     
-      // }
-
+      this.http.put(`http://localhost:5000/users/update/${this.id}`, user).subscribe(res => {
+        console.log(user)
+      }, error => {
+        console.log(error);
+      })
     }
- 
-    
   }
 
 

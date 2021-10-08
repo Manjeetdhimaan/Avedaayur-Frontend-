@@ -26,7 +26,7 @@
               <div class="col-12 col-sm-auto mb-3">
                 <div class="mx-auto" style="width: 140px;">
                   <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; ">
-                    <img style="border-radius:50%" src="{{users.pic}}" alt="">
+                    <img style="border-radius:50%" src="{{users.pic}}" alt="{{users.fullname}}">
                   </div>
                 </div>
               </div>
@@ -68,7 +68,7 @@
                           <div class="col">
                             <div class="form-group">
                               <label>Email</label>
-                              <input class="form-control" type="text" [(ngModel)]="email" placeholder="{{users.email}}"
+                              <input class="form-control" type="text" [(ngModel)]="email"  placeholder="{{users.email}}"
                                 value="{{users.email}}">
                             </div>
                           </div>
@@ -93,8 +93,8 @@
                         <div class="col mb-3">
                           <div class="form-group">
                             <label>About</label>
-                            <textarea class="form-control" rows="5" placeholder="{{users.bio}}"
-                              value="{{users.bio}}"></textarea>
+                            <textarea type="text" class="form-control" rows="5" value="{{users.bio}}" [(ngModel)]="bio" placeholder="{{users.bio}}"
+                              ></textarea>
                           </div>
                         </div>
                       </div>
@@ -151,7 +151,7 @@
                       </div>
                     </div>
                   </div>
-                  <input class="btn btn-primary" type="button" (click)="update($event)" value="Save Changes">
+                  <input class="btn btn-primary" type="button" (click)="onUpdateValues($event)" value="Save Changes">
                   <div class="row">
                     <div class="col d-flex justify-content-end">
                     </div>

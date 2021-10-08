@@ -9,12 +9,13 @@ import { Router } from '@angular/router';
 })
 export class AllUsersComponent implements OnInit {
   users: any;
+  newUser:any
   constructor(private router:Router, private http:HttpClient) { }
 
   ngOnInit(): void {
-    const user = localStorage.getItem('User');
+    const user = localStorage.getItem('admin');
     if (user == null) {
-      this.router.navigateByUrl('/login', { replaceUrl: true })
+      this.router.navigateByUrl('/adminlogin', { replaceUrl: true })
 
     }
     else {
@@ -28,6 +29,14 @@ export class AllUsersComponent implements OnInit {
     }
     
   }
-  
-
+  logout() {
+    localStorage.removeItem('admin');
+    this.router.navigateByUrl('/adminlogin', { replaceUrl: true })
+  }
+  onSelectUser(user:any[]){
+    console.log('user selected')
+    this.newUser = user;
+    localStorage.setItem('new user', JSON.stringify(this.newUser));
+    this.router.navigateByUrl('/user')
+  }
 }

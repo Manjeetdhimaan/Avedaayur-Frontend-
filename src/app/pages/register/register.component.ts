@@ -42,8 +42,10 @@ export class RegisterComponent implements OnInit {
     this.http.post('http://localhost:5000/users/register', user)
       .subscribe(res => {
         this.isLoading = false;
-        localStorage.setItem('User', JSON.stringify(res))
-        this.router.navigateByUrl('userProfile')
+          localStorage.setItem('User', JSON.stringify(res))
+          this.presentAlert('Registration successfull', 'Login Now')
+        
+        this.router.navigateByUrl('userlogin')
       },
         error => {
           this.isLoading = false

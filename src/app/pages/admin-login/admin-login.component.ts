@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: 'app-admin-login',
+  templateUrl: './admin-login.component.html',
+  styleUrls: ['./admin-login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class AdminLoginComponent implements OnInit {
   email: string;
   password: string;
   isLoading: boolean = false;
@@ -17,21 +17,23 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
   }
-login() {
+  login() {
     this.isLoading = true;
     let credentials = {
       email: this.email,
       password: this.password,
     }
-    this.http.post(`http://localhost:5000/users/login`, credentials).subscribe(res => {
+    this.http.post(`http://localhost:5000/admin/adminLogin`, credentials).subscribe(res => {
       this.isLoading = false;
-      localStorage.setItem('User', JSON.stringify(res));
-      this.router.navigateByUrl('profile',  { replaceUrl: true });
+      localStorage.setItem('admin', JSON.stringify(res));
+      this.router.navigateByUrl('allusers', {replaceUrl:true});
     }, error => {
       this.isLoading = false;
       this.presentAlert('Login failed', error.error.error)
     })
   }
+  
+ 
 
   async presentAlert(header: string, message: string) {
     const alert = await this.alertController.create({

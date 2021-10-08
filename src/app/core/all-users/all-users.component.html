@@ -1,3 +1,5 @@
+
+
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 <div class="container">
         <div class="row justify-content-center">
@@ -12,8 +14,8 @@
         </div>
         <div class="row" >
           <!-- Single Advisor-->
-          <div class="col-12 col-sm-6 col-lg-3" *ngFor="let user of users">
-            <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+          <div class="col-12 col-sm-6 col-lg-3" *ngFor="let user of users;let i=index">
+            <div (click)="onSelectUser(user)" class="single_advisor_profile wow fadeInUp" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
               <!-- Team Thumb-->
               <div class="advisor_thumb"><img src="{{user.pic}}" alt="">
                 <!-- Social Info-->
@@ -21,11 +23,12 @@
               </div>
               <!-- Team Details-->
               <div class="single_advisor_details_info">
-                <h6>{{user.firstname}} {{user.lastname}}</h6>
+                <h6>{{user.fullname}}</h6>
                 <p class="designation">{{user.service}}</p>
               </div>
             </div>
           </div>
           <!-- Single Advisor-->
         </div>
+        <button class="btn btn-primary" (click)="logout()">Log out</button>
       </div>
