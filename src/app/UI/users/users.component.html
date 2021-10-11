@@ -31,7 +31,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-2" *ngIf="edit">
+            <div class="col-md-2" *ngIf="editProfile">
                 <input type="submit" routerLink="/editProfile" class="profile-edit-btn" name="btnAddMore" value="Edit Profile" />
             </div>
         </div>
@@ -100,45 +100,47 @@
                                 <label>Experience</label>
                             </div>
                             <div class="col-md-6">
-                                <p>Expert</p>
+                                <p>Fresher</p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <label>Hourly Rate</label>
+                                <label>Remaining Leaves</label>
                             </div>
                             <div class="col-md-6">
-                                <p>10$/hr</p>
+                                <p>{{user.remainingLeaves}}</p>
                             </div>
                         </div>
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-md-6">
                                 <label>Total Projects</label>
                             </div>
                             <div class="col-md-6">
                                 <p>230</p>
                             </div>
-                        </div>
-                        <div class="row">
+                        </div> -->
+                        <!-- <div class="row">
                             <div class="col-md-6">
                                 <label>English Level</label>
                             </div>
                             <div class="col-md-6">
                                 <p>Expert</p>
                             </div>
+                        </div> -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Job type</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>Full time</p>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <label>Availability</label>
+                                <label>Your Bio</label>
                             </div>
                             <div class="col-md-6">
-                                <p>6 months</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label>Your Bio</label><br />
-                                <p>Your detail description</p>
+                                <p>{{user.bio}}</p>
                             </div>
                         </div>
                     </div>

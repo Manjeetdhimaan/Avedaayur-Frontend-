@@ -17,6 +17,7 @@ import { AllUsersComponent } from './core/all-users/all-users.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AdminLoginComponent } from './pages/admin-login/admin-login.component';
 import { UsersComponent } from './UI/users/users.component';
+import { ApiServiceService } from './services/api-service.service';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,7 @@ import { UsersComponent } from './UI/users/users.component';
     HttpClientModule,
     IonicModule.forRoot()
   ],
-  providers: [],
+  providers: [ApiServiceService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

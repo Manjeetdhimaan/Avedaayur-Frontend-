@@ -129,7 +129,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-12 col-sm-5 offset-sm-1 mb-3">
+                    <!-- <div class="col-12 col-sm-5 offset-sm-1 mb-3">
                       <div class="mb-2"><b>Keeping in Touch</b></div>
                       <div class="row">
                         <div class="col">
@@ -150,9 +150,9 @@
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> -->
                   </div>
-                  <input class="btn btn-primary" type="button" (click)="onUpdateValues($event)" value="Save Changes">
+                  <input class="btn btn-primary" type="button" (click)="onUpdateValues()" value="Save Changes">
                   <div class="row">
                     <div class="col d-flex justify-content-end">
                     </div>
@@ -185,6 +185,76 @@
           <button type="button" class="btn btn-primary">Contact Us</button>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- apply leave -->
+<div class="col-md-12" style="margin-top: 2rem;">
+  <div class="card ctm-border-radius shadow-sm grow">
+    <div class="card-header">
+      <h4 class="card-title mb-0">Apply Leaves</h4>
+    </div>
+    <div class="card-body">
+      <!-- form -->
+      <div novalidate="" class="ng-untouched ng-pristine ng-invalid">
+        <div class="row">
+          <div class="col-sm-6">
+            <div aria-required="true" class="form-group"><label>Leave Type <span class="text-danger">*</span></label><select
+                 [(ngModel)]="leaveType" class="form-control select ng-untouched ng-pristine ng-invalid">
+                <option>Select Leave</option>
+                <option value="Working From Home">Working From Home</option>
+                <option>Sick Leave</option>
+                <option>Parental Leave</option>
+                <option>Annual Leave</option>
+                <option>Normal Leave</option>
+              </select>
+              <!---->
+            </div>
+          </div>
+          <div class="col-sm-6 leave-col">
+            <div class="form-group"><label>Remaining
+                Leaves</label><input type="text" placeholder="{{remainingLeaves}}" disabled="" class="form-control"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>From</label>
+              <input type="date" [(ngModel)]="applyLeaveFrom" formcontrolname="from" bsdatepicker=""
+                class="form-control datetimepicker ng-untouched ng-pristine ng-invalid">
+              <!---->
+              <!---->
+            </div>
+          </div>
+          <div class="col-sm-6 leave-col">
+            <div class="form-group">
+              <label>To</label>
+              <input type="date" [(ngModel)]="applyLeaveTo" formcontrolname="to" bsdatepicker=""
+                class="form-control datetimepicker ng-untouched ng-pristine ng-invalid">
+              <!---->
+              <!---->
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group mb-0"><label>Reason</label><textarea rows="4" formcontrolname="reason"
+                class="form-control ng-untouched ng-pristine ng-invalid"></textarea>
+              <!---->
+            </div>
+          </div>
+        </div>
+        <div class="text-center">
+          <a class="btn btn-theme button-1 text-white ctm-border-radius mt-4 mr-2"  (click)="applyLeave()">Apply
+
+        </a>
+        <a class="btn btn-danger text-white ctm-border-radius mt-4">Cancel</a>
+      </div>
+        <!-- form -->
+        </div>
     </div>
   </div>
 </div>

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admin-login',
@@ -29,7 +30,8 @@ export class AdminLoginComponent implements OnInit {
       this.router.navigateByUrl('allusers', {replaceUrl:true});
     }, error => {
       this.isLoading = false;
-      this.presentAlert('Login failed', error.error.error)
+      Swal.fire('Error!', error.error.error, 'error')
+      // this.presentAlert('Login failed', error.error.error)
     })
   }
   

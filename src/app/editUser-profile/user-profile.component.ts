@@ -1,9 +1,9 @@
-
-
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import Swal from 'sweetalert2';
+import { ApiServiceService } from '../services/api-service.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -11,7 +11,7 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./user-profile.component.scss']
 })
 export class UserProfileComponent implements OnInit {
-  input:any;
+  input: any;
   fullname: string;
   email: string;
   password: string;
@@ -26,30 +26,30 @@ export class UserProfileComponent implements OnInit {
   users: any;
   originalServiceProvider: any
 
+
+  @ViewChild('f') leaveForm: NgForm;
   constructor(private router: Router,
     private http: HttpClient,
-    private alertController: AlertController) {
-      this.input = {
-        fullname: "",
-        email: "",
-        password: "",
-        pic: "",
-        service:"none",
-        bio: "",
-        joindate: "",
-        isServiceProvider:false,
-        isLoading: false,
-        id: "",
-        selectedService: ""
-      }
-     }
+    private apiService: ApiServiceService) {
+  }
 
+  totalLeaves = 10;
+  remainingLeaves: number;
+  appliedLeaves: number;
+  leaveType: string;
+  applyLeaveFrom: any;
+  applyLeaveTo: any;
+  rl: any
   ngOnInit(): void {
+    this.http.get('http://localhost:5000/users').subscribe(res => {
 
+    },
+      error => {
+        console.log(error)
+      })
     const user = localStorage.getItem('User');
     if (user == null) {
       this.router.navigateByUrl('/login', { replaceUrl: true })
-
     }
     // else {
     //   this.http.get('http://localhost:5000/users').subscribe(res => {
@@ -60,8 +60,6 @@ export class UserProfileComponent implements OnInit {
     //       console.log(error)
     //     })
     // }
-
-
     // comparing data of database users with loggedIn user (credentials stored in local storage)
     if (user !== null) {
       const loggedInUser = JSON.parse(user)
@@ -75,6 +73,19 @@ export class UserProfileComponent implements OnInit {
         //     }
         //   })
         // })
+        this.rl = [res].map((n: any) => {
+          if (loggedInUser._id == n._id) {
+            if ((n.remainingLeaves) === undefined) {
+              this.remainingLeaves = this.totalLeaves;
+            }
+            else {
+              this.remainingLeaves = n.remainingLeaves;
+              this.totalLeaves = this.remainingLeaves;
+              //updating total leaves in database;
+              this.applyLeave();
+            }
+          }
+        })
       },
         error => {
           console.log(error)
@@ -97,12 +108,11 @@ export class UserProfileComponent implements OnInit {
 
 
   logout() {
-    localStorage.removeItem('User');
-    this.router.navigateByUrl('/userlogin', { replaceUrl: true })
+    this.apiService.logout();
   }
 
 
-  onUpdateValues(event: any) {
+  onUpdateValues() {
     const loggedInUser = localStorage.getItem('User');
     let user = {
       fullname: this.fullname,
@@ -113,60 +123,43 @@ export class UserProfileComponent implements OnInit {
       joindate: this.joindate,
       isServiceProvider: this.isServiceProvider,
     }
-    console.log(user)
-
-
     if (loggedInUser !== null) {
       let parsedData = JSON.parse(loggedInUser);
       this.id = parsedData["_id"];
       this.http.put(`http://localhost:5000/users/update/${this.id}`, user).subscribe(res => {
         console.log(user)
-        this.presentAlert("Success", "Changes saved succussfully")
+        Swal.fire('Success!', 'Data saved succussfully!', 'success')
       }, error => {
-        this.presentAlert("Error", error.statusText)
+        // Error 
+        Swal.fire('Error!', 'Something went wrong!', 'error')
         console.log(error);
       })
     }
   }
-  async presentAlert(header: string, message: string) {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: header,
-      // subHeader: 'Subtitle',
-      message: message,
-      buttons: ['OK']
-    });
-
-    await alert.present();
-
-    const { role } = await alert.onDidDismiss();
-
-  }
 
 
+  applyLeave() {
+    this.appliedLeaves = (+this.applyLeaveTo.slice(8) - +this.applyLeaveFrom.slice(8));
+    this.remainingLeaves = this.totalLeaves - this.appliedLeaves;
+    console.log("remaining leaves", this.remainingLeaves);
+    console.log("applied leaves", +this.applyLeaveTo.slice(8) - +this.applyLeaveFrom.slice(8));
 
-  async presentAlertConfirm() {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Sure to Logout!',
-      // message: 'Sure to Logout!!!',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: (blah: any) => {
-            console.log('Confirm Cancel: blah');
-          }
-        }, {
-          text: 'Okay',
-          handler: () => {
-            console.log('Confirm Okay');
-          }
-        }
-      ]
-    });
-
-    await alert.present();
+    const loggedInUser = localStorage.getItem('User');
+    const leaves = {
+      leaveType: this.leaveType,
+      totalLeaves: this.totalLeaves,
+      remainingLeaves: this.remainingLeaves
+    }
+    if (loggedInUser !== null) {
+      let parsedData = JSON.parse(loggedInUser);
+      this.id = parsedData["_id"];
+      this.http.post(`http://localhost:5000/users/insert/${this.id}`, leaves).subscribe(res => {
+        console.log(res)
+        Swal.fire('Success!', 'Applied leave succesfully!', 'success')
+      }, error => {
+        // Error 
+        Swal.fire('Error!', error.statusText, 'error')
+      })
+    }
   }
 }

@@ -8,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class UsersComponent implements OnInit {
 
   constructor() { }
-  @Input() edit:boolean=false;
+  @Input() editProfile:boolean=false;
   @Input() user: any
   ngOnInit(): void {
     const item = (localStorage.getItem('new user'));

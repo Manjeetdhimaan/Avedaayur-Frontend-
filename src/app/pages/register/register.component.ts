@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -46,7 +47,11 @@ export class RegisterComponent implements OnInit {
       .subscribe(res => {
         this.isLoading = false;
         localStorage.setItem('User', JSON.stringify(res));
-        this.presentAlert('Registration successfull', 'Login Now');
+        // Success
+  
+          Swal.fire('Registeration successfull!', 'Login Now!', 'success')
+ 
+        // this.presentAlert('Registration successfull', 'Login Now');
         this.router.navigateByUrl('userlogin');
       },
         error => {

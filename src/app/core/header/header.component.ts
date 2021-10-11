@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ApiServiceService } from 'src/app/services/api-service.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-header',
@@ -7,12 +9,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  loggedIn=false;
-  constructor(private router:Router) { }
+  loggedIn = false;
+  constructor(private router: Router, private apiService: ApiServiceService) { }
   ngOnInit(): void {
   }
+
   logout() {
-    localStorage.removeItem('User');
-    this.router.navigateByUrl('/userlogin', { replaceUrl: true });
+    this.apiService.logout();
   }
 }

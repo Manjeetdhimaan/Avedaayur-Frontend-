@@ -21,7 +21,7 @@
     id: any
     selectedService: any;
     users: any;
-    edit=true
+    editProfile=true
     originalServiceProvider: any
   
     constructor(private router: Router,
