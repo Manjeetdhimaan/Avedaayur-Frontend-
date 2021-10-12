@@ -26,9 +26,14 @@
                     <button *ngIf="!isLoading" class="login100-form-btn" (click)="login()">
                         Login
                     </button>
-                    <p class="ion-text-center" style="margin-top: 1rem;">
+                    <!-- <button  *ngIf="isLoading" class="login100-form-btn" (click)="login()">
                         <ion-spinner *ngIf="isLoading"></ion-spinner>
-                    </p>
+                    </button> -->
+<ngx-spinner *ngIf="isLoading" bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-spin" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
+
+                    <!-- <p class="ion-text-center" style="margin-top: 1rem;">
+                        <ion-spinner *ngIf="isLoading"></ion-spinner>
+                    </p> -->
                 </div>
                 <div class="text-center p-t-12">
                     <a class="txt2">  

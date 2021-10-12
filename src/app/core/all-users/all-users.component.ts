@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ApiServiceService } from 'src/app/services/api-service.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-all-users',
@@ -9,8 +11,8 @@ import { Router } from '@angular/router';
 })
 export class AllUsersComponent implements OnInit {
   users: any;
-  newUser:any
-  constructor(private router:Router, private http:HttpClient) { }
+  newUser: any
+  constructor(private router: Router, private http: HttpClient,private apiService: ApiServiceService) { }
 
   ngOnInit(): void {
     const admin = localStorage.getItem('admin');
@@ -27,14 +29,12 @@ export class AllUsersComponent implements OnInit {
           console.log(error)
         })
     }
-    
+
   }
   logout() {
-    localStorage.removeItem('admin');
-    this.router.navigateByUrl('/adminlogin', { replaceUrl: true })
+    this.apiService.adminLogout();
   }
-  onSelectUser(user:any[]){
-    console.log('user selected')
+  onSelectUser(user: any[]) {
     this.newUser = user;
     localStorage.setItem('new user', JSON.stringify(this.newUser));
     this.router.navigateByUrl('/user')

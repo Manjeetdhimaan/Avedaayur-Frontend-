@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -12,12 +13,13 @@ export class LoginComponent implements OnInit {
   email: string;
   password: string;
   isLoading: boolean = false;
-
   constructor(private http: HttpClient,
-    private router: Router,) {
+    private router: Router, 
+    private spinner: NgxSpinnerService) {
   }
 
   ngOnInit(): void {
+    this.spinner.show();
   }
   login() {
     this.isLoading = true;

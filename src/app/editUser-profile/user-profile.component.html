@@ -26,14 +26,14 @@
               <div class="col-12 col-sm-auto mb-3">
                 <div class="mx-auto" style="width: 140px;">
                   <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; ">
-                    <img style="border-radius:50%" src="{{users.pic}}" alt="{{users.fullname}}">
+                    <img style="border-radius:50%" src="{{user.pic}}" alt="{{user.fullname}}">
                   </div>
                 </div>
               </div>
               <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
                 <div class="text-center text-sm-left mb-2 mb-sm-0">
-                  <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{users.fullname}}</h4>
-                  <p class="mb-0">{{users.email}}</p>
+                  <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{user.fullname}}</h4>
+                  <p class="mb-0">{{user.email}}</p>
                   <!-- <div class="text-muted"><small>Last seen 2 hours ago</small></div> -->
                   <div class="mt-2">
                     <!-- <button class="btn btn-primary" type="button">
@@ -44,7 +44,7 @@
                 </div>
                 <div class="text-center text-sm-right">
                   <span class="badge badge-secondary">Employee</span>
-                  <div class="text-muted"><small>Joined {{users.joindate.slice(0,10)}}</small></div>
+                  <div class="text-muted"><small>Joined {{user.joindate.slice(0,10)}}</small></div>
                 </div>
               </div>
             </div>
@@ -62,21 +62,21 @@
                           <div class="form-group">
                             <label>Full Name</label>
                             <input class="form-control" type="text" [(ngModel)]="fullname"
-                              placeholder="{{users.fullname}}" value="{{users.fullname}}">
+                              placeholder="{{user.fullname}}" value="{{user.fullname}}">
                           </div>
                         </div>
                         <div class="col">
                           <div class="col">
                             <div class="form-group">
                               <label>Email</label>
-                              <input class="form-control" type="text" [(ngModel)]="email" placeholder="{{users.email}}"
-                                value="{{users.email}}">
+                              <input class="form-control" type="text" [(ngModel)]="email" placeholder="{{user.email}}"
+                                value="{{user.email}}">
                             </div>
                           </div>
                           <!-- <div class="form-group">
                             <label>Last Name</label>
                             <input class="form-control" type="text" name="lastname"
-                              placeholder="{{users.fullname}}" [(ngModel)]="lastname" value="{{users.fullname}}"
+                              placeholder="{{user.fullname}}" [(ngModel)]="lastname" value="{{user.fullname}}"
                               id="userName">
                           </div> -->
                         </div>
@@ -85,8 +85,8 @@
                         <!-- <div class="col">
                           <div class="form-group">
                             <label>Email</label>
-                            <input class="form-control" type="text" [(ngModel)]="email" placeholder="{{users.email}}"
-                              value="{{users.email}}">
+                            <input class="form-control" type="text" [(ngModel)]="email" placeholder="{{user.email}}"
+                              value="{{user.email}}">
                           </div>
                         </div> -->
                       </div>
@@ -94,8 +94,8 @@
                         <div class="col mb-3">
                           <div class="form-group">
                             <label>About</label>
-                            <textarea type="text" class="form-control" rows="5" value="{{users.bio}}" [(ngModel)]="bio"
-                              placeholder="{{users.bio}}"></textarea>
+                            <textarea type="text" class="form-control" rows="5" value="{{user.bio}}" [(ngModel)]="bio"
+                              placeholder="{{user.bio}}"></textarea>
                           </div>
                         </div>
                       </div>
@@ -104,19 +104,19 @@
                   <div class="row">
                     <div class="col-12 col-sm-6 mb-3">
                       <div class="mb-2"><b>Change Password</b></div>
-                      <div class="row">
+                      <!-- <div class="row">
                         <div class="col">
                           <div class="form-group">
                             <label>Current Password</label>
                             <input class="form-control" type="password" placeholder="••••••">
                           </div>
                         </div>
-                      </div>
+                      </div> -->
                       <div class="row">
                         <div class="col">
                           <div class="form-group">
                             <label>New Password</label>
-                            <input class="form-control" type="password" placeholder="••••••">
+                            <input class="form-control" type="password" [(ngModel)]="password" placeholder="••••••">
                           </div>
                         </div>
                       </div>
@@ -124,7 +124,7 @@
                         <div class="col">
                           <div class="form-group">
                             <label>Confirm <span class="d-none d-xl-inline">Password</span></label>
-                            <input class="form-control" type="password" placeholder="••••••">
+                            <input [(ngModel)]="confirmPassword" class="form-control" type="password" placeholder="••••••">
                           </div>
                         </div>
                       </div>
@@ -152,7 +152,9 @@
                       </div>
                     </div> -->
                   </div>
-                  <input class="btn btn-primary" type="button" (click)="onUpdateValues()" value="Save Changes">
+                  <button  class="btn btn-primary" type="button" (click)="onUpdateValues()" >Save Changes</button>
+                  <ngx-spinner *ngIf="isLoading" bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-spin" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
+
                   <div class="row">
                     <div class="col d-flex justify-content-end">
                     </div>
@@ -257,4 +259,37 @@
         </div>
     </div>
   </div>
+</div>
+
+
+<div class='col-sm-8'>
+<div class='row text-center'>
+    <!-- <p class='lead'>Overview   <a href="/user/<%=user.id%>/overview" class='btn btn-success'>Download PDF  <span class='glyphicon glyphicon-download'></span></a></p>  -->
+
+        <!-- <p>Total work Hours :<%=hours%> Hours</p> -->
+        <button class='btn btn-success' type="button" (click)="checkIn()">Check IN</button>
+        <a  class='btn btn-warning' (click)="checkOut()">Proceed to CheckOut  <span class='glyphicon glyphicon-chevron-right'></span></a>
+
+    <table class='table table-bordered table-hover table-striped table-responsive '>
+        <thead>
+            <th>Date</th>
+            <th>Entry time</th>
+            <th>Exit time</th>
+            <th>Exit reason</th>
+        </thead>
+        <tbody *ngFor="let a of attendance">
+       
+           <tr>
+            <td>{{a.date | date:'yyyy-MM-dd'}}</td>
+            <td>{{a.entry | date:'HH:mm:ss'}}</td>
+            <td>
+              {{a.exit.time | date:'HH:mm:ss'}}
+            </td>
+            <td>
+              General
+</td>
+           </tr> 
+        </tbody>
+    </table>
+</div>
 </div>

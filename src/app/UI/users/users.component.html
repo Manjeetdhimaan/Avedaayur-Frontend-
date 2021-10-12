@@ -13,7 +13,7 @@
             <div class="col-md-6">
                 <div class="profile-head">
                     <h5>
-                        {{user.fullname}}
+                        {{user.fullname | uppercase}}
                     </h5>
                     <h6>
                         {{user.service}}
@@ -66,7 +66,7 @@
                                 <label>Name</label>
                             </div>
                             <div class="col-md-6">
-                                <p>{{user.fullname}}</p>
+                                <p>{{user.fullname | uppercase}}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -137,7 +137,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <label>Your Bio</label>
+                                <label>Bio</label>
                             </div>
                             <div class="col-md-6">
                                 <p>{{user.bio}}</p>

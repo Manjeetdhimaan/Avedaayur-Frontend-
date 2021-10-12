@@ -9,7 +9,7 @@ export class ApiServiceService {
 
   constructor(private router :Router) { }
 
-  logout() {
+  userlogout() {
     Swal.fire({  
       title: 'You will be logged out',  
       text: 'Are you sure you wish to sign out?',  
@@ -31,5 +31,28 @@ export class ApiServiceService {
       }  
     })
     
+  }
+
+  adminLogout(){
+    Swal.fire({
+      title: 'You will be logged out',
+      text: 'Are you sure you wish to sign out?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, log me out!',
+      cancelButtonText: 'No, keep me sign in'
+    }).then((result) => {
+      if (result.value) {
+        // Swal.fire(  
+        //   'Logged out!',  
+        //   'You are logged out.',  
+        //   'success'  
+        // )  
+        localStorage.removeItem('admin');
+        this.router.navigateByUrl('/adminlogin', { replaceUrl: true })
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        return;
+      }
+    })
   }
 }

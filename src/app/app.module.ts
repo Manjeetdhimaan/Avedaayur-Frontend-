@@ -18,6 +18,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { AdminLoginComponent } from './pages/admin-login/admin-login.component';
 import { UsersComponent } from './UI/users/users.component';
 import { ApiServiceService } from './services/api-service.service';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { ApiServiceService } from './services/api-service.service';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    NgxSpinnerModule,
     IonicModule.forRoot()
   ],
   providers: [ApiServiceService],

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, DoCheck, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 import { ApiServiceService } from '../services/api-service.service';
 
@@ -15,6 +15,7 @@ export class UserProfileComponent implements OnInit {
   fullname: string;
   email: string;
   password: string;
+  confirmPassword: string;
   pic: string;
   service: string = "none";
   bio: string;
@@ -23,57 +24,62 @@ export class UserProfileComponent implements OnInit {
   isLoading: boolean = false;
   id: any
   selectedService: any;
-  users: any;
+  user: any;
   originalServiceProvider: any
-
-
-  @ViewChild('f') leaveForm: NgForm;
   constructor(private router: Router,
     private http: HttpClient,
-    private apiService: ApiServiceService) {
+    private apiService: ApiServiceService,
+    private spinner: NgxSpinnerService) {
   }
 
-  totalLeaves = 10;
+  totalLeaves = 24;
   remainingLeaves: number;
   appliedLeaves: number;
   leaveType: string;
   applyLeaveFrom: any;
   applyLeaveTo: any;
   rl: any
-  ngOnInit(): void {
-    this.http.get('http://localhost:5000/users').subscribe(res => {
+  attendance: any[];
 
-    },
-      error => {
-        console.log(error)
-      })
+  ngOnInit(): void {
+    this.spinner.show();
+    // this.http.get('http://localhost:5000/user').subscribe(res => {
+    //   [res].map((n: any) => {
+    //     n.map((a: any) => {
+    //       this.attendance = a.attendance;
+    //       console.log('attendance', this.attendance)
+    //     })
+    //   })
+    // },
+    //   error => {
+    //     console.log(error)
+    //   })
     const user = localStorage.getItem('User');
     if (user == null) {
       this.router.navigateByUrl('/login', { replaceUrl: true })
     }
     // else {
-    //   this.http.get('http://localhost:5000/users').subscribe(res => {
-    //     this.users = res;
+    //   this.http.get('http://localhost:5000/user').subscribe(res => {
+    //     this.user = res;
     //     this.originalServiceProvider = res;
     //   },
     //     error => {
     //       console.log(error)
     //     })
     // }
-    // comparing data of database users with loggedIn user (credentials stored in local storage)
+    // comparing data of database user with loggedIn user (credentials stored in local storage)
     if (user !== null) {
       const loggedInUser = JSON.parse(user)
+      this.id= loggedInUser._id
       delete loggedInUser.password
-      this.http.get(`http://localhost:5000/users/${loggedInUser._id}`).subscribe(res => {
-        this.users = res;
-        // this.users.map((val: any) => {
-        //   val.map((a: any) => {
-        //     if (specificUser.email == a.email) {
-        //       this.users = a;
-        //     }
-        //   })
-        // })
-        this.rl = [res].map((n: any) => {
+      this.http.get(`http://localhost:5000/users/${this.id}`).subscribe(res => {
+        //logged in user
+        this.user = res;
+        // getting attendance of logged in user
+        this.attendance = this.user.attendance;
+        this.attendance = this.attendance.reverse();
+        // getting remaining leaves , total leaves and updating leaves data on databse
+        [res].map((n: any) => {
           if (loggedInUser._id == n._id) {
             if ((n.remainingLeaves) === undefined) {
               this.remainingLeaves = this.totalLeaves;
@@ -86,21 +92,22 @@ export class UserProfileComponent implements OnInit {
             }
           }
         })
+
       },
         error => {
-          console.log(error)
+          console.log(error);
         })
     }
   }
 
   onServiceSelect(e: any) {
-    this.users = this.originalServiceProvider
+    this.user = this.originalServiceProvider
     this.selectedService = e.detail.value
     if (e.detail.value == "All") {
-      this.users = this.originalServiceProvider
+      this.user = this.originalServiceProvider
     }
     else {
-      this.users = this.users.filter((serviceProv: any) => {
+      this.user = this.user.filter((serviceProv: any) => {
         return serviceProv.service == this.selectedService
       })
     }
@@ -108,11 +115,12 @@ export class UserProfileComponent implements OnInit {
 
 
   logout() {
-    this.apiService.logout();
+    this.apiService.userlogout();
   }
 
 
   onUpdateValues() {
+    this.isLoading = true;
     const loggedInUser = localStorage.getItem('User');
     let user = {
       fullname: this.fullname,
@@ -123,20 +131,25 @@ export class UserProfileComponent implements OnInit {
       joindate: this.joindate,
       isServiceProvider: this.isServiceProvider,
     }
-    if (loggedInUser !== null) {
+    if (this.password !== this.confirmPassword) {
+      this.isLoading = false;
+      Swal.fire('Error!', 'passwords do no match!', 'error')
+      return;
+    }
+    else if (loggedInUser !== null) {
       let parsedData = JSON.parse(loggedInUser);
       this.id = parsedData["_id"];
       this.http.put(`http://localhost:5000/users/update/${this.id}`, user).subscribe(res => {
-        console.log(user)
+        this.isLoading = false;
         Swal.fire('Success!', 'Data saved succussfully!', 'success')
       }, error => {
         // Error 
+        this.isLoading = false;
         Swal.fire('Error!', 'Something went wrong!', 'error')
         console.log(error);
       })
     }
   }
-
 
   applyLeave() {
     this.appliedLeaves = (+this.applyLeaveTo.slice(8) - +this.applyLeaveFrom.slice(8));
@@ -154,7 +167,6 @@ export class UserProfileComponent implements OnInit {
       let parsedData = JSON.parse(loggedInUser);
       this.id = parsedData["_id"];
       this.http.post(`http://localhost:5000/users/insert/${this.id}`, leaves).subscribe(res => {
-        console.log(res)
         Swal.fire('Success!', 'Applied leave succesfully!', 'success')
       }, error => {
         // Error 
@@ -162,4 +174,40 @@ export class UserProfileComponent implements OnInit {
       })
     }
   }
+
+
+  checkIn(){
+    const credentials = {
+      email:this.email,
+      password:this.password
+    }
+    this.router.navigateByUrl('/profile')
+    Swal.fire('Success!', 'Checked In!', 'success')
+    this.http.post(`http://localhost:5000/users/${this.id}/enter`, credentials).subscribe(res => {
+      debugger
+      console.log(res)
+     
+    }, error => {
+      // Error 
+      Swal.fire('Error!', error.statusText, 'error')
+    })
+  }
+
+  checkOut(){
+    const credentials = {
+      email:this.email,
+      password:this.password
+    }
+    this.router.navigateByUrl('/profile')
+
+    Swal.fire('Success!', 'Checked out!', 'success')
+
+    this.http.post(`http://localhost:5000/users/${this.id}/exit`, credentials).subscribe(res => {
+      debugger
+    }, error => {
+      // Error 
+      Swal.fire('Error!', error.statusText, 'error')
+    })
+  }
+  
 }
