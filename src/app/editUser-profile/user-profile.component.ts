@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, DoCheck, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
@@ -41,19 +41,10 @@ export class UserProfileComponent implements OnInit {
   rl: any
   attendance: any[];
 
+  
   ngOnInit(): void {
+    
     this.spinner.show();
-    // this.http.get('http://localhost:5000/user').subscribe(res => {
-    //   [res].map((n: any) => {
-    //     n.map((a: any) => {
-    //       this.attendance = a.attendance;
-    //       console.log('attendance', this.attendance)
-    //     })
-    //   })
-    // },
-    //   error => {
-    //     console.log(error)
-    //   })
     const user = localStorage.getItem('User');
     if (user == null) {
       this.router.navigateByUrl('/login', { replaceUrl: true })
@@ -133,8 +124,8 @@ export class UserProfileComponent implements OnInit {
     }
     if (this.password !== this.confirmPassword) {
       this.isLoading = false;
-      Swal.fire('Error!', 'passwords do no match!', 'error')
-      return;
+      Swal.fire('', 'passwords do no match!', 'warning')
+      return; 
     }
     else if (loggedInUser !== null) {
       let parsedData = JSON.parse(loggedInUser);
@@ -145,7 +136,7 @@ export class UserProfileComponent implements OnInit {
       }, error => {
         // Error 
         this.isLoading = false;
-        Swal.fire('Error!', 'Something went wrong!', 'error')
+        Swal.fire('Error!', error, 'error')
         console.log(error);
       })
     }
@@ -182,32 +173,71 @@ export class UserProfileComponent implements OnInit {
       password:this.password
     }
     this.router.navigateByUrl('/profile')
-    Swal.fire('Success!', 'Checked In!', 'success')
-    this.http.post(`http://localhost:5000/users/${this.id}/enter`, credentials).subscribe(res => {
-      debugger
+    
+    this.http.post(`http://localhost:5000/users/${this.id}/enter`, this.id).subscribe(res => {
       console.log(res)
-     
+      Swal.fire('Success!', 'Checked In!', 'success');
     }, error => {
       // Error 
-      Swal.fire('Error!', error.statusText, 'error')
+      console.log(error)
+      Swal.fire('', error.error.text, 'warning');
     })
   }
 
+  exitType:string;
   checkOut(){
     const credentials = {
       email:this.email,
-      password:this.password
+      password:this.password,
+      exitType:this.exitType
     }
-    this.router.navigateByUrl('/profile')
-
-    Swal.fire('Success!', 'Checked out!', 'success')
-
-    this.http.post(`http://localhost:5000/users/${this.id}/exit`, credentials).subscribe(res => {
-      debugger
-    }, error => {
-      // Error 
-      Swal.fire('Error!', error.statusText, 'error')
+    Swal.fire({  
+      title: 'You will be checked out',  
+      text: 'Are you sure you wish to check out?',  
+      icon: 'question',  
+      showCancelButton: true,  
+      confirmButtonText: 'Yes, check me out!',  
+      cancelButtonText: 'No, keep me check in'  
+    }).then((result) => {  
+      if (result.value) {  
+        // Swal.fire(  
+        //   'Logged out!',  
+        //   'You are logged out.',  
+        //   'success'  
+        // ) 
+        this.http.post(`http://localhost:5000/users/${this.id}/exit`, credentials).subscribe(res => {
+          console.log(res)
+        }, error => {
+          // Error 
+        
+          Swal.fire('', error.error.text, 'warning');
+        }) 
+        this.router.navigateByUrl('/profile')
+      } else if (result.dismiss === Swal.DismissReason.cancel) {  
+        return; 
+      }  
     })
   }
   
+  getAttendance:boolean=false;
+  getApplyLeave:boolean=false;
+  onGetAttendance(){
+   this.getAttendance=true;
+   this.getApplyLeave=false;
+  }
+  onGetSettings(){
+    this.getAttendance=false;
+    this.getApplyLeave=false;
+  }
+  onGetApplyLeave(){
+    this.getAttendance=false;
+    this.getApplyLeave=true;
+  }
+  popUp:boolean=false;
+  openForm(){
+    this.popUp=true;
+  }
+  closeForm(){
+    this.popUp=false;
+  }
 }

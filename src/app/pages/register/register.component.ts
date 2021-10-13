@@ -20,7 +20,7 @@ export class RegisterComponent implements OnInit {
   joindate: any;
   isServiceProvider: boolean = false;
   isLoading: boolean = false;
-  phone:string;
+  phone: string;
   constructor(private http: HttpClient,
     private alertController: AlertController,
     private router: Router) { }
@@ -35,28 +35,25 @@ export class RegisterComponent implements OnInit {
       fullname: this.fullname,
       email: this.email,
       password: this.password,
-      phone:this.phone,
+      phone: this.phone,
       pic: this.pic,
       service: this.service,
       bio: this.bio,
       joindate: this.joindate,
       isServiceProvider: this.isServiceProvider,
     }
-    console.log(user);
     this.http.post('http://localhost:5000/users/register', user)
       .subscribe(res => {
         this.isLoading = false;
         localStorage.setItem('User', JSON.stringify(res));
         // Success
-  
-          Swal.fire('Registeration successfull!', 'Login Now!', 'success')
- 
+        Swal.fire('Registeration successfull!', 'Login Now!', 'success')
         // this.presentAlert('Registration successfull', 'Login Now');
         this.router.navigateByUrl('userlogin');
       },
         error => {
           this.isLoading = false;
-          this.presentAlert('Registration Failed', error.error.error);
+          Swal.fire('Registeration Failed!', error.error.error, 'error')
         })
   }
 
@@ -69,28 +66,5 @@ export class RegisterComponent implements OnInit {
     else {
       this.isServiceProvider = true;
     }
-  }
-
-
-  async presentAlert(header: string, message: string) {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: header,
-      // subHeader: 'Subtitle',
-      message: message,
-      buttons: ['OK']
-    });
-
-    await alert.present();
-
-    const { role } = await alert.onDidDismiss();
-
-  }
-
-  validateRequiredInputs() {
-    if (this.fullname == '' || this.email == '' || this.pic == '') {
-      return false;
-    }
-    return;
   }
 }

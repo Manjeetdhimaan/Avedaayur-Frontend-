@@ -96,10 +96,10 @@
                     </ion-select>
                 </ion-item>
                 <div class="container-login100-form-btn">
-                    <button class="login100-form-btn" (click)="register()" [disabled]="validateRequiredInputs()">
+                    <button class="login100-form-btn" (click)="register()">
                         Register
                     </button>
-                </div>
+                </div>  
                 <p class="ion-text-center" style="margin-top: 1rem;">
                     <ion-spinner *ngIf="isLoading"></ion-spinner>
                 </p>

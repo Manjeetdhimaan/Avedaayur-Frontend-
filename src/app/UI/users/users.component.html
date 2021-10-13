@@ -15,7 +15,7 @@
                     <h5>
                         {{user.fullname | uppercase}}
                     </h5>
-                    <h6>
+                    <h6 *ngIf="user.service!=='none'">
                         {{user.service}}
                     </h6>
                     <p style="visibility: hidden;" class="proile-rating">RANKINGS : <span>8/10</span></p>

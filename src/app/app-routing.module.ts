@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { AllUsersComponent } from './core/all-users/all-users.component';
 import { HomeComponent } from './core/home/home.component';
 import { AdminLoginComponent } from './pages/admin-login/admin-login.component';
-import { ApplyLeaveComponent } from './pages/apply-leave/apply-leave.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { UsersComponent } from './UI/users/users.component';
@@ -19,7 +18,6 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'allusers', component: AllUsersComponent },
   { path: 'user', component: UsersComponent },
-  { path: 'applyLeave', component: ApplyLeaveComponent },
   { path: 'profile', component: ProfileComponent },
 ];
 

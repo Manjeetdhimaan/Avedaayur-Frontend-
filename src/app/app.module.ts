@@ -11,7 +11,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserProfileComponent } from './editUser-profile/user-profile.component'
 import { LoginComponent } from './pages/login/login.component';
 import { HeaderComponent } from './core/header/header.component';
-import { ApplyLeaveComponent } from './pages/apply-leave/apply-leave.component';
 import { HomeComponent } from './core/home/home.component';
 import { AllUsersComponent } from './core/all-users/all-users.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -19,6 +18,7 @@ import { AdminLoginComponent } from './pages/admin-login/admin-login.component';
 import { UsersComponent } from './UI/users/users.component';
 import { ApiServiceService } from './services/api-service.service';
 import { NgxSpinnerModule } from 'ngx-spinner';
+
 
 @NgModule({
   declarations: [
@@ -28,7 +28,6 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     RegisterComponent,
     UserProfileComponent,
     HeaderComponent,
-    ApplyLeaveComponent,
     HomeComponent,
     AllUsersComponent,
     ProfileComponent,

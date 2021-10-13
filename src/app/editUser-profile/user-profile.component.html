@@ -32,7 +32,7 @@
               </div>
               <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
                 <div class="text-center text-sm-left mb-2 mb-sm-0">
-                  <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{user.fullname}}</h4>
+                  <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{user.fullname | uppercase}}</h4>
                   <p class="mb-0">{{user.email}}</p>
                   <!-- <div class="text-muted"><small>Last seen 2 hours ago</small></div> -->
                   <div class="mt-2">
@@ -44,14 +44,144 @@
                 </div>
                 <div class="text-center text-sm-right">
                   <span class="badge badge-secondary">Employee</span>
-                  <div class="text-muted"><small>Joined {{user.joindate.slice(0,10)}}</small></div>
+                  <div class="text-muted"><small>Joined {{user.joindate | date:'dd-MM-yyyy'}}</small></div>
                 </div>
               </div>
             </div>
             <ul class="nav nav-tabs">
-              <li class="nav-item"><a class="active nav-link">Settings</a></li>
+              <li class="nav-item" (click)="onGetSettings()"><a [ngClass]="{'active' : !getAttendance&&!getApplyLeave}"
+                  class="nav-link">Settings</a></li>
+              <li class="nav-item" (click)="onGetAttendance()"><a [ngClass]="{'active' : getAttendance&&!getApplyLeave}"
+                  class="nav-link">Attendance</a></li>
+              <li class="nav-item" (click)="onGetApplyLeave()"><a [ngClass]="{'active' : !getAttendance&&getApplyLeave}"
+                  class="nav-link">Apply Leave</a></li>
             </ul>
-            <div class="tab-content pt-3">
+
+            <!-- attendance -->
+
+          
+<div style="margin-top: 3rem;" class='container'  *ngIf="getAttendance&&!getApplyLeave">
+  <div class='row'>
+    <div class='col-sm-4'>
+      <div> 
+      <button class='btn btn-success' type="button" (click)="checkIn()">Check IN</button>
+      </div>
+      <br><br>
+      <!-- <a href="/" class='btn btn-primary'>
+        <span class='glyphicon glyphicon-chevron-left'></span> BACK
+      </a> -->
+      <a class='btn btn-warning' (click)="openForm()" >Proceed to CheckOut <span class='glyphicon glyphicon-chevron-right'></span></a>
+    </div>
+    <div class='' style="margin-top: 1rem; ">
+      <div class=''>
+        <!-- <p class='lead'>Overview   <a  class='btn btn-success'>Download PDF  <span class='glyphicon glyphicon-download'></span></a></p> 
+                  <p></p> -->
+        <table class='table table-responsive table-bordered'>
+          <thead>
+            <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Entry time</th>
+            <th scope="col">Exit time</th>
+            <th scope="col">Exit Type</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let a of attendance;let i=index">
+            <tr>
+              <td>{{a.date | date:'dd-MM-yyyy'}}</td>
+              <td>{{a.entry | date:'HH:mm:ss'}}</td>
+              <td>
+                {{a.exit.time | date:'HH:mm:ss'}}
+              </td>
+              <td>
+                {{a.exit.exitType}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+
+
+</div>
+            
+
+            <!-- apply leave -->
+            <div class="col-md-12" style="margin-top: 2rem;" *ngIf="!getAttendance&&getApplyLeave">
+              <div class="card ctm-border-radius shadow-sm grow">
+                <div class="card-header">
+                  <h4 class="card-title mb-0">Apply Leaves</h4>
+                </div>
+                <div class="card-body">
+                  <!-- form -->
+                  <div novalidate="" class="ng-untouched ng-pristine ng-invalid">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div aria-required="true" class="form-group">
+                          <label>Leave Type <span class="text-danger">*</span></label>
+                              <select [(ngModel)]="leaveType" class="form-control select ng-untouched ng-pristine ng-invalid">
+                            <option value="Working From Home">Working From Home</option>
+                            <option value="Sick Leave">Sick Leave</option>
+                            <option value="Parental Leave">Parental Leave</option>
+                            <option value="Annual Leave">Annual Leave</option>
+                            <option value="Normal Leave">Normal Leave</option>
+                          </select>
+                          <!---->
+                        </div>
+                      </div>
+                      <div class="col-sm-6 leave-col">
+                        <div class="form-group"><label>Remaining
+                            Leaves</label><input type="text" placeholder="{{remainingLeaves}}" disabled=""
+                            class="form-control"></div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label>From</label>
+                          <input type="date" [(ngModel)]="applyLeaveFrom" formcontrolname="from" bsdatepicker=""
+                            class="form-control datetimepicker ng-untouched ng-pristine ng-invalid">
+                          <!---->
+                          <!---->
+                        </div>
+                      </div>
+                      <div class="col-sm-6 leave-col">
+                        <div class="form-group">
+                          <label>To</label>
+                          <input type="date" [(ngModel)]="applyLeaveTo" formcontrolname="to" bsdatepicker=""
+                            class="form-control datetimepicker ng-untouched ng-pristine ng-invalid">
+                          <!---->
+                          <!---->
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <div class="form-group mb-0"><label>Reason</label><textarea rows="4" formcontrolname="reason"
+                            class="form-control ng-untouched ng-pristine ng-invalid"></textarea>
+                          <!---->
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-center">
+                      <a class="btn btn-theme button-1 text-white ctm-border-radius mt-4 mr-2"
+                        (click)="applyLeave()">Apply
+
+                      </a>
+                      <a class="btn btn-danger text-white ctm-border-radius mt-4">Cancel</a>
+                    </div>
+                    <!-- form -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- settings -->
+            <div class="tab-content pt-3" *ngIf="!getAttendance&&!getApplyLeave">
               <div class="tab-pane active">
                 <!-- form -->
                 <div class="form" novalidate="" id="controls">
@@ -124,7 +254,8 @@
                         <div class="col">
                           <div class="form-group">
                             <label>Confirm <span class="d-none d-xl-inline">Password</span></label>
-                            <input [(ngModel)]="confirmPassword" class="form-control" type="password" placeholder="••••••">
+                            <input [(ngModel)]="confirmPassword" class="form-control" type="password"
+                              placeholder="••••••">
                           </div>
                         </div>
                       </div>
@@ -152,8 +283,11 @@
                       </div>
                     </div> -->
                   </div>
-                  <button  class="btn btn-primary" type="button" (click)="onUpdateValues()" >Save Changes</button>
-                  <ngx-spinner *ngIf="isLoading" bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-spin" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
+                  <button class="btn btn-primary" type="button" (click)="onUpdateValues()">Save Changes</button>
+                  <ngx-spinner *ngIf="isLoading" bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff"
+                    type="square-spin" [fullScreen]="true">
+                    <p style="color: white"> Loading... </p>
+                  </ngx-spinner>
 
                   <div class="row">
                     <div class="col d-flex justify-content-end">
@@ -193,103 +327,18 @@
 
 
 <!-- apply leave -->
-<div class="col-md-12" style="margin-top: 2rem;">
-  <div class="card ctm-border-radius shadow-sm grow">
-    <div class="card-header">
-      <h4 class="card-title mb-0">Apply Leaves</h4>
-    </div>
-    <div class="card-body">
-      <!-- form -->
-      <div novalidate="" class="ng-untouched ng-pristine ng-invalid">
-        <div class="row">
-          <div class="col-sm-6">
-            <div aria-required="true" class="form-group"><label>Leave Type <span class="text-danger">*</span></label><select
-                 [(ngModel)]="leaveType" class="form-control select ng-untouched ng-pristine ng-invalid">
-                <option>Select Leave</option>
-                <option value="Working From Home">Working From Home</option>
-                <option>Sick Leave</option>
-                <option>Parental Leave</option>
-                <option>Annual Leave</option>
-                <option>Normal Leave</option>
-              </select>
-              <!---->
-            </div>
-          </div>
-          <div class="col-sm-6 leave-col">
-            <div class="form-group"><label>Remaining
-                Leaves</label><input type="text" placeholder="{{remainingLeaves}}" disabled="" class="form-control"></div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-6">
-            <div class="form-group">
-              <label>From</label>
-              <input type="date" [(ngModel)]="applyLeaveFrom" formcontrolname="from" bsdatepicker=""
-                class="form-control datetimepicker ng-untouched ng-pristine ng-invalid">
-              <!---->
-              <!---->
-            </div>
-          </div>
-          <div class="col-sm-6 leave-col">
-            <div class="form-group">
-              <label>To</label>
-              <input type="date" [(ngModel)]="applyLeaveTo" formcontrolname="to" bsdatepicker=""
-                class="form-control datetimepicker ng-untouched ng-pristine ng-invalid">
-              <!---->
-              <!---->
-            </div>
-          </div>
-        </div>
 
-        <div class="row">
-          <div class="col-sm-12">
-            <div class="form-group mb-0"><label>Reason</label><textarea rows="4" formcontrolname="reason"
-                class="form-control ng-untouched ng-pristine ng-invalid"></textarea>
-              <!---->
-            </div>
-          </div>
-        </div>
-        <div class="text-center">
-          <a class="btn btn-theme button-1 text-white ctm-border-radius mt-4 mr-2"  (click)="applyLeave()">Apply
 
-        </a>
-        <a class="btn btn-danger text-white ctm-border-radius mt-4">Cancel</a>
-      </div>
-        <!-- form -->
-        </div>
-    </div>
+<div class="form-popup" id="myForm" *ngIf="popUp">
+  <div  class="form-container">
+    <h1>Exit</h1>
+    <label for="reason">Exit Type</label>
+    <select class='form-control' name='reason' [(ngModel)]="exitType">
+        <option value="fullday">Full day</option>
+        <option value="halfday">Half day</option>
+    </select>
+    <button type="button" class="btn cancel" (click)="checkOut()">exit </button>
+    <button type="button" class="btn cancel" (click)="closeForm()">Cancel</button>
   </div>
 </div>
 
-
-<div class='col-sm-8'>
-<div class='row text-center'>
-    <!-- <p class='lead'>Overview   <a href="/user/<%=user.id%>/overview" class='btn btn-success'>Download PDF  <span class='glyphicon glyphicon-download'></span></a></p>  -->
-
-        <!-- <p>Total work Hours :<%=hours%> Hours</p> -->
-        <button class='btn btn-success' type="button" (click)="checkIn()">Check IN</button>
-        <a  class='btn btn-warning' (click)="checkOut()">Proceed to CheckOut  <span class='glyphicon glyphicon-chevron-right'></span></a>
-
-    <table class='table table-bordered table-hover table-striped table-responsive '>
-        <thead>
-            <th>Date</th>
-            <th>Entry time</th>
-            <th>Exit time</th>
-            <th>Exit reason</th>
-        </thead>
-        <tbody *ngFor="let a of attendance">
-       
-           <tr>
-            <td>{{a.date | date:'yyyy-MM-dd'}}</td>
-            <td>{{a.entry | date:'HH:mm:ss'}}</td>
-            <td>
-              {{a.exit.time | date:'HH:mm:ss'}}
-            </td>
-            <td>
-              General
-</td>
-           </tr> 
-        </tbody>
-    </table>
-</div>
-</div>

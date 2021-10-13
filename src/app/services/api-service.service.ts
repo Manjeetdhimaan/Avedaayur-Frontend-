@@ -13,7 +13,7 @@ export class ApiServiceService {
     Swal.fire({  
       title: 'You will be logged out',  
       text: 'Are you sure you wish to sign out?',  
-      icon: 'warning',  
+      icon: 'question',  
       showCancelButton: true,  
       confirmButtonText: 'Yes, log me out!',  
       cancelButtonText: 'No, keep me sign in'  
