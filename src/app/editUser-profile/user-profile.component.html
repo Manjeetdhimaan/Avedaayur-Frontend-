@@ -65,12 +65,16 @@
     <div class='col-sm-4'>
       <div> 
       <button class='btn btn-success' type="button" (click)="checkIn()">Check IN</button>
+      <ngx-spinner *ngIf="isLoading" bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff"
+                    type="square-spin" [fullScreen]="true">
+                    <p style="color: white"> Loading... </p>
+                  </ngx-spinner>
       </div>
       <br><br>
       <!-- <a href="/" class='btn btn-primary'>
         <span class='glyphicon glyphicon-chevron-left'></span> BACK
       </a> -->
-      <a class='btn btn-warning' (click)="openForm()" >Proceed to CheckOut <span class='glyphicon glyphicon-chevron-right'></span></a>
+      <a class='btn btn-warning' (click)="openForm()">Proceed to CheckOut <span class='glyphicon glyphicon-chevron-right'></span></a>
     </div>
     <div class='' style="margin-top: 1rem; ">
       <div class=''>
@@ -192,7 +196,7 @@
                           <div class="form-group">
                             <label>Full Name</label>
                             <input class="form-control" type="text" [(ngModel)]="fullname"
-                              placeholder="{{user.fullname}}" value="{{user.fullname}}">
+                              placeholder="{{user.fullname}}" [value]="user.fullname">
                           </div>
                         </div>
                         <div class="col">
@@ -328,17 +332,24 @@
 
 <!-- apply leave -->
 
+ 
+    <div class="dialog" [ngStyle]="{'display':popUp === true ? 'block' : 'none' }">
+    <form  class="form-container" [formGroup]="profileForm" (ngSubmit)="checkOut()">
+      
+      <div class="block">
+        <h1>Exit Type</h1>
+      <input id="fullday" type="radio" checked value="Full day" [(ngModel)]="exitType" formControlName="exitType">
+      <label for="fullday">  Full Day </label>
+     </div>
+      <div class="block">
+      <input id="halfday" type="radio"  value="Half day" [(ngModel)]="exitType" formControlName="exitType">
+      <label for="halfday">  Half Day</label>
+    </div>
+      <button class="btn btn-success" type="submit" >Submit</button>
 
-<div class="form-popup" id="myForm" *ngIf="popUp">
-  <div  class="form-container">
-    <h1>Exit</h1>
-    <label for="reason">Exit Type</label>
-    <select class='form-control' name='reason' [(ngModel)]="exitType">
-        <option value="fullday">Full day</option>
-        <option value="halfday">Half day</option>
-    </select>
-    <button type="button" class="btn cancel" (click)="checkOut()">exit </button>
-    <button type="button" class="btn cancel" (click)="closeForm()">Cancel</button>
+      <button type="button" class="btn cancel" (click)="closeForm()">Cancel</button>
+    </form>
   </div>
-</div>
+  
+    
 

@@ -30,7 +30,6 @@ export class LoginComponent implements OnInit {
     this.http.post(`http://localhost:5000/users/login`, credentials).subscribe(res => {
       this.isLoading = false;
       localStorage.setItem('User', JSON.stringify(res));
-
       this.router.navigateByUrl('profile', { replaceUrl: true });
     }, error => {
       this.isLoading = false;

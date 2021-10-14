@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
@@ -41,9 +42,9 @@ export class UserProfileComponent implements OnInit {
   rl: any
   attendance: any[];
 
-  
+
   ngOnInit(): void {
-    
+
     this.spinner.show();
     const user = localStorage.getItem('User');
     if (user == null) {
@@ -61,7 +62,7 @@ export class UserProfileComponent implements OnInit {
     // comparing data of database user with loggedIn user (credentials stored in local storage)
     if (user !== null) {
       const loggedInUser = JSON.parse(user)
-      this.id= loggedInUser._id
+      this.id = loggedInUser._id
       delete loggedInUser.password
       this.http.get(`http://localhost:5000/users/${this.id}`).subscribe(res => {
         //logged in user
@@ -125,7 +126,7 @@ export class UserProfileComponent implements OnInit {
     if (this.password !== this.confirmPassword) {
       this.isLoading = false;
       Swal.fire('', 'passwords do no match!', 'warning')
-      return; 
+      return;
     }
     else if (loggedInUser !== null) {
       let parsedData = JSON.parse(loggedInUser);
@@ -167,77 +168,79 @@ export class UserProfileComponent implements OnInit {
   }
 
 
-  checkIn(){
-    const credentials = {
-      email:this.email,
-      password:this.password
-    }
-    this.router.navigateByUrl('/profile')
-    
-    this.http.post(`http://localhost:5000/users/${this.id}/enter`, this.id).subscribe(res => {
-      console.log(res)
+  checkIn() {
+    this.isLoading=true;
+    this.router.navigateByUrl('/profile');
+    this.http.post(`http://localhost:5000/users/${this.id}/enter`, this.id).subscribe(() => {
+      this.isLoading=false;
       Swal.fire('Success!', 'Checked In!', 'success');
+      this.router.navigateByUrl('/profile');
     }, error => {
       // Error 
-      console.log(error)
+      this.isLoading=false;
       Swal.fire('', error.error.text, 'warning');
     })
   }
+  profileForm = new FormGroup({
+    exitType: new FormControl(''),
+  });
 
-  exitType:string;
-  checkOut(){
+  exitType: string="Full day";
+  checkOut() {
+    this.isLoading=true;
     const credentials = {
-      email:this.email,
-      password:this.password,
-      exitType:this.exitType
+      exitType: this.profileForm.value.exitType
     }
-    Swal.fire({  
-      title: 'You will be checked out',  
-      text: 'Are you sure you wish to check out?',  
-      icon: 'question',  
-      showCancelButton: true,  
-      confirmButtonText: 'Yes, check me out!',  
-      cancelButtonText: 'No, keep me check in'  
-    }).then((result) => {  
-      if (result.value) {  
-        // Swal.fire(  
-        //   'Logged out!',  
-        //   'You are logged out.',  
-        //   'success'  
-        // ) 
-        this.http.post(`http://localhost:5000/users/${this.id}/exit`, credentials).subscribe(res => {
-          console.log(res)
-        }, error => {
-          // Error 
-        
-          Swal.fire('', error.error.text, 'warning');
-        }) 
-        this.router.navigateByUrl('/profile')
-      } else if (result.dismiss === Swal.DismissReason.cancel) {  
-        return; 
-      }  
+
+    this.http.post(`http://localhost:5000/users/${this.id}/exit`, credentials).subscribe(() => {
+      this.isLoading=false;
+      Swal.fire('Success!', 'Checked out!', 'success');
+      this.router.navigateByUrl('/profile')
+    }, error => {
+      // Error 
+      this.isLoading=false;
+      Swal.fire('', error.error.text, 'warning');
     })
+    // Swal.fire({
+    //   title: 'You will be checked out',
+    //   text: 'Are you sure you wish to check out?',
+    //   icon: 'question',
+    //   showCancelButton: true,
+    //   confirmButtonText: 'Yes, check me out!',
+    //   cancelButtonText: 'No, keep me check in'
+    // }).then((result) => {
+    //   if (result.value) {
+    //     // Swal.fire(  
+    //     //   'Logged out!',  
+    //     //   'You are logged out.',  
+    //     //   'success'  
+    //     // ) 
+      
+    //   } else if (result.dismiss === Swal.DismissReason.cancel) {
+    //     return;
+    //   }
+    // })
   }
-  
-  getAttendance:boolean=false;
-  getApplyLeave:boolean=false;
-  onGetAttendance(){
-   this.getAttendance=true;
-   this.getApplyLeave=false;
+
+  getAttendance: boolean = false;
+  getApplyLeave: boolean = false;
+  onGetAttendance() {
+    this.getAttendance = true;
+    this.getApplyLeave = false;
   }
-  onGetSettings(){
-    this.getAttendance=false;
-    this.getApplyLeave=false;
+  onGetSettings() {
+    this.getAttendance = false;
+    this.getApplyLeave = false;
   }
-  onGetApplyLeave(){
-    this.getAttendance=false;
-    this.getApplyLeave=true;
+  onGetApplyLeave() {
+    this.getAttendance = false;
+    this.getApplyLeave = true;
   }
-  popUp:boolean=false;
-  openForm(){
-    this.popUp=true;
+  popUp: boolean = false;
+  openForm() {
+    this.popUp = true;
   }
-  closeForm(){
-    this.popUp=false;
+  closeForm() {
+    this.popUp = false;
   }
 }
