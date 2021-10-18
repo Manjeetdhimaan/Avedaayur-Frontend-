@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IonicModule } from '@ionic/angular';
 import { Tab1Component } from './tab1/tab1.component';
-import { RegisterComponent } from './pages/register/register.component';
+import { RegisterComponent } from './UI/users/register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { UserProfileComponent } from './editUser-profile/user-profile.component'

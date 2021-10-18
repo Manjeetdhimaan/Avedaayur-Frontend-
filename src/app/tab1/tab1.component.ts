@@ -16,39 +16,15 @@ export class Tab1Component implements OnInit {
   constructor(private router: Router, private http: HttpClient, private alertController: AlertController) { }
 
   ngOnInit(): void {
-    const user = localStorage.getItem('User');
-    if (user == null) {
-      this.router.navigateByUrl('/login', { replaceUrl: true })
 
-    }
-    // else {
-    //   this.http.get('http://localhost:5000/users').subscribe(res => {
-    //     this.users = res;
-    //     this.originalServiceProvider = res;
-    //   },
-    //     error => {
-    //       console.log(error)
-    //     })
-    // }
-    
-    //comparing data of database users with loggedIn user (credentials stored in local storage)
-    if (user !== null) {
-      const specificUser = JSON.parse(user)
-      this.http.get('http://localhost:5000/users').subscribe(res => {
-        this.users = [res];
-        this.users.map((val: any) => {
-          val.map((a: any) => {
-            if (specificUser.email == a.email) {
-              this.users = a;
-            }
-          })
-        })
-        
-      },
-        error => {
-          console.log(error)
-        })
-    }
+    this.http.get('http://localhost:5000/users').subscribe(res => {
+      this.users = res;
+      console.log(this.users)
+      this.originalServiceProvider = res;
+    },
+      error => {
+        console.log(error)
+      })
   }
 
 

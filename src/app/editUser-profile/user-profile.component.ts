@@ -26,7 +26,7 @@ export class UserProfileComponent implements OnInit {
   id: any
   selectedService: any;
   user: any;
-  originalServiceProvider: any
+  originalServiceProvider: any;
   constructor(private router: Router,
     private http: HttpClient,
     private apiService: ApiServiceService,
@@ -39,11 +39,17 @@ export class UserProfileComponent implements OnInit {
   leaveType: string;
   applyLeaveFrom: any;
   applyLeaveTo: any;
-  rl: any
   attendance: any[];
-
+  editProfileForm:FormGroup
 
   ngOnInit(): void {
+    this.editProfileForm= new FormGroup({
+      fullname: new FormControl(this.fullname),
+      email: new FormControl(this.email),
+      bio: new FormControl(this.bio),
+      password: new FormControl(this.password),
+      confirmPassword: new FormControl(this.confirmPassword),
+    })
 
     this.spinner.show();
     const user = localStorage.getItem('User');
@@ -67,6 +73,10 @@ export class UserProfileComponent implements OnInit {
       this.http.get(`http://localhost:5000/users/${this.id}`).subscribe(res => {
         //logged in user
         this.user = res;
+       this.fullname=this.user.fullname;
+       this.email=this.user.email;
+       this.pic=this.user.pic;
+       this.bio=this.user.bio;
         // getting attendance of logged in user
         this.attendance = this.user.attendance;
         this.attendance = this.attendance.reverse();
@@ -109,19 +119,16 @@ export class UserProfileComponent implements OnInit {
   logout() {
     this.apiService.userlogout();
   }
-
+  
 
   onUpdateValues() {
     this.isLoading = true;
     const loggedInUser = localStorage.getItem('User');
     let user = {
-      fullname: this.fullname,
-      email: this.email,
-      password: this.password,
-      service: this.service,
-      bio: this.bio,
-      joindate: this.joindate,
-      isServiceProvider: this.isServiceProvider,
+      fullname: this.editProfileForm.value.fullname,
+      email: this.editProfileForm.value.email,
+      password: this.editProfileForm.value.password,
+      bio: this.editProfileForm.value.bio,
     }
     if (this.password !== this.confirmPassword) {
       this.isLoading = false;
@@ -181,6 +188,8 @@ export class UserProfileComponent implements OnInit {
       Swal.fire('', error.error.text, 'warning');
     })
   }
+
+  
   profileForm = new FormGroup({
     exitType: new FormControl(''),
   });
@@ -188,6 +197,7 @@ export class UserProfileComponent implements OnInit {
   exitType: string="Full day";
   checkOut() {
     this.isLoading=true;
+    this.popUp = false;
     const credentials = {
       exitType: this.profileForm.value.exitType
     }
@@ -224,6 +234,8 @@ export class UserProfileComponent implements OnInit {
 
   getAttendance: boolean = false;
   getApplyLeave: boolean = false;
+  popUp: boolean = false;
+
   onGetAttendance() {
     this.getAttendance = true;
     this.getApplyLeave = false;
@@ -236,11 +248,11 @@ export class UserProfileComponent implements OnInit {
     this.getAttendance = false;
     this.getApplyLeave = true;
   }
-  popUp: boolean = false;
   openForm() {
     this.popUp = true;
   }
   closeForm() {
     this.popUp = false;
   }
+
 }
