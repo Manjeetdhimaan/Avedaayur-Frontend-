@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 
@@ -30,38 +29,13 @@ export class RegisterComponent implements OnInit {
   submitted = false;
   constructor(private http: HttpClient,
     private spinner: NgxSpinnerService,
-    private router: Router,
-    private formBuilder: FormBuilder) { }
+    private router: Router) { }
 
   ngOnInit(): void {
     this.spinner.show();
-    this.registerForm = this.formBuilder.group({
-      title: ['', Validators.required],
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', Validators.required],
-      acceptTerms: [false, Validators.requiredTrue]
-  }, {
-  });
-  
-
   }
 
-  get f() { return this.registerForm.controls; }
 
-  onSubmit() {
-      this.submitted = true;
-
-      // stop here if form is invalid
-      if (this.registerForm.invalid) {
-          return;
-      }
-
-      // display form values on success
-      alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value, null, 4));
-  }
 
   onReset() {
       this.submitted = false;
@@ -76,7 +50,7 @@ export class RegisterComponent implements OnInit {
     this.http.post(`http://localhost:5000/admin/adminLogin`, credentials).subscribe(res => {
       this.isLoading = false;
       localStorage.setItem('admin', JSON.stringify(res));
-      this.router.navigateByUrl('allusers', {replaceUrl:true});
+      this.router.navigateByUrl('/allusers', {replaceUrl:true});
     }, error => {
       this.isLoading = false;
       Swal.fire('Error!', error.error.error, 'error')

@@ -21,6 +21,7 @@
     id: any
     selectedService: any;
     users: any;
+    newUser:any
     editProfile=true
     originalServiceProvider: any
   
@@ -31,7 +32,8 @@
     ngOnInit(): void {
   
       const user = localStorage.getItem('User');
-      if (user == null) {
+      const newUser = localStorage.getItem('new user')
+      if (user === null && newUser === null) {
         this.router.navigateByUrl('/adminlogin', { replaceUrl: true })
   
       }
@@ -47,11 +49,29 @@
   
   
       // comparing data of database users with loggedIn user (credentials stored in local storage)
-      if (user !== null) {
+      if (user !== null ) {
         const loggedInUser = JSON.parse(user)
         delete loggedInUser.password
         this.http.get(`http://localhost:5000/users/${loggedInUser._id}`).subscribe(res => {
           this.users = res;
+          // this.users.map((val: any) => {
+          //   val.map((a: any) => {
+          //     if (specificUser.email == a.email) {
+          //       this.users = a;
+          //     }
+          //   })
+          // })
+        },
+          error => {
+            console.log(error)
+          })
+      }
+      if (newUser !== null ) {
+        const newloggedInUser = JSON.parse(newUser)
+        delete newloggedInUser.password
+        this.http.get(`http://localhost:5000/users/${newloggedInUser._id}`).subscribe(res => {
+          this.newUser = res;
+          console.log('new user', this.newUser)
           // this.users.map((val: any) => {
           //   val.map((a: any) => {
           //     if (specificUser.email == a.email) {

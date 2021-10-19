@@ -1,0 +1,33 @@
+<app-header></app-header>
+
+<div class='' style="margin-top: 1rem; ">
+    <div class=''>
+      <!-- <p class='lead'>Overview   <a  class='btn btn-success'>Download PDF  <span class='glyphicon glyphicon-download'></span></a></p> 
+                <p></p> -->
+      <table class='table table-responsive table-bordered'>
+        <thead>
+          <tr>
+          <th scope="col">From</th>
+          <th scope="col">To</th>
+          <th scope="col">Reason</th>
+          <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let a of leaves | paginate: { itemsPerPage: 5, currentPage: p }">
+          <tr>
+            <td>{{a.from | date:'dd-MM-yyyy'}}</td>
+            <td>{{a.to | date:'HH:mm:ss'}}</td>
+            <td>
+              {{a.reason}}
+            </td>
+            <td>
+              {{a.status}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div >
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+   </div>
+  </div>

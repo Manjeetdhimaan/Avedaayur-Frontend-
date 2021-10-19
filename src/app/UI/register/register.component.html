@@ -70,6 +70,14 @@
                         <i class="fa fa-lock" aria-hidden="true"></i>
                     </span>
                 </div>
+                <!-- <label for="gender">Gender:</label>
+                <div class="wrap-input100 validate-input">
+                    <select name="gender" placeholder="select" id="cars" [(ngModel)]="gender">
+                        <option value="">Select</option>
+                        <option value="Female">Female</option>
+                        <option value="Male">Male</option>
+                    </select>
+                </div> -->
                 <ion-item>
                     <ion-label>Are you a service provider?</ion-label>
                     <ion-select placeholder="select" (ionChange)="onServiceSelect($event)">
@@ -159,8 +167,14 @@
                     <button *ngIf="!isLoading" class="login100-form-btn" (click)="userlogin()">
                         Login
                     </button>
-<ngx-spinner *ngIf="isLoading" bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-spin" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
+                    <!-- <button  *ngIf="isLoading" class="login100-form-btn" (click)="login()">
+                        <ion-spinner *ngIf="isLoading"></ion-spinner>
+                    </button> -->
+<ngx-spinner *ngIf="isLoading" bdColor = "rgba(0, 0, 0, 0.8)" size = "default" color = "#fff" type = "line-spin-fade" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
 
+                    <!-- <p class="ion-text-center" style="margin-top: 1rem;">
+                        <ion-spinner *ngIf="isLoading"></ion-spinner>
+                    </p> -->
                 </div>
                 <div class="text-center p-t-12">
                     <span class="txt1">
@@ -216,8 +230,14 @@
                     <button *ngIf="!isLoading" class="login100-form-btn" (click)="adminlogin()">
                         Login
                     </button>
-<ngx-spinner *ngIf="isLoading" bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-spin" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
+                    <!-- <button  *ngIf="isLoading" class="login100-form-btn" (click)="login()">
+                        <ion-spinner *ngIf="isLoading"></ion-spinner>
+                    </button> -->
+<ngx-spinner *ngIf="isLoading" bdColor = "rgba(0, 0, 0, 0.8)" size = "default" color = "#fff" type = "line-spin-fade" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
 
+                    <!-- <p class="ion-text-center" style="margin-top: 1rem;">
+                        <ion-spinner *ngIf="isLoading"></ion-spinner>
+                    </p> -->
                 </div>
                 <div class="text-center p-t-12">
                     <a class="txt2">  
@@ -228,77 +248,3 @@
         </div>
     </div>
 </div>
-
-<!-- main app container -->
-<div class="card m-3">
-    <h5 class="card-header">Register</h5>
-    <div class="card-body">
-        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-            <div class="form-row">
-                <div class="form-group col">
-                    <label>Title</label>
-                    <select formControlName="title" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
-                        <option value="">select</option>
-                        <option value="Mr">Mr</option>
-                        <option value="Mrs">Mrs</option>
-                        <option value="Miss">Miss</option>
-                        <option value="Ms">Ms</option>
-                    </select>
-                    <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
-                        <div *ngIf="f.title.errors.required">Title is required</div>
-                    </div>
-                </div>
-                <div class="form-group col-5">
-                    <label>First Name</label>
-                    <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
-                    <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
-                        <div *ngIf="f.firstName.errors.required">First Name is required</div>
-                    </div>
-                </div>
-                <div class="form-group col-5">
-                    <label>Last Name</label>
-                    <input type="text" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
-                    <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
-                        <div *ngIf="f.lastName.errors.required">Last Name is required</div>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Email</label>
-                <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
-                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                    <div *ngIf="f.email.errors.required">Email is required</div>
-                    <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col">
-                    <label>Password</label>
-                    <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                        <div *ngIf="f.password.errors.required">Password is required</div>
-                        <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
-                    </div>
-                </div>
-                <div class="form-group col">
-                    <label>Confirm Password</label>
-                    <input type="password" formControlName="confirmPassword" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
-                    <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
-                        <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
-                        <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords must match</div>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group form-check">
-                <input type="checkbox" formControlName="acceptTerms" id="acceptTerms" class="form-check-input" [ngClass]="{ 'is-invalid': submitted && f.acceptTerms.errors }" />
-                <label for="acceptTerms" class="form-check-label">Accept Terms & Conditions</label>
-                <div *ngIf="submitted && f.acceptTerms.errors" class="invalid-feedback">Accept Ts & Cs is required</div>
-            </div>
-            <div class="text-center">
-                <button class="btn btn-primary mr-1">Register</button>
-                <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
-            </div>
-        </form>
-    </div>
-</div>
-

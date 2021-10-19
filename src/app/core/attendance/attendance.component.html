@@ -1,0 +1,70 @@
+<div style="margin-top: 3rem;" class='container'>
+    <div class='row'>
+      <div class='col-sm-4'>
+        <div>
+          <button class='btn btn-success' type="button" (click)="checkIn()">Check IN</button>
+          <ngx-spinner *ngIf="isLoading" bdColor="rgba(0, 0, 0, 0.8)" size="default" color="#fff"
+            type="line-spin-fade" [fullScreen]="true">
+            <p style="color: white"> Loading... </p>
+          </ngx-spinner>
+
+        </div>
+        <br><br>
+        <!-- <a href="/" class='btn btn-primary'>
+<span class='glyphicon glyphicon-chevron-left'></span> BACK
+</a> -->
+        <a class='btn btn-warning' (click)="openForm()">Proceed to CheckOut <span
+            class='glyphicon glyphicon-chevron-right'></span></a>
+      </div>
+      <div class='' style="margin-top: 1rem; ">
+        <div class=''>
+          <!-- <p class='lead'>Overview   <a  class='btn btn-success'>Download PDF  <span class='glyphicon glyphicon-download'></span></a></p> 
+      <p></p> -->
+          <table class='table table-responsive table-bordered'>
+            <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Entry time</th>
+                <th scope="col">Exit time</th>
+                <th scope="col">Exit Type</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let a of attendance | paginate: { itemsPerPage: 5, currentPage: p }">
+              <tr>
+                <td>{{a.date | date:'dd-MM-yyyy'}}</td>
+                <td>{{a.entry | date:'HH:mm:ss'}}</td>
+                <td>
+                  {{a.exit.time | date:'HH:mm:ss'}}
+                </td>
+                <td>
+                  {{a.exit.exitType}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div *ngIf="attendance.length>5">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dialog" [ngStyle]="{'display':popUp === false ? 'none' : 'block' }">
+    <form class="form-container" [formGroup]="profileForm" (ngSubmit)="checkOut()">
+
+      <div class="block">
+        <h1>Exit Type</h1>
+        <input id="fullday" type="radio" checked value="Full day" [(ngModel)]="exitType" formControlName="exitType">
+        <label for="fullday"> Full Day </label>
+      </div>
+      <div class="block">
+        <input id="halfday" type="radio" value="Half day" [(ngModel)]="exitType" formControlName="exitType">
+        <label for="halfday"> Half Day</label>
+      </div>
+      <button class="btn btn-success" type="submit">Submit</button>
+
+      <button type="button" class="btn cancel" (click)="closeForm()">Cancel</button>
+    </form>
+  </div>
+

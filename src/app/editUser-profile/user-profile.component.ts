@@ -36,14 +36,16 @@ export class UserProfileComponent implements OnInit {
   totalLeaves = 24;
   remainingLeaves: number;
   appliedLeaves: number;
-  leaveType: string;
-  applyLeaveFrom: any;
-  applyLeaveTo: any;
-  attendance: any[];
-  editProfileForm:FormGroup
-
+  reason: string;
+  from: any;
+  to: any;
+  status: string = 'pending'
+  attendance: any;
+  leaves: any;
+  editProfileForm: FormGroup;
+  p: number = 1;
   ngOnInit(): void {
-    this.editProfileForm= new FormGroup({
+    this.editProfileForm = new FormGroup({
       fullname: new FormControl(this.fullname),
       email: new FormControl(this.email),
       bio: new FormControl(this.bio),
@@ -53,7 +55,7 @@ export class UserProfileComponent implements OnInit {
 
     this.spinner.show();
     const user = localStorage.getItem('User');
-    if (user == null) {
+    if (user === null) {
       this.router.navigateByUrl('/login', { replaceUrl: true })
     }
     // else {
@@ -67,19 +69,26 @@ export class UserProfileComponent implements OnInit {
     // }
     // comparing data of database user with loggedIn user (credentials stored in local storage)
     if (user !== null) {
+
       const loggedInUser = JSON.parse(user)
       this.id = loggedInUser._id
       delete loggedInUser.password
-      this.http.get(`http://localhost:5000/users/${this.id}`).subscribe(res => {
+      // this.http.get(`${this.apiService.url}/users/enter/${this.id}`).subscribe(res=>{
+      //   this.attendance = res;
+      //   console.log(this.attendance)
+      // })
+      this.http.get(`${this.apiService.url}/users/${this.id}`).subscribe(res => {
         //logged in user
         this.user = res;
-       this.fullname=this.user.fullname;
-       this.email=this.user.email;
-       this.pic=this.user.pic;
-       this.bio=this.user.bio;
+        this.fullname = this.user.fullname;
+        this.email = this.user.email;
+        this.pic = this.user.pic;
+        this.bio = this.user.bio;
         // getting attendance of logged in user
         this.attendance = this.user.attendance;
         this.attendance = this.attendance.reverse();
+        this.leaves = this.user.leaves;
+        console.log(this.leaves);
         // getting remaining leaves , total leaves and updating leaves data on databse
         [res].map((n: any) => {
           if (loggedInUser._id == n._id) {
@@ -116,10 +125,10 @@ export class UserProfileComponent implements OnInit {
   }
 
 
-  logout() {
+  userLogout() {
     this.apiService.userlogout();
   }
-  
+
 
   onUpdateValues() {
     this.isLoading = true;
@@ -138,7 +147,7 @@ export class UserProfileComponent implements OnInit {
     else if (loggedInUser !== null) {
       let parsedData = JSON.parse(loggedInUser);
       this.id = parsedData["_id"];
-      this.http.put(`http://localhost:5000/users/update/${this.id}`, user).subscribe(res => {
+      this.http.put(`${this.apiService.url}/users/update/${this.id}`, user).subscribe(res => {
         this.isLoading = false;
         Swal.fire('Success!', 'Data saved succussfully!', 'success')
       }, error => {
@@ -149,24 +158,47 @@ export class UserProfileComponent implements OnInit {
       })
     }
   }
+  applyLeaveForm = new FormGroup({
+    from : new FormControl(),
+    to : new FormControl(),
+    reason: new FormControl()
+  })
 
   applyLeave() {
-    this.appliedLeaves = (+this.applyLeaveTo.slice(8) - +this.applyLeaveFrom.slice(8));
+    this.appliedLeaves = (+this.to.slice(8) - +this.from.slice(8));
     this.remainingLeaves = this.totalLeaves - this.appliedLeaves;
     console.log("remaining leaves", this.remainingLeaves);
-    console.log("applied leaves", +this.applyLeaveTo.slice(8) - +this.applyLeaveFrom.slice(8));
+    console.log("applied leaves", +this.to.slice(8) - +this.from.slice(8));
 
     const loggedInUser = localStorage.getItem('User');
     const leaves = {
-      leaveType: this.leaveType,
-      totalLeaves: this.totalLeaves,
-      remainingLeaves: this.remainingLeaves
+      reason: this.applyLeaveForm.value.reason,
+      from: this.applyLeaveForm.value.from,
+      to: this.applyLeaveForm.value.to,
+      status: this.status
     }
+    console.log(leaves)
+    const remainingLeaves = {
+      totalLeaves: this.totalLeaves,
+      remainingLeaves: this.remainingLeaves,
+      appliedLeaves: this.appliedLeaves
+    }
+
     if (loggedInUser !== null) {
       let parsedData = JSON.parse(loggedInUser);
       this.id = parsedData["_id"];
-      this.http.post(`http://localhost:5000/users/insert/${this.id}`, leaves).subscribe(res => {
+      this.isLoading = true;
+      this.http.post(`${this.apiService.url}/users/${this.id}/apply`, leaves).subscribe(res => {
+        this.isLoading = false;
+        this.router.navigateByUrl('/leaves')
+
         Swal.fire('Success!', 'Applied leave succesfully!', 'success')
+      }, error => {
+        // Error 
+        Swal.fire('Error!', error.statusText, 'error')
+      })
+      this.http.post(`${this.apiService.url}/users/insert/${this.id}`, remainingLeaves).subscribe(res => {
+        this.isLoading = false;
       }, error => {
         // Error 
         Swal.fire('Error!', error.statusText, 'error')
@@ -176,39 +208,39 @@ export class UserProfileComponent implements OnInit {
 
 
   checkIn() {
-    this.isLoading=true;
+    this.isLoading = true;
     this.router.navigateByUrl('/profile');
-    this.http.post(`http://localhost:5000/users/${this.id}/enter`, this.id).subscribe(() => {
-      this.isLoading=false;
+    this.http.post(`${this.apiService.url}/users/${this.id}/enter`, this.id).subscribe(() => {
+      this.isLoading = false;
       Swal.fire('Success!', 'Checked In!', 'success');
       this.router.navigateByUrl('/profile');
     }, error => {
       // Error 
-      this.isLoading=false;
+      this.isLoading = false;
       Swal.fire('', error.error.text, 'warning');
     })
   }
 
-  
+ 
   profileForm = new FormGroup({
     exitType: new FormControl(''),
   });
 
-  exitType: string="Full day";
+  exitType: string = "Full day";
   checkOut() {
-    this.isLoading=true;
+    this.isLoading = true;
     this.popUp = false;
     const credentials = {
       exitType: this.profileForm.value.exitType
     }
 
-    this.http.post(`http://localhost:5000/users/${this.id}/exit`, credentials).subscribe(() => {
-      this.isLoading=false;
+    this.http.post(`${this.apiService.url}/users/${this.id}/exit`, credentials).subscribe(() => {
+      this.isLoading = false;
       Swal.fire('Success!', 'Checked out!', 'success');
       this.router.navigateByUrl('/profile')
     }, error => {
       // Error 
-      this.isLoading=false;
+      this.isLoading = false;
       Swal.fire('', error.error.text, 'warning');
     })
     // Swal.fire({
@@ -225,7 +257,7 @@ export class UserProfileComponent implements OnInit {
     //     //   'You are logged out.',  
     //     //   'success'  
     //     // ) 
-      
+
     //   } else if (result.dismiss === Swal.DismissReason.cancel) {
     //     return;
     //   }

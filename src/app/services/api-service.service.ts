@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 export class ApiServiceService {
 
   constructor(private router :Router) { }
+  url:string='http://localhost:5000'
 
   userlogout() {
     Swal.fire({  

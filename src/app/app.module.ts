@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IonicModule } from '@ionic/angular';
 import { Tab1Component } from './tab1/tab1.component';
-import { RegisterComponent } from './UI/users/register/register.component';
+import { RegisterComponent } from './UI/register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { UserProfileComponent } from './editUser-profile/user-profile.component'
@@ -18,6 +18,9 @@ import { AdminLoginComponent } from './pages/admin-login/admin-login.component';
 import { UsersComponent } from './UI/users/users.component';
 import { ApiServiceService } from './services/api-service.service';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { LeavesComponent } from './core/leaves/leaves.component';
+import { AttendanceComponent } from './core/attendance/attendance.component';
 
 
 @NgModule({
@@ -33,6 +36,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     ProfileComponent,
     AdminLoginComponent,
     UsersComponent,
+    LeavesComponent,
+    AttendanceComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +46,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     ReactiveFormsModule,
     HttpClientModule,
     NgxSpinnerModule,
+    NgxPaginationModule,
     IonicModule.forRoot()
   ],
   providers: [ApiServiceService],
