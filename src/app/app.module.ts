@@ -13,15 +13,14 @@ import { LoginComponent } from './pages/login/login.component';
 import { HeaderComponent } from './core/header/header.component';
 import { HomeComponent } from './core/home/home.component';
 import { AllUsersComponent } from './core/all-users/all-users.component';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent } from './loggedInUserProfile/profile.component';
 import { AdminLoginComponent } from './pages/admin-login/admin-login.component';
 import { UsersComponent } from './UI/users/users.component';
 import { ApiServiceService } from './services/api-service.service';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { LeavesComponent } from './core/leaves/leaves.component';
-import { AttendanceComponent } from './core/attendance/attendance.component';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -37,10 +36,10 @@ import { AttendanceComponent } from './core/attendance/attendance.component';
     AdminLoginComponent,
     UsersComponent,
     LeavesComponent,
-    AttendanceComponent,
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,

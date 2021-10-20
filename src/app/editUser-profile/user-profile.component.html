@@ -62,22 +62,7 @@
 
               <div style="margin-top: 3rem;" class='container' *ngIf="getAttendance&&!getApplyLeave">
                 <div class='row'>
-                  <div class='col-sm-4'>
-                    <div>
-                      <button class='btn btn-success' type="button" (click)="checkIn()">Check IN</button>
-                      <ngx-spinner *ngIf="isLoading" bdColor="rgba(0, 0, 0, 0.8)" size="default" color="#fff"
-                        type="line-spin-fade" [fullScreen]="true">
-                        <p style="color: white"> Loading... </p>
-                      </ngx-spinner>
-
-                    </div>
-                    <br><br>
-                    <!-- <a href="/" class='btn btn-primary'>
-        <span class='glyphicon glyphicon-chevron-left'></span> BACK
-      </a> -->
-                    <a class='btn btn-warning' (click)="openForm()">Proceed to CheckOut <span
-                        class='glyphicon glyphicon-chevron-right'></span></a>
-                  </div>
+                
                   <div class='' style="margin-top: 1rem; ">
                     <div class=''>
                       <!-- <p class='lead'>Overview   <a  class='btn btn-success'>Download PDF  <span class='glyphicon glyphicon-download'></span></a></p> 
@@ -329,22 +314,4 @@
   <!-- apply leave -->
 
 
-  <div class="dialog" [ngStyle]="{'display':popUp === false ? 'none' : 'block' }">
-    <form class="form-container" [formGroup]="profileForm" (ngSubmit)="checkOut()">
-
-      <div class="block">
-        <h1>Exit Type</h1>
-        <input id="fullday" type="radio" checked value="Full day" [(ngModel)]="exitType" formControlName="exitType">
-        <label for="fullday"> Full Day </label>
-      </div>
-      <div class="block">
-        <input id="halfday" type="radio" value="Half day" [(ngModel)]="exitType" formControlName="exitType">
-        <label for="halfday"> Half Day</label>
-      </div>
-      <button class="btn btn-success" type="submit">Submit</button>
-
-      <button type="button" class="btn cancel" (click)="closeForm()">Cancel</button>
-    </form>
-  </div>
-
-</div>
+ 

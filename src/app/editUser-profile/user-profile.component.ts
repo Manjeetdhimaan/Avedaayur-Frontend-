@@ -55,8 +55,8 @@ export class UserProfileComponent implements OnInit {
 
     this.spinner.show();
     const user = localStorage.getItem('User');
-    if (user === null) {
-      this.router.navigateByUrl('/login', { replaceUrl: true })
+    if (user == null) {
+      this.router.navigateByUrl('/userlogin', { replaceUrl: true })
     }
     // else {
     //   this.http.get('http://localhost:5000/user').subscribe(res => {
@@ -87,6 +87,11 @@ export class UserProfileComponent implements OnInit {
         // getting attendance of logged in user
         this.attendance = this.user.attendance;
         this.attendance = this.attendance.reverse();
+        this.attendance.map((a:any)=>{
+          if(a.exit== undefined){
+            a.exit=''
+          }
+        });
         this.leaves = this.user.leaves;
         console.log(this.leaves);
         // getting remaining leaves , total leaves and updating leaves data on databse
@@ -207,63 +212,7 @@ export class UserProfileComponent implements OnInit {
   }
 
 
-  checkIn() {
-    this.isLoading = true;
-    this.router.navigateByUrl('/profile');
-    this.http.post(`${this.apiService.url}/users/${this.id}/enter`, this.id).subscribe(() => {
-      this.isLoading = false;
-      Swal.fire('Success!', 'Checked In!', 'success');
-      this.router.navigateByUrl('/profile');
-    }, error => {
-      // Error 
-      this.isLoading = false;
-      Swal.fire('', error.error.text, 'warning');
-    })
-  }
-
  
-  profileForm = new FormGroup({
-    exitType: new FormControl(''),
-  });
-
-  exitType: string = "Full day";
-  checkOut() {
-    this.isLoading = true;
-    this.popUp = false;
-    const credentials = {
-      exitType: this.profileForm.value.exitType
-    }
-
-    this.http.post(`${this.apiService.url}/users/${this.id}/exit`, credentials).subscribe(() => {
-      this.isLoading = false;
-      Swal.fire('Success!', 'Checked out!', 'success');
-      this.router.navigateByUrl('/profile')
-    }, error => {
-      // Error 
-      this.isLoading = false;
-      Swal.fire('', error.error.text, 'warning');
-    })
-    // Swal.fire({
-    //   title: 'You will be checked out',
-    //   text: 'Are you sure you wish to check out?',
-    //   icon: 'question',
-    //   showCancelButton: true,
-    //   confirmButtonText: 'Yes, check me out!',
-    //   cancelButtonText: 'No, keep me check in'
-    // }).then((result) => {
-    //   if (result.value) {
-    //     // Swal.fire(  
-    //     //   'Logged out!',  
-    //     //   'You are logged out.',  
-    //     //   'success'  
-    //     // ) 
-
-    //   } else if (result.dismiss === Swal.DismissReason.cancel) {
-    //     return;
-    //   }
-    // })
-  }
-
   getAttendance: boolean = false;
   getApplyLeave: boolean = false;
   popUp: boolean = false;

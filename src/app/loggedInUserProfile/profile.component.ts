@@ -1,7 +1,6 @@
   import { HttpClient } from '@angular/common/http';
-  import { Component, Input, OnInit } from '@angular/core';
+  import { Component, OnInit } from '@angular/core';
   import { Router } from '@angular/router';
-  import { AlertController } from '@ionic/angular';
   
   @Component({
     selector: 'app-profile',
@@ -21,19 +20,19 @@
     id: any
     selectedService: any;
     users: any;
-    newUser:any
+    selectedUser:any
     editProfile=true
+    editAttendance= false;
     originalServiceProvider: any
   
     constructor(private router: Router,
-      private http: HttpClient,
-      private alertController: AlertController) { }
+      private http: HttpClient) { }
   
     ngOnInit(): void {
   
       const user = localStorage.getItem('User');
-      const newUser = localStorage.getItem('new user')
-      if (user === null && newUser === null) {
+      const selectedUser = localStorage.getItem('selected user')
+      if (user === null && selectedUser === null) {
         this.router.navigateByUrl('/adminlogin', { replaceUrl: true })
   
       }
@@ -66,12 +65,11 @@
             console.log(error)
           })
       }
-      if (newUser !== null ) {
-        const newloggedInUser = JSON.parse(newUser)
-        delete newloggedInUser.password
-        this.http.get(`http://localhost:5000/users/${newloggedInUser._id}`).subscribe(res => {
-          this.newUser = res;
-          console.log('new user', this.newUser)
+      if (selectedUser !== null ) {
+        const newSelectedUser = JSON.parse(selectedUser)
+        delete newSelectedUser.password
+        this.http.get(`http://localhost:5000/users/${newSelectedUser._id}`).subscribe(res => {
+          this.selectedUser = res;
           // this.users.map((val: any) => {
           //   val.map((a: any) => {
           //     if (specificUser.email == a.email) {
@@ -132,29 +130,6 @@
   
   
   
-    async presentAlertConfirm() {
-      const alert = await this.alertController.create({
-        cssClass: 'my-custom-class',
-        header: 'Sure to Logout!',
-        // message: 'Sure to Logout!!!',
-        buttons: [
-          {
-            text: 'Cancel',
-            role: 'cancel',
-            cssClass: 'secondary',
-            handler: (blah: any) => {
-              console.log('Confirm Cancel: blah');
-            }
-          }, {
-            text: 'Okay',
-            handler: () => {
-              console.log('Confirm Okay');
-            }
-          }
-        ]
-      });
-  
-      await alert.present();
-    }
+   
   }
   

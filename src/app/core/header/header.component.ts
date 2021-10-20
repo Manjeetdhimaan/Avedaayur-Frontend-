@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
 import { ApiServiceService } from 'src/app/services/api-service.service';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +8,8 @@ import Swal from 'sweetalert2';
 })
 export class HeaderComponent implements OnInit {
   loggedIn = false;
-  constructor(private router: Router, private apiService: ApiServiceService) { }
+  @Input() isEmployee = true
+  constructor( private apiService: ApiServiceService) { }
   ngOnInit(): void {
   }
 

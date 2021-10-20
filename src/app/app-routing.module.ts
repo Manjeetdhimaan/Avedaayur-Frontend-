@@ -6,11 +6,10 @@ import { AdminLoginComponent } from './pages/admin-login/admin-login.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './UI/register/register.component';
 import { UsersComponent } from './UI/users/users.component';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent } from './loggedInUserProfile/profile.component';
 import { UserProfileComponent } from './editUser-profile/user-profile.component';
 import { Tab1Component } from './tab1/tab1.component';
 import { LeavesComponent } from './core/leaves/leaves.component';
-import { AttendanceComponent } from './core/attendance/attendance.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -24,7 +23,6 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'tab', component: Tab1Component },
   { path: 'leaves', component: LeavesComponent },
-  { path: 'attendance', component: AttendanceComponent },
 ];
 
 @NgModule({

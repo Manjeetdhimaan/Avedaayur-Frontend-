@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 export class AllUsersComponent implements OnInit {
   users: any;
   newUser: any
+  isEmployee= false;
   constructor(private router: Router, private http: HttpClient,private apiService: ApiServiceService) { }
 
   ngOnInit(): void {
@@ -36,7 +37,7 @@ export class AllUsersComponent implements OnInit {
   }
   onSelectUser(user: any[]) {
     this.newUser = user;
-    localStorage.setItem('new user', JSON.stringify(this.newUser));
+    localStorage.setItem('selected user', JSON.stringify(this.newUser));
     this.router.navigateByUrl('/user')
   }
 }

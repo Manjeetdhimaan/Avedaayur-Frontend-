@@ -6,10 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin-login.component.scss']
 })
 export class AdminLoginComponent implements OnInit {
-  email: string;
-  password: string;
-  isLoading: boolean = false;
-
   constructor() { }
 
   ngOnInit(): void {

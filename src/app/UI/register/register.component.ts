@@ -49,7 +49,8 @@ export class RegisterComponent implements OnInit {
     }
     this.http.post(`http://localhost:5000/admin/adminLogin`, credentials).subscribe(res => {
       this.isLoading = false;
-      localStorage.setItem('admin', JSON.stringify(res));
+      const loggedAdmin  = localStorage.setItem('admin', JSON.stringify(res));
+      
       this.router.navigateByUrl('/allusers', {replaceUrl:true});
     }, error => {
       this.isLoading = false;
