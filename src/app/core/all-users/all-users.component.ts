@@ -11,8 +11,10 @@ import Swal from 'sweetalert2';
 })
 export class AllUsersComponent implements OnInit {
   users: any;
-  newUser: any
+  selectedUser: any
   isEmployee= false;
+  leaveArray:any[]=[]
+  p: number = 1;
   constructor(private router: Router, private http: HttpClient,private apiService: ApiServiceService) { }
 
   ngOnInit(): void {
@@ -24,6 +26,9 @@ export class AllUsersComponent implements OnInit {
     else {
       this.http.get('http://localhost:5000/users').subscribe(res => {
         this.users = res;
+        this.users.map((a:any)=>{
+          this.leaveArray.push(a.leaves)
+        })
         // this.originalServiceProvider = res;
       },
         error => {
@@ -36,8 +41,8 @@ export class AllUsersComponent implements OnInit {
     this.apiService.adminLogout();
   }
   onSelectUser(user: any[]) {
-    this.newUser = user;
-    localStorage.setItem('selected user', JSON.stringify(this.newUser));
+    this.selectedUser = user;
+    localStorage.setItem('selected user', JSON.stringify(this.selectedUser));
     this.router.navigateByUrl('/user')
   }
 }

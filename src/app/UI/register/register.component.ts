@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
@@ -25,7 +25,6 @@ export class RegisterComponent implements OnInit {
 
   @Input() layout='register';
 
-  registerForm: FormGroup;
   submitted = false;
   constructor(private http: HttpClient,
     private spinner: NgxSpinnerService,
@@ -37,15 +36,15 @@ export class RegisterComponent implements OnInit {
 
 
 
-  onReset() {
-      this.submitted = false;
-      this.registerForm.reset();
-  }
+  adminForm= new FormGroup({
+    email: new FormControl(''),
+    password: new FormControl('')
+  })
   adminlogin() {
     this.isLoading = true;
     let credentials = {
-      email: this.email,
-      password: this.password,
+      email: this.adminForm.value.email,
+      password: this.adminForm.value.password,
     }
     this.http.post(`http://localhost:5000/admin/adminLogin`, credentials).subscribe(res => {
       this.isLoading = false;
@@ -59,14 +58,20 @@ export class RegisterComponent implements OnInit {
     })
   }
 
+  loginForm= new FormGroup({
+    email: new FormControl(''),
+    password: new FormControl('')
+  })
+
   userlogin() {
     this.isLoading = true;
     let credentials = {
-      email: this.email,
-      password: this.password
+      email: this.loginForm.value.email,
+      password: this.loginForm.value.password
     }
     this.http.post(`http://localhost:5000/users/login`, credentials).subscribe(res => {
       this.isLoading = false;
+      
       localStorage.setItem('User', JSON.stringify(res));
       this.router.navigateByUrl('profile', { replaceUrl: true });
     }, error => {
@@ -76,19 +81,28 @@ export class RegisterComponent implements OnInit {
     })
   }
 
+  registerForm= new FormGroup({
+    fullname: new FormControl(),
+    email: new FormControl(),
+    password: new FormControl(),
+    phone: new FormControl(),
+    pic: new FormControl(),
+    service: new FormControl(),
+    bio: new FormControl(),
+    joindate: new FormControl(),
+  })
 
-
-  register() {
+  onRegister() {
     this.isLoading = true;
     let user = {
-      fullname: this.fullname,
-      email: this.email,
-      password: this.password,
-      phone: this.phone,
-      pic: this.pic,
-      service: this.service,
-      bio: this.bio,
-      joindate: this.joindate,
+      fullname: this.registerForm.value.fullname,
+      email: this.registerForm.value.email,
+      password: this.registerForm.value.password,
+      phone: this.registerForm.value.phone,
+      pic: this.registerForm.value.pic,
+      service: this.registerForm.value.service,
+      bio: this.registerForm.value.bio,
+      joindate: this.registerForm.value.joindate,
       isServiceProvider: this.isServiceProvider,
     }
     this.http.post('http://localhost:5000/users/register', user)

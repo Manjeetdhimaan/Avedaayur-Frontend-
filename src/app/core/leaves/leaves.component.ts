@@ -12,13 +12,11 @@ export class LeavesComponent implements OnInit {
 
   constructor(private http: HttpClient, private apiService: ApiServiceService) { }
   id: any;
-  user:any;
+  user: any;
   leaves: any;
   p: number = 1;
-  status?:any;
-  leaveForm = new FormGroup({
-    status: new FormControl(this.status),
-  });
+  status?: any;
+  isLoading: boolean = false;
   ngOnInit(): void {
     const loggedInUser = localStorage.getItem('User');
     if (loggedInUser !== null) {
@@ -37,7 +35,44 @@ export class LeavesComponent implements OnInit {
 
     }
   }
-  onSubmitLeaves(){
-    console.log(this.leaveForm.value.status)
+  // respondLeaveForm = new FormGroup({
+  //   response : new FormControl()
+  // })
+
+  response: any;
+
+  respondForm = new FormGroup({
+    response: new FormControl()
+  })
+  onRespondLeave(selected: any, event: any) {
+    this.isLoading = true;
+    let credentials = {
+      id: selected._id,
+      event: event.target.value
+    }
+    this.http.put(`${this.apiService.url}/users/updateLeaveStatus/${this.id}`, credentials).subscribe(res => {
+      //logged in user
+      this.isLoading = false;
+      this.user = res;
+      // getting leaves of logged in user
+      this.leaves = this.user.leaves.reverse();
+
+      // getting remaining leaves , total leaves and updating leaves data on database
+    },
+      error => {
+        console.log(error);
+        this.isLoading = false;
+      })
+  }
+
+  getCustomCss(status: any) {
+    //Logic here;
+    if (status == "Approved") {
+      return 'success'
+    }
+    if (status == "Denied") {
+      return 'danger'
+    }
+    return 'warn'
   }
 }

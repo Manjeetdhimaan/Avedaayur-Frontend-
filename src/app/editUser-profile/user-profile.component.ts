@@ -36,10 +36,10 @@ export class UserProfileComponent implements OnInit {
   totalLeaves = 24;
   remainingLeaves: number;
   appliedLeaves: number;
-  reason: string;
+  reason?: string;
   from: any;
   to: any;
-  status: string = 'pending'
+  status: string = 'Pending'
   attendance: any;
   leaves: any;
   editProfileForm: FormGroup;
@@ -93,7 +93,6 @@ export class UserProfileComponent implements OnInit {
           }
         });
         this.leaves = this.user.leaves;
-        console.log(this.leaves);
         // getting remaining leaves , total leaves and updating leaves data on databse
         [res].map((n: any) => {
           if (loggedInUser._id == n._id) {
@@ -166,7 +165,7 @@ export class UserProfileComponent implements OnInit {
   applyLeaveForm = new FormGroup({
     from : new FormControl(),
     to : new FormControl(),
-    reason: new FormControl()
+    reason: new FormControl(this.reason)
   })
 
   applyLeave() {

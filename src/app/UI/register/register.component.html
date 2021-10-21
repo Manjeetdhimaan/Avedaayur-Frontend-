@@ -8,69 +8,71 @@
                 <span class="login100-form-title">
                     Register
                 </span>
-                <label for="email">Email:</label>
-                <div class="wrap-input100 validate-input">
-                    <input class="input100" [(ngModel)]="email" name="email" placeholder="email" type="email" required>
-                    <span class="focus-input100"></span>
-                    <span class="symbol-input100">
-                        <i class="fa fa-envelope" aria-hidden="true"></i>
-                    </span>
-                </div>
-                <label for="password">Password:</label>
-                <div class="wrap-input100 validate-input">
-                    <input class="input100" [(ngModel)]="password" name="password" placeholder="password"
-                        type="password"  required>
-                    <span class="focus-input100"></span>
-                    <span class="symbol-input100">
-                        <i class="fa fa-lock" aria-hidden="true"></i>
-                    </span>
-                </div>
-                <label for="phone">Mobile number:</label>
-                <div class="wrap-input100 validate-input">
-                    <input class="input100" [(ngModel)]="phone" name="phone" placeholder="mobile number"
-                        type="text"  required>
-                    <span class="focus-input100"></span>
-                    <span class="symbol-input100">
-                        <i class="fa fa-lock" aria-hidden="true"></i>
-                    </span>
-                </div>
-                <label for="fullname">Full Name:</label>
-                <div class="wrap-input100 validate-input">
-                    <input class="input100" [(ngModel)]="fullname" name="fullname" placeholder="Full Name" type="text"
-                        name="fullname" required>
-                    <span class="focus-input100"></span>
-                    <span class="symbol-input100">
-                        <i class="fa fa-lock" aria-hidden="true"></i>
-                    </span>
-                </div>
-                <label for="doj">Date of joining:</label>
-                <div class="wrap-input100 validate-input">
-                    <input class="input100" [(ngModel)]="joindate" name="doj" type="date" required
-                        placeholder="joining date" name="joiningDate" title="date of joining">
-                    <span class="focus-input100"></span>
-                    <span class="symbol-input100">
-                        <i class="fa fa-lock" aria-hidden="true"></i>
-                    </span>
-                </div>
-                <label for="pic">Picture Url:</label>
-                <div class="wrap-input100 validate-input">
-                    <input class="input100" [(ngModel)]="pic" name="pic" placeholder="Picture Url" type="text"
-                        name="pic" required>
-                    <span class="focus-input100"></span>
-                    <span class="symbol-input100">
-                        <i class="fa fa-lock" aria-hidden="true"></i>
-                    </span>
-                </div>
-                <label for="Bio">Bio:</label>
-                <div class="wrap-input100 validate-input">
-                    <input class="input100" [(ngModel)]="bio" name="Bio" placeholder="Bio" type="text" name="bio"
-                        required>
-                    <span class="focus-input100"></span>
-                    <span class="symbol-input100">
-                        <i class="fa fa-lock" aria-hidden="true"></i>
-                    </span>
-                </div>
-                <!-- <label for="gender">Gender:</label>
+                <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+                    <label for="email">Email:</label>
+                    <div class="wrap-input100 validate-input">
+                        <input class="input100" [(ngModel)]="email" formControlName="email" name="email"
+                            placeholder="email" type="email" required>
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <label for="password">Password:</label>
+                    <div class="wrap-input100 validate-input">
+                        <input class="input100" [(ngModel)]="password" formControlName="password" name="password"
+                            placeholder="password" type="password" required>
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <label for="phone">Mobile number:</label>
+                    <div class="wrap-input100 validate-input">
+                        <input class="input100" [(ngModel)]="phone" formControlName="phone" name="phone"
+                            placeholder="mobile number" type="text" required>
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <label for="fullname">Full Name:</label>
+                    <div class="wrap-input100 validate-input">
+                        <input class="input100" [(ngModel)]="fullname" formControlName="fullname" name="fullname"
+                            placeholder="Full Name" type="text" name="fullname" required>
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <label for="doj">Date of joining:</label>
+                    <div class="wrap-input100 validate-input">
+                        <input class="input100" [(ngModel)]="joindate" formControlName="joindate" name="doj" type="date"
+                            required placeholder="joining date" name="joiningDate" title="date of joining">
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <label for="pic">Picture Url:</label>
+                    <div class="wrap-input100 validate-input">
+                        <input class="input100" [(ngModel)]="pic" formControlName="pic" name="pic"
+                            placeholder="Picture Url" type="text" name="pic" required>
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <label for="Bio">Bio:</label>
+                    <div class="wrap-input100 validate-input">
+                        <input class="input100" [(ngModel)]="bio" formControlName="bio" name="Bio" placeholder="Bio"
+                            type="text" name="bio" required>
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <!-- <label for="gender">Gender:</label>
                 <div class="wrap-input100 validate-input">
                     <select name="gender" placeholder="select" id="cars" [(ngModel)]="gender">
                         <option value="">Select</option>
@@ -78,28 +80,29 @@
                         <option value="Male">Male</option>
                     </select>
                 </div> -->
-                <ion-item>
-                    <ion-label>Are you a service provider?</ion-label>
-                    <ion-select placeholder="select" (ionChange)="onServiceSelect($event)">
-                        <ion-select-option value="yes">Yes</ion-select-option>
-                        <ion-select-option value="no">No</ion-select-option>
-                    </ion-select>
-                </ion-item>
-                <ion-item *ngIf="isServiceProvider">
-                    <ion-label>Service</ion-label>
-                    <ion-select placeholder="All" [(ngModel)]="service">
-                        <ion-select-option value="Web Developer">Web Developer</ion-select-option>
-                        <ion-select-option value="Digital Marketing Specialist">Digital Marketing Specialist
-                        </ion-select-option>
-                        <ion-select-option value="Bidder">Bidder</ion-select-option>
-                        <ion-select-option value="HR">HR</ion-select-option>
-                    </ion-select>
-                </ion-item>
-                <div class="container-login100-form-btn">
-                    <button class="login100-form-btn" (click)="register()">
-                        Register
-                    </button>
-                </div>  
+                    <ion-item>
+                        <ion-label>Are you a service provider?</ion-label>
+                        <ion-select placeholder="select" (ionChange)="onServiceSelect($event)">
+                            <ion-select-option value="yes">Yes</ion-select-option>
+                            <ion-select-option value="no">No</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                    <ion-item *ngIf="isServiceProvider">
+                        <ion-label>Service</ion-label>
+                        <ion-select placeholder="All" [(ngModel)]="service" formControlName="service">
+                            <ion-select-option value="Web Developer">Web Developer</ion-select-option>
+                            <ion-select-option value="Digital Marketing Specialist">Digital Marketing Specialist
+                            </ion-select-option>
+                            <ion-select-option value="Bidder">Bidder</ion-select-option>
+                            <ion-select-option value="HR">HR</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                    <div class="container-login100-form-btn">
+                        <button type="submit" class="login100-form-btn">
+                            Register
+                        </button>
+                    </div>
+                </form>
                 <p class="ion-text-center" style="margin-top: 1rem;">
                     <ion-spinner *ngIf="isLoading"></ion-spinner>
                 </p>
@@ -115,79 +118,57 @@
     </div>
 </div>
 
-
 <!-- user login -->
 
 <div class="limiter" *ngIf="layout=='userLogin'">
-    
     <div class="container-login100">
-      
         <div class="wrap-login100">
             <div class="login100-pic js-tilt" data-tilt>
-                  <div class="text-center p-t-12">
-           
-        </div>
+                <div class="text-center p-t-12">
+                </div>
                 <img src="../../../favicon.ico" alt="IMG">
             </div>
-           
             <div class="login100-form validate-form">
                 <span class="login100-form-title">
                     Member Login
                 </span>
-                <!-- <div style="text-align: center; width: auto;">
-                    <ion-item >
-                        <ion-input [(ngModel)]="email" placeholder="email" type="email"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                        <ion-input [(ngModel)]="password" placeholder="password" type="password"></ion-input>
-                    </ion-item>
-                    <ion-button color="dark" expand="block" (click)="login()">Login</ion-button>
-                    <p class="ion-text-center">
-                        <ion-spinner *ngIf="isLoading"></ion-spinner>
-                    </p>
-                    <p>Don't have an account?<strong routerLink="/register">Register</strong></p>
-                </div> -->
-
-                <div class="wrap-input100 validate-input">
-                    <input class="input100" [(ngModel)]="email" placeholder="email" type="email">
-                    <span class="focus-input100"></span>
-                    <span class="symbol-input100">
-                        <i class="fa fa-envelope" aria-hidden="true"></i>
-                    </span>
-                </div>
-
-                <div class="wrap-input100 validate-input">
-                    <input class="input100" [(ngModel)]="password" placeholder="password" type="password" name="pass">
-                    <span class="focus-input100"></span>
-                    <span class="symbol-input100">
-                        <i class="fa fa-lock" aria-hidden="true"></i>
-                    </span>
-                </div>
-                <div class="container-login100-form-btn">
-                    <button *ngIf="!isLoading" class="login100-form-btn" (click)="userlogin()">
-                        Login
-                    </button>
-                    <!-- <button  *ngIf="isLoading" class="login100-form-btn" (click)="login()">
-                        <ion-spinner *ngIf="isLoading"></ion-spinner>
-                    </button> -->
-<ngx-spinner *ngIf="isLoading" bdColor = "rgba(0, 0, 0, 0.8)" size = "default" color = "#fff" type = "line-spin-fade" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
-
-                    <!-- <p class="ion-text-center" style="margin-top: 1rem;">
-                        <ion-spinner *ngIf="isLoading"></ion-spinner>
-                    </p> -->
-                </div>
+                <form [formGroup]="loginForm" (ngSubmit)="userlogin()">
+                    <div class="wrap-input100 validate-input">
+                        <input class="input100" [(ngModel)]="email" formControlName="email" placeholder="email"
+                            type="email">
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <div class="wrap-input100 validate-input">
+                        <input class="input100" [(ngModel)]="password" formControlName="password" placeholder="password"
+                            type="password" name="pass">
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <div class="container-login100-form-btn">
+                        <button *ngIf="!isLoading" class="login100-form-btn" (click)="userlogin()">
+                            Login
+                        </button>
+                        <ngx-spinner *ngIf="isLoading" bdColor="rgba(0, 0, 0, 0.8)" size="default" color="#fff"
+                            type="line-spin-fade" [fullScreen]="true">
+                            <p style="color: white"> Loading... </p>
+                        </ngx-spinner>
+                    </div>
+                </form>
                 <div class="text-center p-t-12">
                     <span class="txt1">
-                                   
                     </span>
-                    <a class="txt2">  
-                        <p>Don't have an account? <a ><strong routerLink="/register">Register</strong></a></p>
+                    <a class="txt2">
+                        <p>Don't have an account? <a><strong routerLink="/register">Register</strong></a></p>
                     </a>
-                    <a class="txt2">  
-                        <p>Are you an Admin? <a ><strong routerLink="/adminlogin">Admin Login</strong></a></p>
+                    <a class="txt2">
+                        <p>Are you an Admin? <a><strong routerLink="/adminlogin">Admin Login</strong></a></p>
                     </a>
                 </div>
-
                 <!-- <div class="text-center p-t-136">
                     <a class="txt2" >
                         Create your Account
@@ -198,7 +179,6 @@
         </div>
     </div>
 </div>
-
 
 
 <!-- admin login  -->
@@ -212,36 +192,35 @@
                 <span class="login100-form-title">
                     Admin Login
                 </span>
+                <form [formGroup]="adminForm" (ngSubmit)="adminlogin()">
                 <div class="wrap-input100 validate-input">
-                    <input class="input100" [(ngModel)]="email" placeholder="Admin Email" type="email">
+                    <input class="input100" [(ngModel)]="email" formControlName="email" placeholder="Admin Email" type="email">
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                         <i class="fa fa-envelope" aria-hidden="true"></i>
                     </span>
                 </div>
                 <div class="wrap-input100 validate-input">
-                    <input class="input100" [(ngModel)]="password" placeholder="Admin Password" type="password" name="pass">
+                    <input class="input100" [(ngModel)]="password" formControlName="password" placeholder="Admin Password" type="password"
+                        name="pass">
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                         <i class="fa fa-lock" aria-hidden="true"></i>
                     </span>
                 </div>
                 <div class="container-login100-form-btn">
-                    <button *ngIf="!isLoading" class="login100-form-btn" (click)="adminlogin()">
+                    <button *ngIf="!isLoading" class="login100-form-btn" type="submit">
                         Login
                     </button>
-                    <!-- <button  *ngIf="isLoading" class="login100-form-btn" (click)="login()">
-                        <ion-spinner *ngIf="isLoading"></ion-spinner>
-                    </button> -->
-<ngx-spinner *ngIf="isLoading" bdColor = "rgba(0, 0, 0, 0.8)" size = "default" color = "#fff" type = "line-spin-fade" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
-
-                    <!-- <p class="ion-text-center" style="margin-top: 1rem;">
-                        <ion-spinner *ngIf="isLoading"></ion-spinner>
-                    </p> -->
+                    <ngx-spinner *ngIf="isLoading" bdColor="rgba(0, 0, 0, 0.8)" size="default" color="#fff"
+                        type="line-spin-fade" [fullScreen]="true">
+                        <p style="color: white"> Loading... </p>
+                    </ngx-spinner>
                 </div>
+            </form>
                 <div class="text-center p-t-12">
-                    <a class="txt2">  
-                        <p>Are you a Member? <a ><strong routerLink="/userlogin">Member Login</strong></a></p>
+                    <a class="txt2">
+                        <p>Are you a Member? <a><strong routerLink="/userlogin">Member Login</strong></a></p>
                     </a>
                 </div>
             </div>

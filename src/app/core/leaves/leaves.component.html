@@ -2,55 +2,77 @@
 
 <div style="text-align: center;">
 
-<div class="col-sm-6" style="flex:0 0 50%; max-width:60%; margin-top:1rem; text-align:-webkit-center;">
-      <div class="thumbnail">
-        <img
-          style="height:150px;width:150px;border-radius: 100%"
-          src="{{user.pic}}"
-        />
-        <h1><strong>Name:</strong> {{user.fullname | uppercase}}</h1>
-        <h4><strong>Email:</strong>{{user.email}}</h4>
+  <div class="col-sm-6" style="flex:0 0 50%; max-width:60%; margin-top:1rem; text-align:-webkit-center;">
+    <div class="thumbnail">
+      <img style="height:150px;width:150px;border-radius: 100%" src="{{user.pic}}" />
+      <h1><strong>Name:</strong> {{user.fullname | uppercase}}</h1>
+      <h4><strong>Email:</strong>{{user.email}}</h4>
 
-        <h4>Contact no: {{user.phone}}</h4>
-        <!-- <h4>Department:<%=student.department%></h4>
+      <h4>Contact no: {{user.phone}}</h4>
+      <!-- <h4>Department:<%=student.department%></h4>
         <h4>Hostel: <%=student.hostel%></h4> -->
-      </div>
     </div>
+  </div>
 
 
-<div class='' style="margin-top: 1rem; ">
+  <div class='' style="margin-top: 1rem; ">
     <div class=''>
       <!-- <p class='lead'>Overview   <a  class='btn btn-success'>Download PDF  <span class='glyphicon glyphicon-download'></span></a></p> 
                 <p></p> -->
-                <form [formGroup]="leaveForm" (ngSubmit)="onSubmitLeaves()">
       <table class='table  table-bordered'>
         <thead>
           <tr>
-          <th scope="col">From</th>
-          <th scope="col">To</th>
-          <th scope="col">Reason</th>
-          <th scope="col">Status</th>
+            <th scope="col">From</th>
+            <th scope="col">To</th>
+            <th scope="col">Reason</th>
+            <th scope="col">Status</th>
           </tr>
         </thead>
-        <tbody *ngFor="let a of leaves | paginate: { itemsPerPage: 5, currentPage: p }">
+        <tbody *ngFor="let leave of leaves | paginate: { itemsPerPage: 5, currentPage: p }">
           <tr>
-            <td>{{a.from | date:'dd-MM-yyyy'}}</td>
-            <td>{{a.to | date:'HH:mm:ss'}}</td>
+            <td>{{leave.from | date:'dd-MM-yyyy'}}</td>
+            <td>{{leave.to | date:'dd-MM-yyyy'}}</td>
             <td>
-              {{a.reason}}
+              {{leave.reason}}
             </td>
             <td>
-              {{a.status}}
-              <input type="text" [(ngModel)]="status" formControlName="status">
+              <span [ngClass]="getCustomCss(leave.status)">{{leave.status}}</span>
+              <div aria-required="true" class="">
+                <!-- <form class="form-container" [formGroup]="respondForm" (ngSubmit)="onRespondLeave(leave)">
+                  <input id="Pending" type="radio" checked value="Pending" [(ngModel)]="response"
+                    formControlName="response">
+                  <label for="Pending"> Pending </label>
+                  <input id="Approved" type="radio" value="Approved" [(ngModel)]="response" formControlName="response">
+                  <label for="Approved"> Approve</label>
+                  <input id="Deny" type="radio" value="Denied" [(ngModel)]="response" formControlName="response">
+                  <label for="Deny"> Deny</label>
+                  <input style="font-size: 10px; margin-left: 2px; margin-top: -6px;" type="button"
+                    class="btn btn-primary" value="Submit" (click)="onRespondLeave(leave)">
+                </form> -->
+                <!-- <select [(ngModel)]="response" class="">
+                  <option value="Pending">Pending</option>
+                  <option value="Approved">Approve</option>
+                  <option value="Denied">Deny</option>
+                </select> -->
+                <button style="font-size: 10px; margin-left: 2px; margin-top: 4px;" class="btn btn-success"
+                  value="Approved" (click)="onRespondLeave(leave, $event)">Approve</button>
+                <button style="font-size: 10px; margin-left: 2px; margin-top: 4px;" class="btn btn-danger"
+                  value="Denied" (click)="onRespondLeave(leave, $event)">Deny</button>
+                <button style="font-size: 10px; margin-left: 2px; margin-top: 4px; color: white ;" class="btn btn-warning"
+                  value="Pending" (click)="onRespondLeave(leave, $event)">Pending</button>
+                  <!-- <ngx-spinner *ngIf="isLoading" bdColor="rgba(0, 0, 0, 0.8)" size="default" color="#fff"
+                  type="line-spin-fade" [fullScreen]="true">
+                  <p style="color: white"> Loading... </p>
+                </ngx-spinner> -->
+                <!-- <input style="font-size: 10px; margin-left: 2px; margin-top: -6px;" type="button" class="btn btn-primary" value="Submit"  (click)="onRespondLeave(leave)"> -->
+              </div>
             </td>
           </tr>
         </tbody>
       </table>
-      <button type="submit">Submit</button>
-    </form>
-      <div >
-      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      <div>
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
     </div>
-   </div>
   </div>
 </div>
