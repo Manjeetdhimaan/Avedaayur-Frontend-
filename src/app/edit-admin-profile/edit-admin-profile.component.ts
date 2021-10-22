@@ -39,25 +39,22 @@ export class EditAdminProfileComponent implements OnInit {
     }
 
     if (admin !== null) {
-
+      this.isLoading = true;
       const loggedInUser = JSON.parse(admin)
+      this.user = loggedInUser;
       this.id = loggedInUser.id
-      this.user = loggedInUser
-      this.email = this.user.email
-      console.log(this.user)
       delete loggedInUser.password
-      const credentials = {
-
-      }
-      // this.http.get(`${this.apiService.url}/admin/updateAdminCredentials/${this.id}`).subscribe(res => {
-      //   this.user = res;
-      //   this.email = this.user.email;
-      //   console.log(this.user)
-
-      // },
-      //   error => {
-      //     console.log(error);
-      //   })
+      this.http.get(`${this.apiService.url}/admin`).subscribe(res => {
+        //logged in user
+        this.user = res;
+        this.email = this.user.email;
+        this.isLoading = false
+        // getting attendance of logged in user
+      
+      },
+        error => {
+          console.log(error);
+        })
     }
   }
 
