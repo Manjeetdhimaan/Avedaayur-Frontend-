@@ -1,4 +1,3 @@
-<div>
     <div class="header-dark">
         <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search" style="text-align: center;">
             <div class="container">
@@ -17,38 +16,30 @@
                 <div class="collapse navbar-collapse" id="navcol-1">
                     <ul class="nav navbar-nav">
                         <li class="nav-item" role="presentation"><a class="nav-link" routerLink="/home">Home</a></li>
-                        <li class="nav-item" role="presentation"><a class="nav-link" routerLink="/leaves">Leaves</a>
-                        </li>
-                        <li class="nav-item" role="presentation"><a class="nav-link" routerLink="">Complaint</a></li>
-                        <li class="nav-item" role="presentation"><a class="nav-link" routerLink="">Salary Slip</a></li>
-                        <li class="nav-item" role="presentation"><a class="nav-link" routerLink="">Feedback</a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link">Complaint</a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link">Salary Slip</a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link" routerLink="/checkleaves">Check Leaves</a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link" routerLink="/allusers">Employees</a></li>
                     </ul>
-                    
                     <form class="form-inline mr-auto" target="_self">
 
                         <!-- <div class="form-group"><label for="search-field"><i class="fa fa-search"></i></label><input class="form-control search-field" type="search" name="search" id="search-field"></div> -->
                     </form>
-                    <ul class="nav navbar-nav">
-                        <!-- <li class="dropdown">
+                    <ul class="nav ">
+                        <li class="dropdown">
                             <a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ><i class="fa fa-user" aria-hidden="true"></i></a>
                             <div class="dropdown-menu" role="menu">
-                                <a class="dropdown-item" role="presentation" routerLink="/profile">My Profile</a>
-                                <a class="dropdown-item" role="presentation" routerLink="">Second Item</a>
-                                <a class="dropdown-item" role="presentation" (click)="logout()">Log Out</a>
+                                <a class="dropdown-item" role="presentation" routerLink="/editAdminProfile">Edit Profile</a>
+                                <a class="dropdown-item" role="presentation" (click)="adminLogout()">Log Out</a>
                             </div>
-                        </li> -->
+                        </li>
+                </ul>
+                    <ul class="nav navbar-nav">
                         <li class="nav-item" role="presentation"><a class="nav-link" routerLink=""><i
                                     class="fa fa-bell"></i></a></li>
+                                   
                     </ul>
-                    
-                    <a style="margin-right: 4px;" class="btn btn-light action-button" role="button" routerLink="/profile"><i class="fa fa-user"
-                            aria-hidden="true"></i> My Profile
-                    </a>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a data-toggle="modal" (click)="userLogout()" data-target="#logoutModal"> Logout</a>
-                        </li>
-                    </ul>
+                   
                 </div>
             </div>
         </nav>
@@ -61,4 +52,3 @@
             </div>
         </div> -->
     </div>
-</div>

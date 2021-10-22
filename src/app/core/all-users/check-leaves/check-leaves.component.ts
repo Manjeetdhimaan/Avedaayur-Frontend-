@@ -1,0 +1,44 @@
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-check-leaves',
+  templateUrl: './check-leaves.component.html',
+  styleUrls: ['./check-leaves.component.scss']
+})
+export class CheckLeavesComponent implements OnInit {
+
+  constructor(private router: Router,
+    private http: HttpClient) { }
+
+    users: any;
+    selectedUser: any;
+    leaveArray: any[] = [];
+  ngOnInit(): void {
+
+    const admin = localStorage.getItem('admin');
+    if (admin == null) {
+      this.router.navigateByUrl('/adminlogin', { replaceUrl: true });
+    }
+    else {
+      this.http.get('http://localhost:5000/users').subscribe(res => {
+        this.users = res;
+        this.users.map((a: any) => {
+          this.leaveArray.push(a.leaves)
+        })
+        // this.originalServiceProvider = res;
+      },
+        error => {
+          console.log(error);
+        })
+    }
+  }
+
+  onSelectUser(user: any[]) {
+    this.selectedUser = user;
+    localStorage.setItem('selected userLeave', JSON.stringify(this.selectedUser));
+    this.router.navigateByUrl('/employeeLeaves');
+  }
+
+}

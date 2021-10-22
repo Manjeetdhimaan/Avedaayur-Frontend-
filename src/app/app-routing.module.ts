@@ -10,6 +10,9 @@ import { ProfileComponent } from './loggedInUserProfile/profile.component';
 import { UserProfileComponent } from './editUser-profile/user-profile.component';
 import { Tab1Component } from './tab1/tab1.component';
 import { LeavesComponent } from './core/leaves/leaves.component';
+import { CheckLeavesComponent } from './core/all-users/check-leaves/check-leaves.component';
+import { EmployeeLeaveComponent } from './core/all-users/check-leaves/employee-leave/employee-leave.component';
+import { EditAdminProfileComponent } from './edit-admin-profile/edit-admin-profile.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -19,7 +22,10 @@ const routes: Routes = [
   { path: 'adminlogin', component: AdminLoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'allusers', component: AllUsersComponent },
+  { path: 'editAdminProfile', component: EditAdminProfileComponent },
   { path: 'user', component: UsersComponent },
+  { path: 'checkleaves', component: CheckLeavesComponent },
+  { path: 'employeeLeaves', component: EmployeeLeaveComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'tab', component: Tab1Component },
   { path: 'leaves', component: LeavesComponent },

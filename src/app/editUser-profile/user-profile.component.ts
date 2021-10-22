@@ -34,8 +34,8 @@ export class UserProfileComponent implements OnInit {
   }
 
   totalLeaves = 24;
-  remainingLeaves: number;
-  appliedLeaves: number;
+  remainingLeaves: any;
+  appliedLeaves: any;
   reason?: string;
   from: any;
   to: any;
@@ -162,6 +162,8 @@ export class UserProfileComponent implements OnInit {
       })
     }
   }
+
+  
   applyLeaveForm = new FormGroup({
     from : new FormControl(),
     to : new FormControl(),

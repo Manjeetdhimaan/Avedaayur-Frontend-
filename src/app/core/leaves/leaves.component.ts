@@ -15,7 +15,7 @@ export class LeavesComponent implements OnInit {
   user: any;
   leaves: any;
   p: number = 1;
-  status?: any;
+  status: any;
   isLoading: boolean = false;
   ngOnInit(): void {
     const loggedInUser = localStorage.getItem('User');
@@ -34,35 +34,6 @@ export class LeavesComponent implements OnInit {
         })
 
     }
-  }
-  // respondLeaveForm = new FormGroup({
-  //   response : new FormControl()
-  // })
-
-  response: any;
-
-  respondForm = new FormGroup({
-    response: new FormControl()
-  })
-  onRespondLeave(selected: any, event: any) {
-    this.isLoading = true;
-    let credentials = {
-      id: selected._id,
-      event: event.target.value
-    }
-    this.http.put(`${this.apiService.url}/users/updateLeaveStatus/${this.id}`, credentials).subscribe(res => {
-      //logged in user
-      this.isLoading = false;
-      this.user = res;
-      // getting leaves of logged in user
-      this.leaves = this.user.leaves.reverse();
-
-      // getting remaining leaves , total leaves and updating leaves data on database
-    },
-      error => {
-        console.log(error);
-        this.isLoading = false;
-      })
   }
 
   getCustomCss(status: any) {

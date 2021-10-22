@@ -26,11 +26,17 @@ export class UsersComponent implements OnInit, OnDestroy {
   id: any
   popUp: boolean = false;
   p: number = 1
+
+  isEmployee:boolean = false;
   ngOnInit(): void {
     this.popUp=false
     this.spinner.show();
     const item = (localStorage.getItem('selected user'));
     const loggedInUser = (localStorage.getItem('User'));
+    const admin = (localStorage.getItem('admin'));
+    if(admin){
+      this.isEmployee = false;
+    }
     if (item !== null && loggedInUser == null) {
       let parsedData = JSON.parse(item);
       this.id = parsedData["_id"];
@@ -49,6 +55,7 @@ export class UsersComponent implements OnInit, OnDestroy {
         })
     }
     if (item == null && loggedInUser !== null) {
+      this.isEmployee = true;
       let parsedDataOLoggedInuser = JSON.parse(loggedInUser);
       this.id = parsedDataOLoggedInuser["_id"];
       this.http.get(`${this.apiService.url}/users/${this.id}`).subscribe(res => {

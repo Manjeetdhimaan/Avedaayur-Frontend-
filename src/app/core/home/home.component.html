@@ -1,2 +1,3 @@
-<app-header></app-header>
+<app-header *ngIf="isEmploye"></app-header>
+<app-admin-header *ngIf="!isEmploye"></app-admin-header>
 <p>home content!</p>

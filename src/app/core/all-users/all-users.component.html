@@ -1,88 +1,37 @@
-<app-header [isEmployee]='isEmployee'></app-header>
+<app-admin-header></app-admin-header>
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-12 col-sm-8 col-lg-6">
-            <!-- Section Heading-->
-            <div class="section_heading text-center wow fadeInUp" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
-              <h3>Our Creative <span> Team</span></h3>
-              <!-- <p>Appland is completely creative, lightweight, clean &amp; super responsive app landing page.</p> -->
-              <div class="line"></div>
-            </div>
-          </div>
-        </div>
-        <div class="row" >
-          <!-- Single Advisor-->
-          <div class="col-12 col-sm-6 col-lg-3" *ngFor="let user of users;let i=index">
-            <div (click)="onSelectUser(user)" class="single_advisor_profile wow fadeInUp" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
-              <!-- Team Thumb-->
-              <div class="advisor_thumb"><img src="{{user.pic}}" alt="">
-                <!-- Social Info-->
-                <div class="social-info"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-linkedin"></i></a></div>
-              </div>
-              <!-- Team Details-->
-              <div class="single_advisor_details_info">
-                <h6>{{user.fullname}}</h6>
-                <p class="designation">{{user.service}}</p>
-              </div>
-            </div>
-          </div>
-          <!-- Single Advisor-->
-        </div>
-        <button class="btn btn-primary" (click)="logout()">Log out</button>
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-8 col-lg-6">
+      <!-- Section Heading-->
+      <div class="section_heading text-center wow fadeInUp" data-wow-delay="0.2s"
+        style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+        <h3>Our Creative <span> Team</span></h3>
+        <!-- <p>Appland is completely creative, lightweight, clean &amp; super responsive app landing page.</p> -->
+        <div class="line"></div>
       </div>
-
-<div style="text-align: center;">
-
-<!-- <div class="col-sm-6" style="flex:0 0 50%; max-width:60%; margin-top:1rem; text-align:-webkit-center;">
-      <div class="thumbnail" *ngFor='let user of users'>
-        <img
-          style="height:150px;width:150px;border-radius: 100%"
-          src="{{user.pic}}"
-        />
-        <h1><strong>Name:</strong> {{user.fullname | uppercase}}</h1>
-        <h4><strong>Email:</strong>{{user.email}}</h4>
-
-        <h4>Contact no: {{user.phone}}</h4>
-        <h4>Department:<%=student.department%></h4>
-        <h4>Hostel: <%=student.hostel%></h4>
-      </div>
-    </div> -->
-
-
-<div class='' style="margin-top: 1rem; ">
-    <div class=''>
-      <!-- <p class='lead'>Overview   <a  class='btn btn-success'>Download PDF  <span class='glyphicon glyphicon-download'></span></a></p> 
-                <p></p> -->
-                <form >
-      <table class='table  table-bordered'>
-        <thead>
-          <tr>
-          <th scope="col">From</th>
-          <th scope="col">To</th>
-          <th scope="col">Reason</th>
-          <th scope="col">Status</th>
-          </tr>
-        </thead>
-        <tbody *ngFor="let leave of leaveArray | paginate: { itemsPerPage: 5, currentPage: p }">
-          <tr *ngFor="let l of leave" >
-            <td>{{l.from | date:'dd-MM-yyyy'}}</td>
-            <td>{{l.to | date:'dd-MM-yyyy'}}</td>
-            <td>
-              {{l.reason}}
-            </td>
-            <td>
-              {{l.status}}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <button type="submit">Submit</button>
-    </form>
-      <div >
-      <pagination-controls (pageChange)="p = $event"></pagination-controls>
     </div>
-   </div>
   </div>
+  <div class="row">
+    <!-- Single Advisor-->
+    <div class="col-12 col-sm-6 col-lg-3" *ngFor="let user of users;let i=index">
+      <div (click)="onSelectUser(user)" class="single_advisor_profile wow fadeInUp" data-wow-delay="0.2s"
+        style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+        <!-- Team Thumb-->
+        <div class="advisor_thumb"><img src="{{user.pic}}" alt="">
+          <!-- Social Info-->
+          <div class="social-info"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i
+                class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-linkedin"></i></a></div>
+        </div>
+        <!-- Team Details-->
+        <div class="single_advisor_details_info">
+          <h6>{{user.fullname}}</h6>
+          <p class="designation">{{user.service}}</p>
+        </div>
+      </div>
+    </div>
+    <!-- Single Advisor-->
+  </div>
+  <button class="btn btn-primary" (click)="logout()">Log out</button>
 </div>

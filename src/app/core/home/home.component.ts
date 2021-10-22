@@ -9,10 +9,17 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
 
   constructor(private router:Router) { }
-
+  isEmploye:boolean=false;
   ngOnInit(): void {
-    const user = localStorage.getItem('User');
     const admin = localStorage.getItem('admin');
+    const user = localStorage.getItem('User');
+    if(user){
+      this.isEmploye = true;
+    }
+   
+    if(admin){
+      this.isEmploye = false;
+    }
     if (user === null && admin === null) {
       this.router.navigateByUrl('/userlogin', { replaceUrl: true })
     }

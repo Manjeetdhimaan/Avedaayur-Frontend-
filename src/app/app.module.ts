@@ -21,6 +21,10 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { LeavesComponent } from './core/leaves/leaves.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AdminHeaderComponent } from './core/admin-header/admin-header.component';
+import { CheckLeavesComponent } from './core/all-users/check-leaves/check-leaves.component';
+import { EmployeeLeaveComponent } from './core/all-users/check-leaves/employee-leave/employee-leave.component';
+import { EditAdminProfileComponent } from './edit-admin-profile/edit-admin-profile.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +40,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AdminLoginComponent,
     UsersComponent,
     LeavesComponent,
+    AdminHeaderComponent,
+    CheckLeavesComponent,
+    EmployeeLeaveComponent,
+    EditAdminProfileComponent,
   ],
   imports: [
     BrowserModule,

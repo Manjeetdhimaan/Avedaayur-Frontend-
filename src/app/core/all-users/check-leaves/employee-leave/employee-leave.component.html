@@ -1,5 +1,4 @@
-<app-header></app-header>
-
+<app-admin-header></app-admin-header>
 <div style="text-align: center;">
 
   <div class="col-sm-6" style="flex:0 0 50%; max-width:60%; margin-top:1rem; text-align:-webkit-center;">
@@ -37,6 +36,16 @@
             <td>
               <span [ngClass]="getCustomCss(leave.status)">{{leave.status}}</span>
               <div aria-required="true" class="">
+                <button style="font-size: 10px; margin-left: 2px; margin-top: 4px;" class="btn btn-success"
+                  value="Approved" (click)="onRespondLeave(leave, $event)">Approve</button>
+                <button style="font-size: 10px; margin-left: 2px; margin-top: 4px;" class="btn btn-danger"
+                  value="Denied" (click)="onRespondLeave(leave, $event)">Deny</button>
+                <button style="font-size: 10px; margin-left: 2px; margin-top: 4px; color: white ;" class="btn btn-warning"
+                  value="Pending" (click)="onRespondLeave(leave, $event)">Pending</button>
+                  <ngx-spinner *ngIf="isLoading" bdColor="rgba(0, 0, 0, 0.8)" size="default" color="#fff"
+                  type="line-spin-fade" [fullScreen]="true">
+                  <p style="color: white"> Loading... </p>
+                </ngx-spinner>
               </div>
             </td>
           </tr>

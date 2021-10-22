@@ -8,12 +8,11 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 })
 export class HeaderComponent implements OnInit {
   loggedIn = false;
-  @Input() isEmployee = true
   constructor( private apiService: ApiServiceService) { }
   ngOnInit(): void {
   }
 
-  logout() {
+  userLogout() {
     this.apiService.userlogout();
   }
 }
