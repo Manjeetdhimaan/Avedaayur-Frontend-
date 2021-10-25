@@ -1,6 +1,8 @@
   import { HttpClient } from '@angular/common/http';
   import { Component, OnInit } from '@angular/core';
   import { Router } from '@angular/router';
+import { ApiServiceService } from '../services/api-service.service';
+
   
   @Component({
     selector: 'app-profile',
@@ -26,10 +28,10 @@
     originalServiceProvider: any
   
     constructor(private router: Router,
-      private http: HttpClient) { }
+      private http: HttpClient,
+    private apiService: ApiServiceService) { }
   
-    ngOnInit(): void {
-  
+    ngOnInit(): void {  
       const user = localStorage.getItem('User');
       const selectedUser = localStorage.getItem('selected user')
       if (user === null && selectedUser === null) {
@@ -37,7 +39,7 @@
   
       }
       // else {
-      //   this.http.get('http://localhost:5000/users').subscribe(res => {
+      //   this.http.get(`${this.apiService.url}/users`).subscribe(res => {
       //     this.users = res;
       //     this.originalServiceProvider = res;
       //   },
@@ -51,7 +53,7 @@
       if (user !== null ) {
         const loggedInUser = JSON.parse(user)
         delete loggedInUser.password
-        this.http.get(`http://localhost:5000/users/${loggedInUser._id}`).subscribe(res => {
+        this.http.get(`${this.apiService.url}/users/${loggedInUser._id}`).subscribe(res => {
           this.users = res;
           // this.users.map((val: any) => {
           //   val.map((a: any) => {
@@ -68,7 +70,7 @@
       if (selectedUser !== null ) {
         const newSelectedUser = JSON.parse(selectedUser)
         delete newSelectedUser.password
-        this.http.get(`http://localhost:5000/users/${newSelectedUser._id}`).subscribe(res => {
+        this.http.get(`${this.apiService.url}/users/${newSelectedUser._id}`).subscribe(res => {
           this.selectedUser = res;
           // this.users.map((val: any) => {
           //   val.map((a: any) => {
@@ -120,7 +122,7 @@
       if (loggedInUser !== null) {
         let parsedData = JSON.parse(loggedInUser);
         this.id = parsedData["_id"]
-        this.http.put(`http://localhost:5000/users/update/${this.id}`, user).subscribe(res => {
+        this.http.put(`${this.apiService.url}/users/update/${this.id}`, user).subscribe(res => {
           console.log(res)
         }, error => {
           console.log(error);

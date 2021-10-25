@@ -41,7 +41,8 @@ export class EmployeeLeaveComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     let credentials = {
       id: selected._id,
-      event: event.target.value
+      event: event.target.value,
+      appliedLeaves:this.user.appliedLeaves
     }
     this.http.put(`${this.apiService.url}/users/updateLeaveStatus/${this.id}`, credentials).subscribe(res => {
       //logged in user

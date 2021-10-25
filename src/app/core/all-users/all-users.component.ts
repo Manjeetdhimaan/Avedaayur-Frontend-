@@ -23,15 +23,13 @@ export class AllUsersComponent implements OnInit {
     const admin = localStorage.getItem('admin');
     if (admin == null) {
       this.router.navigateByUrl('/adminlogin', { replaceUrl: true })
-
     }
     else {
-      this.http.get('http://localhost:5000/users').subscribe(res => {
+      this.http.get(`${this.apiService.url}/users`).subscribe(res => {
         this.users = res;
         this.users.map((a: any) => {
           this.leaveArray.push(a.leaves)
         })
-        console.log(this.leaveArray)
         // this.originalServiceProvider = res;
       },
         error => {
@@ -40,9 +38,7 @@ export class AllUsersComponent implements OnInit {
     }
 
   }
-  logout() {
-    this.apiService.adminLogout();
-  }
+
   onSelectUser(user: any[]) {
     this.selectedUser = user;
     localStorage.setItem('selected user', JSON.stringify(this.selectedUser));

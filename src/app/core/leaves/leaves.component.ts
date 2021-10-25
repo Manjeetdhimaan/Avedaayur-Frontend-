@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 
 @Component({
@@ -27,7 +26,6 @@ export class LeavesComponent implements OnInit {
         this.user = res;
         // getting leaves of logged in user
         this.leaves = this.user.leaves.reverse();
-        // getting remaining leaves , total leaves and updating leaves data on database
       },
         error => {
           console.log(error);

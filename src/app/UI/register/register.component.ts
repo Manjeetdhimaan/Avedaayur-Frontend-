@@ -4,6 +4,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
+import { ApiServiceService } from 'src/app/services/api-service.service';
 
 @Component({
   selector: 'app-register',
@@ -28,7 +29,8 @@ export class RegisterComponent implements OnInit {
   submitted = false;
   constructor(private http: HttpClient,
     private spinner: NgxSpinnerService,
-    private router: Router) { }
+    private router: Router,
+    private apiService: ApiServiceService) { }
 
   ngOnInit(): void {
     this.spinner.show();
@@ -46,9 +48,10 @@ export class RegisterComponent implements OnInit {
       email: this.adminForm.value.email,
       password: this.adminForm.value.password,
     }
-    this.http.post(`http://localhost:5000/admin/adminLogin`, credentials).subscribe(res => {
+    this.http.post(`${this.apiService.url}/admin/adminLogin`, credentials).subscribe(res => {
       this.isLoading = false;
-      const loggedAdmin  = localStorage.setItem('admin', JSON.stringify(res));
+      localStorage.setItem('admin', JSON.stringify(res));
+      localStorage.removeItem('User');
       
       this.router.navigateByUrl('/allusers', {replaceUrl:true});
     }, error => {
@@ -69,10 +72,11 @@ export class RegisterComponent implements OnInit {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password
     }
-    this.http.post(`http://localhost:5000/users/login`, credentials).subscribe(res => {
+    this.http.post(`${this.apiService.url}/users/login`, credentials).subscribe(res => {
       this.isLoading = false;
       
       localStorage.setItem('User', JSON.stringify(res));
+      localStorage.removeItem('admin');
       this.router.navigateByUrl('profile', { replaceUrl: true });
     }, error => {
       this.isLoading = false;
@@ -105,7 +109,7 @@ export class RegisterComponent implements OnInit {
       joindate: this.registerForm.value.joindate,
       isServiceProvider: this.isServiceProvider,
     }
-    this.http.post('http://localhost:5000/users/register', user)
+    this.http.post(`${this.apiService.url}/users/register`, user)
       .subscribe(res => {
         this.isLoading = false;
         localStorage.setItem('User', JSON.stringify(res));

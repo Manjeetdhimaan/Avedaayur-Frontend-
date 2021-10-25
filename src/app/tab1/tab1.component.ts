@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
@@ -13,7 +12,7 @@ export class Tab1Component implements OnInit {
   selectedService: any;
   users: any;
   originalServiceProvider: any
-  constructor(private router: Router, private http: HttpClient, private alertController: AlertController) { }
+  constructor(private router: Router, private http: HttpClient) { }
 
   ngOnInit(): void {
 
@@ -47,28 +46,5 @@ export class Tab1Component implements OnInit {
 
   }
 
-  async presentAlertConfirm() {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Sure to Logout!',
-      // message: 'Sure to Logout!!!',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: (blah: any) => {
-            console.log('Confirm Cancel: blah');
-          }
-        }, {
-          text: 'Okay',
-          handler: () => {
-            console.log('Confirm Okay');
-          }
-        }
-      ]
-    });
-
-    await alert.present();
-  }
+ 
 }

@@ -54,6 +54,7 @@ export class EditAdminProfileComponent implements OnInit {
       },
         error => {
           console.log(error);
+            this.isLoading = false
         })
     }
   }
@@ -70,18 +71,15 @@ export class EditAdminProfileComponent implements OnInit {
     if(!credentials.password){
       credentials.password= this.user.password
     }
-    console.log(credentials)
     if (this.password !== this.confirmPassword) {
       this.isLoading = false;
       Swal.fire('', 'passwords do no match!', 'warning')
       return;
     }
     else if (loggedInUser !== null) {
-      console.log(this.id)
       this.http.post(`${this.apiService.url}/admin/updateAdminCredentials/${this.id}`, credentials).subscribe(res => {
         this.isLoading = false;
         this.user = res
-        console.log(res)
         Swal.fire('Success!', 'Data saved succussfully!', 'success')
       }, error => {
         // Error 

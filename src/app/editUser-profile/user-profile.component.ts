@@ -34,8 +34,8 @@ export class UserProfileComponent implements OnInit {
   }
 
   totalLeaves = 24;
-  remainingLeaves: any;
-  appliedLeaves: any;
+  remainingLeaves= 24;
+  appliedLeaves: number;
   reason?: string;
   from: any;
   to: any;
@@ -59,7 +59,7 @@ export class UserProfileComponent implements OnInit {
       this.router.navigateByUrl('/userlogin', { replaceUrl: true })
     }
     // else {
-    //   this.http.get('http://localhost:5000/user').subscribe(res => {
+    //   this.http.get(`${this.apiService.url}/user`).subscribe(res => {
     //     this.user = res;
     //     this.originalServiceProvider = res;
     //   },
@@ -94,19 +94,19 @@ export class UserProfileComponent implements OnInit {
         });
         this.leaves = this.user.leaves;
         // getting remaining leaves , total leaves and updating leaves data on databse
-        [res].map((n: any) => {
-          if (loggedInUser._id == n._id) {
-            if ((n.remainingLeaves) === undefined) {
-              this.remainingLeaves = this.totalLeaves;
-            }
-            else {
-              this.remainingLeaves = n.remainingLeaves;
-              this.totalLeaves = this.remainingLeaves;
-              //updating total leaves in database;
-              this.applyLeave();
-            }
-          }
-        })
+        // [res].map((n: any) => {
+        //   if (loggedInUser._id == n._id) {
+        //     if ((n.remainingLeaves) === undefined) {
+        //       this.remainingLeaves = this.totalLeaves;
+        //     }
+        //     else {
+        //       this.remainingLeaves = n.remainingLeaves;
+        //       this.totalLeaves = this.remainingLeaves;
+        //       //updating total leaves in database;
+        //       this.applyLeave();
+        //     }
+        //   }
+        // })
 
       },
         error => {
@@ -172,7 +172,6 @@ export class UserProfileComponent implements OnInit {
 
   applyLeave() {
     this.appliedLeaves = (+this.to.slice(8) - +this.from.slice(8));
-    this.remainingLeaves = this.totalLeaves - this.appliedLeaves;
     console.log("remaining leaves", this.remainingLeaves);
     console.log("applied leaves", +this.to.slice(8) - +this.from.slice(8));
 
@@ -183,13 +182,16 @@ export class UserProfileComponent implements OnInit {
       to: this.applyLeaveForm.value.to,
       status: this.status
     }
-    console.log(leaves)
+      if(!this.user.appliedLeaves){
+      this.user.appliedLeaves = (+this.to.slice(8) - +this.from.slice(8))
+    }
+
     const remainingLeaves = {
       totalLeaves: this.totalLeaves,
       remainingLeaves: this.remainingLeaves,
-      appliedLeaves: this.appliedLeaves
+      appliedLeaves: Number(this.user.appliedLeaves)+ Number(this.appliedLeaves)
     }
-
+  
     if (loggedInUser !== null) {
       let parsedData = JSON.parse(loggedInUser);
       this.id = parsedData["_id"];

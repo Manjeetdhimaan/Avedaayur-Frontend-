@@ -9,8 +9,10 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 export class AdminHeaderComponent implements OnInit {
 
   constructor(private apiService: ApiServiceService) { }
-
+  
   ngOnInit(): void {
+
+    
   }
 
   adminLogout(){

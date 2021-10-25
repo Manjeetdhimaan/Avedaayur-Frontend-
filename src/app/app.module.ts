@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title  } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -56,7 +56,7 @@ import { EditAdminProfileComponent } from './edit-admin-profile/edit-admin-profi
     NgxPaginationModule,
     IonicModule.forRoot()
   ],
-  providers: [ApiServiceService],
+  providers: [ApiServiceService, Title],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
