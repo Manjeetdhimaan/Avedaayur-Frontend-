@@ -69,7 +69,6 @@ export class UserProfileComponent implements OnInit {
     // }
     // comparing data of database user with loggedIn user (credentials stored in local storage)
     if (user !== null) {
-
       const loggedInUser = JSON.parse(user)
       this.id = loggedInUser._id
       delete loggedInUser.password
@@ -115,18 +114,18 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-  onServiceSelect(e: any) {
-    this.user = this.originalServiceProvider
-    this.selectedService = e.detail.value
-    if (e.detail.value == "All") {
-      this.user = this.originalServiceProvider
-    }
-    else {
-      this.user = this.user.filter((serviceProv: any) => {
-        return serviceProv.service == this.selectedService
-      })
-    }
-  }
+  // onServiceSelect(e: any) {
+  //   this.user = this.originalServiceProvider
+  //   this.selectedService = e.detail.value
+  //   if (e.detail.value == "All") {
+  //     this.user = this.originalServiceProvider
+  //   }
+  //   else {
+  //     this.user = this.user.filter((serviceProv: any) => {
+  //       return serviceProv.service == this.selectedService
+  //     })
+  //   }
+  // }
 
 
   userLogout() {
@@ -172,9 +171,6 @@ export class UserProfileComponent implements OnInit {
 
   applyLeave() {
     this.appliedLeaves = (+this.to.slice(8) - +this.from.slice(8));
-    console.log("remaining leaves", this.remainingLeaves);
-    console.log("applied leaves", +this.to.slice(8) - +this.from.slice(8));
-
     const loggedInUser = localStorage.getItem('User');
     const leaves = {
       reason: this.applyLeaveForm.value.reason,
@@ -185,7 +181,6 @@ export class UserProfileComponent implements OnInit {
       if(!this.user.appliedLeaves){
       this.user.appliedLeaves = (+this.to.slice(8) - +this.from.slice(8))
     }
-
     const remainingLeaves = {
       totalLeaves: this.totalLeaves,
       remainingLeaves: this.remainingLeaves,
@@ -199,16 +194,14 @@ export class UserProfileComponent implements OnInit {
       this.http.post(`${this.apiService.url}/users/${this.id}/apply`, leaves).subscribe(res => {
         this.isLoading = false;
         this.router.navigateByUrl('/leaves')
-
         Swal.fire('Success!', 'Applied leave succesfully!', 'success')
       }, error => {
-        // Error 
         Swal.fire('Error!', error.statusText, 'error')
       })
+      
       this.http.post(`${this.apiService.url}/users/insert/${this.id}`, remainingLeaves).subscribe(res => {
         this.isLoading = false;
       }, error => {
-        // Error 
         Swal.fire('Error!', error.statusText, 'error')
       })
     }

@@ -1,10 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import Swal from 'sweetalert2';
+import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-users',
@@ -16,7 +18,8 @@ export class UsersComponent implements OnInit, OnDestroy {
   constructor(private apiService: ApiServiceService,
      private router: Router,
      private http: HttpClient,
-     private spinner:NgxSpinnerService) { }
+     private spinner:NgxSpinnerService,private titleService: Title,
+     private activatedRoute: ActivatedRoute) { }
   @Input() editProfile:boolean=false;
   @Input() editAttendance:boolean = true;
   @Input() user: any
@@ -29,6 +32,9 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   isEmployee:boolean = false;
   ngOnInit(): void {
+
+
+
     this.popUp=false
     this.spinner.show();
     const item = (localStorage.getItem('selected user'));
