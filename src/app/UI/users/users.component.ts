@@ -95,12 +95,12 @@ export class UsersComponent implements OnInit, OnDestroy {
     })
   }
 
+  exitType: string = "Full day";
 
   profileForm = new FormGroup({
-    exitType: new FormControl(''),
+    exitType: new FormControl(this.exitType),
   });
 
-  exitType: string = "Full day";
   checkOut() {
     this.isLoading = true;
     this.popUp = false;
@@ -108,34 +108,21 @@ export class UsersComponent implements OnInit, OnDestroy {
       exitType: this.profileForm.value.exitType
     }
 
-    this.http.post(`${this.apiService.url}/users/${this.id}/exit`, credentials).subscribe(() => {
+    if(credentials.exitType == '' || !credentials.exitType){
+      Swal.fire('Error', `Please provide exit type`, 'warning');
       this.isLoading = false;
-      Swal.fire('Success!', `${this.user.fullname.toUpperCase()} Checked out! `, 'success');
-      this.router.navigateByUrl('/allusers');
-    }, error => {
-      // Error 
-      this.isLoading = false;
-      Swal.fire('', `${this.user.fullname.toUpperCase()} already checked out today`, 'warning');
-    })
-    // Swal.fire({
-    //   title: 'You will be checked out',
-    //   text: 'Are you sure you wish to check out?',
-    //   icon: 'question',
-    //   showCancelButton: true,
-    //   confirmButtonText: 'Yes, check me out!',
-    //   cancelButtonText: 'No, keep me check in'
-    // }).then((result) => {
-    //   if (result.value) {
-    //     // Swal.fire(  
-    //     //   'Logged out!',  
-    //     //   'You are logged out.',  
-    //     //   'success'  
-    //     // ) 
-
-    //   } else if (result.dismiss === Swal.DismissReason.cancel) {
-    //     return;
-    //   }
-    // })
+    }
+    else{
+      this.http.post(`${this.apiService.url}/users/${this.id}/exit`, credentials).subscribe(() => {
+        this.isLoading = false;
+        Swal.fire('Success!', `${this.user.fullname.toUpperCase()} Checked out! `, 'success');
+        this.router.navigateByUrl('/allusers');
+      }, error => {
+        // Error 
+        this.isLoading = false;
+        Swal.fire('', `${this.user.fullname.toUpperCase()} already checked out today`, 'warning');
+      })
+    }
   }
   openForm() {
     this.popUp = true;

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiServiceService } from 'src/app/services/api-service.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-all-users',
@@ -16,7 +17,8 @@ export class AllUsersComponent implements OnInit {
   p: number = 1;
   constructor(private router: Router,
     private http: HttpClient,
-    private apiService: ApiServiceService) { }
+    private apiService: ApiServiceService,
+    private userService : UsersService) { }
 
   ngOnInit(): void {
     const admin = localStorage.getItem('admin');
@@ -39,6 +41,7 @@ export class AllUsersComponent implements OnInit {
   }
 
   onSelectUser(user: any[]) {
+    this.userService.user = user;
     this.selectedUser = user;
     localStorage.setItem('selected user', JSON.stringify(this.selectedUser));
     this.router.navigateByUrl('/user')

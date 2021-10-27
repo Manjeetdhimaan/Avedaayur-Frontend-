@@ -56,14 +56,17 @@
                                     </div>
                                     <div class="text-center text-sm-right">
                                         <span class="badge badge-secondary">Employee</span>
-                                        <div class="text-muted"><small>Joined {{user?.joindate | date:'dd-MM-yyyy'}}</small></div>
+                                        <div class="text-muted"><small>Joined {{user?.joindate |
+                                                date:'dd-MM-yyyy'}}</small></div>
                                     </div>
                                 </div>
                             </div>
                             <ul class="nav nav-tabs">
-                                <li class="nav-item" (click)="onGetSettings()"><a [ngClass]="{'active' : !getAttendance&&!getApplyLeave}" class="nav-link">user Details</a></li>
+                                <li class="nav-item" (click)="onGetSettings()"><a [ngClass]="{'active' : !getAttendance&&!getApplyLeave}" class="nav-link">user
+                                        Details</a></li>
                                 <li class="nav-item" (click)="onGetAttendance()"><a [ngClass]="{'active' : getAttendance&&!getApplyLeave}" class="nav-link">Attendance</a></li>
-                                <li class="nav-item" (click)="onGetApplyLeave()"><a [ngClass]="{'active' : !getAttendance&&getApplyLeave}" class="nav-link">Apply Leave</a></li>
+                                <li class="nav-item" (click)="onGetApplyLeave()"><a [ngClass]="{'active' : !getAttendance&&getApplyLeave}" class="nav-link">Apply
+                                        Leave</a></li>
                             </ul>
 
                             <!-- attendance -->
@@ -119,26 +122,28 @@
                                                 <div class="col-sm-6">
                                                     <div aria-required="true" class="form-group">
                                                         <label>Reason<span class="text-danger">*</span></label>
-                                                        <select [(ngModel)]="reason" formControlName="reason" class="form-control select ng-untouched ng-pristine ng-invalid">
-                              <option value="Working From Home">Working From Home</option>
-                              <option value="Sick Leave">Sick Leave</option>
-                              <option value="Parental Leave">Parental Leave</option>
-                              <option value="Annual Leave">Annual Leave</option>
-                              <option value="Normal Leave">Normal Leave</option>
-                            </select>
+                                                        <select formControlName="reason" class="form-control select ng-untouched ng-pristine ng-invalid">
+
+                                                            <option [ngValue]="null">Select</option>
+                                                            <option value="Working From Home">Working From Home</option>
+                                                            <option value="Sick Leave">Sick Leave</option>
+                                                            <option value="Parental Leave">Parental Leave</option>
+                                                            <option value="Annual Leave">Annual Leave</option>
+                                                            <option value="Normal Leave">Normal Leave</option>
+                                                        </select>
                                                         <!---->
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6 leave-col">
                                                     <div class="form-group"><label>Remaining
-                              Leaves</label><input type="text" placeholder="{{remainingLeaves}}" disabled="" class="form-control"></div>
+                                                            Leaves</label><input type="text" placeholder="{{remainingLeaves}}" disabled="" class="form-control"></div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label>From</label>
-                                                        <input type="date" [(ngModel)]="from" formControlName="from" bsdatepicker="" class="form-control datetimepicker ng-untouched ng-pristine ng-invalid">
+                                                        <input type="date" formControlName="from" bsdatepicker="" class="form-control datetimepicker ng-untouched ng-pristine ng-invalid">
                                                         <!---->
                                                         <!---->
                                                     </div>
@@ -146,7 +151,7 @@
                                                 <div class="col-sm-6 leave-col">
                                                     <div class="form-group">
                                                         <label>To</label>
-                                                        <input type="date" [(ngModel)]="to" formControlName="to" bsdatepicker="" class="form-control datetimepicker ng-untouched ng-pristine ng-invalid">
+                                                        <input type="date" formControlName="to" bsdatepicker="" class="form-control datetimepicker ng-untouched ng-pristine ng-invalid">
                                                         <!---->
                                                         <!---->
                                                     </div>
@@ -162,8 +167,8 @@
                                             </div>
                                             <div class="text-center">
                                                 <button type="submit" class="btn btn-theme button-1 text-white ctm-border-radius mt-4 mr-2">
-                          Apply
-                        </button>
+                                                    Apply
+                                                </button>
                                                 <ngx-spinner *ngIf="isLoading" bdColor="rgba(0, 0, 0, 0.8)" size="default" color="#fff" type="line-spin-fade" [fullScreen]="true">
                                                     <p style="color: white"> Loading... </p>
                                                 </ngx-spinner>
@@ -188,14 +193,14 @@
                                                     <div class="col">
                                                         <div class="form-group">
                                                             <label>Full Name</label>
-                                                            <input class="form-control" type="text" [(ngModel)]="fullname" formControlName="fullname" placeholder="{{user?.fullname}}" value="{{user?.fullname}}">
+                                                            <input class="form-control" type="text" [value]="fullname" formControlName="fullname" placeholder="{{user?.fullname}}" value="{{user?.fullname}}">
                                                         </div>
                                                     </div>
                                                     <div class="col">
                                                         <div class="col">
                                                             <div class="form-group">
                                                                 <label>Email</label>
-                                                                <input class="form-control" type="text" [(ngModel)]="email" formControlName="email" placeholder="{{user?.email}}" value="{{user?.email}}">
+                                                                <input class="form-control" type="text" [value]="email" formControlName="email" placeholder="{{user?.email}}" value="{{user?.email}}">
                                                             </div>
                                                         </div>
 
@@ -206,7 +211,7 @@
                                                     <div class="col mb-3">
                                                         <div class="form-group">
                                                             <label>Bio</label>
-                                                            <textarea type="text" class="form-control" rows="5" formControlName="bio" value="{{user?.bio}}" [(ngModel)]="bio" placeholder="{{user?.bio}}"></textarea>
+                                                            <textarea type="text" class="form-control" rows="5" formControlName="bio" [value]="bio" placeholder="{{user?.bio}}"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -227,15 +232,16 @@
                                                     <div class="col">
                                                         <div class="form-group">
                                                             <label>New Password</label>
-                                                            <input class="form-control" type="password" formControlName="password" [(ngModel)]="password" placeholder="••••••">
+                                                            <input class="form-control" type="password" formControlName="password" placeholder="••••••">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class="form-group">
-                                                            <label>Confirm <span class="d-none d-xl-inline">Password</span></label>
-                                                            <input [(ngModel)]="confirmPassword" formControlName="confirmPassword" class="form-control" type="password" placeholder="••••••">
+                                                            <label>Confirm <span
+                                                                    class="d-none d-xl-inline">Password</span></label>
+                                                            <input formControlName="confirmPassword" class="form-control" type="password" placeholder="••••••">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -288,9 +294,9 @@
                     <div class="card-body">
                         <div class="px-xl-3">
                             <button class="btn btn-block btn-secondary" (click)="userLogout()">
-                <i class="fa fa-sign-out"></i>
-                <span>Logout</span>
-              </button>
+                                <i class="fa fa-sign-out"></i>
+                                <span>Logout</span>
+                            </button>
                         </div>
                     </div>
                 </div>

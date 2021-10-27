@@ -109,7 +109,12 @@ export class RegisterComponent implements OnInit {
       joindate: this.registerForm.value.joindate,
       isServiceProvider: this.isServiceProvider,
     }
-    this.http.post(`${this.apiService.url}/users/register`, user)
+    if(user.email=='' || !user.email){
+      Swal.fire('Registeration Failed!', 'Email required', 'error')
+        this.isLoading = false;
+    }
+    else{
+      this.http.post(`${this.apiService.url}/users/register`, user)
       .subscribe(res => {
         this.isLoading = false;
         localStorage.setItem('User', JSON.stringify(res));
@@ -122,6 +127,8 @@ export class RegisterComponent implements OnInit {
           this.isLoading = false;
           Swal.fire('Registeration Failed!', error.error.error, 'error')
         })
+    }
+    
   }
 
   onServiceSelect(event: any) {

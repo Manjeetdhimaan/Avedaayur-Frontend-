@@ -27,6 +27,7 @@ export class UserProfileComponent implements OnInit {
   selectedService: any;
   user: any;
   originalServiceProvider: any;
+  selected = 'selectCountry';
   constructor(private router: Router,
     private http: HttpClient,
     private apiService: ApiServiceService,
@@ -87,7 +88,7 @@ export class UserProfileComponent implements OnInit {
         this.attendance = this.user.attendance;
         this.attendance = this.attendance.reverse();
         this.attendance.map((a:any)=>{
-          if(a.exit== undefined){
+          if(a.exit == undefined){
             a.exit=''
           }
         });
@@ -170,7 +171,7 @@ export class UserProfileComponent implements OnInit {
   })
 
   applyLeave() {
-    this.appliedLeaves = (+this.to.slice(8) - +this.from.slice(8));
+    this.appliedLeaves = (+this.applyLeaveForm.value.to.slice(8) - +this.applyLeaveForm.value.from.slice(8));
     const loggedInUser = localStorage.getItem('User');
     const leaves = {
       reason: this.applyLeaveForm.value.reason,
