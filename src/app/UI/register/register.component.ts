@@ -23,8 +23,9 @@ export class RegisterComponent implements OnInit {
   isServiceProvider: boolean = false;
   isLoading: boolean = false;
   phone: string;
-  loggedInUser:any;
-  @Input() layout='register';
+  loggedInUser: any;
+  paramName: any
+  @Input() layout = 'register';
 
   submitted = false;
   constructor(private http: HttpClient,
@@ -38,7 +39,7 @@ export class RegisterComponent implements OnInit {
 
 
 
-  adminForm= new FormGroup({
+  adminForm = new FormGroup({
     email: new FormControl(''),
     password: new FormControl('')
   })
@@ -52,8 +53,8 @@ export class RegisterComponent implements OnInit {
       this.isLoading = false;
       localStorage.setItem('admin', JSON.stringify(res));
       localStorage.removeItem('User');
-      
-      this.router.navigateByUrl('/allusers', {replaceUrl:true});
+
+      this.router.navigateByUrl('/allusers', { replaceUrl: true });
     }, error => {
       this.isLoading = false;
       Swal.fire('Error!', error.error.error, 'error')
@@ -61,7 +62,7 @@ export class RegisterComponent implements OnInit {
     })
   }
 
-  loginForm= new FormGroup({
+  loginForm = new FormGroup({
     email: new FormControl(''),
     password: new FormControl('')
   })
@@ -74,15 +75,18 @@ export class RegisterComponent implements OnInit {
     }
     this.http.post(`${this.apiService.url}/users/login`, credentials).subscribe(res => {
       this.isLoading = false;
-      
+
       localStorage.setItem('User', JSON.stringify(res));
       const user = localStorage.getItem('User');
-      if(user){
+      if (user) {
         const parsedData = JSON.parse(user)
-          this.loggedInUser = parsedData
+        this.loggedInUser = parsedData
+        const a = parsedData.fullname.toLowerCase().split(' ')
+        this.paramName = a.join('-');
+
       }
       localStorage.removeItem('admin');
-      this.router.navigate(['profile', this.loggedInUser.fullname], { replaceUrl: true });
+      this.router.navigate(['profile', this.paramName], { replaceUrl: true });
     }, error => {
       this.isLoading = false;
       Swal.fire('Error!', error.error.error, 'error')
@@ -90,7 +94,7 @@ export class RegisterComponent implements OnInit {
     })
   }
 
-  registerForm= new FormGroup({
+  registerForm = new FormGroup({
     fullname: new FormControl(),
     email: new FormControl(),
     password: new FormControl(),
@@ -114,26 +118,26 @@ export class RegisterComponent implements OnInit {
       joindate: this.registerForm.value.joindate,
       isServiceProvider: this.isServiceProvider,
     }
-    if(user.email=='' || !user.email){
+    if (user.email == '' || !user.email) {
       Swal.fire('Registeration Failed!', 'Email required', 'error')
-        this.isLoading = false;
+      this.isLoading = false;
     }
-    else{
+    else {
       this.http.post(`${this.apiService.url}/users/register`, user)
-      .subscribe(res => {
-        this.isLoading = false;
-        localStorage.setItem('User', JSON.stringify(res));
-        // Success
-        Swal.fire('Registeration successfull!', 'Login Now!', 'success')
-        // this.presentAlert('Registration successfull', 'Login Now');
-        this.router.navigateByUrl('userlogin');
-      },
-        error => {
+        .subscribe(res => {
           this.isLoading = false;
-          Swal.fire('Registeration Failed!', error.error.error, 'error')
-        })
+          localStorage.setItem('User', JSON.stringify(res));
+          // Success
+          Swal.fire('Registeration successfull!', 'Login Now!', 'success')
+          // this.presentAlert('Registration successfull', 'Login Now');
+          this.router.navigateByUrl('userlogin');
+        },
+          error => {
+            this.isLoading = false;
+            Swal.fire('Registeration Failed!', error.error.error, 'error')
+          })
     }
-    
+
   }
 
   onServiceSelect(event: any) {

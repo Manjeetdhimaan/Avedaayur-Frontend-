@@ -8,13 +8,17 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 })
 export class HeaderComponent implements OnInit {
   loggedIn = false;
-  loggedInUser:any
-  constructor( private apiService: ApiServiceService) { }
+  loggedInUser: any;
+  paramName: any
+  constructor(private apiService: ApiServiceService) { }
   ngOnInit(): void {
     const user = localStorage.getItem('User')
-    if(user){
-        this.loggedInUser = JSON.parse(user)
+    if (user) {
+      this.loggedInUser = JSON.parse(user)
+      const a = this.loggedInUser.fullname.toLowerCase().split(' ')
+      this.paramName = a.join('-');
     }
+
   }
 
 

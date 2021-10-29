@@ -29,6 +29,7 @@ export class CheckLeavesComponent implements OnInit {
         this.users.map((a: any) => {
           this.leaveArray.push(a.leaves)
         })
+        
         // this.originalServiceProvider = res;
       },
         error => {
@@ -38,9 +39,12 @@ export class CheckLeavesComponent implements OnInit {
   }
 
   onSelectUser(user: any[]) {
+
     this.selectedUser = user;
     localStorage.setItem('selected userLeave', JSON.stringify(this.selectedUser));
-    this.router.navigate(['/employeeLeaves', this.selectedUser.fullname]);
+    const a =   this.selectedUser.fullname.toLowerCase().split(' ')
+        const b = a.join('-');
+    this.router.navigate(['/employeeLeaves', b]);
   }
 
 }

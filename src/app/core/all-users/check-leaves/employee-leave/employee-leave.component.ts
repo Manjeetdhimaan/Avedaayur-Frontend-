@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiServiceService } from 'src/app/services/api-service.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-employee-leave',
@@ -38,23 +39,36 @@ export class EmployeeLeaveComponent implements OnInit, OnDestroy {
   }
 
   onRespondLeave(selected: any, event: any) {
-    this.isLoading = true;
-    let credentials = {
-      id: selected._id,
-      event: event.target.value,
-      appliedLeaves:this.user.appliedLeaves
-    }
-    this.http.put(`${this.apiService.url}/users/updateLeaveStatus/${this.id}`, credentials).subscribe(res => {
-      //logged in user
-      this.isLoading = false;
-      this.user = res;
-      // getting leaves of logged in user
-      this.leaves = this.user.leaves.reverse();
-    },
-      error => {
-        console.log(error);
+    let matched = false;
+    this.leaves.map((a: any) => {
+      if (a._id == selected._id && a.status == event.target.value) {
+        Swal.fire('', `Already ${event.target.value}`, 'warning')
+           matched = true
+           return
+      }
+    })
+    if(matched==false){
+      this.isLoading = true;
+      let credentials = {
+        id: selected._id,
+        event: event.target.value,
+        appliedLeaves: this.user.appliedLeaves
+      }
+  
+      console.log(selected.from, this.leaves);
+      this.http.put(`${this.apiService.url}/users/updateLeaveStatus/${this.id}`, credentials).subscribe(res => {
+        //logged in user
         this.isLoading = false;
-      })
+        this.user = res;
+        // getting leaves of logged in user
+        this.leaves = this.user.leaves.reverse();
+      },
+        error => {
+          console.log(error);
+          this.isLoading = false;
+        })
+    }
+    matched = false;
   }
 
   getCustomCss(status: any) {
@@ -67,7 +81,7 @@ export class EmployeeLeaveComponent implements OnInit, OnDestroy {
     }
     return 'warn'
   }
-  ngOnDestroy(){
+  ngOnDestroy() {
     localStorage.removeItem('selected userLeave');
   }
 }

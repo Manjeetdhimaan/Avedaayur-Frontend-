@@ -40,10 +40,16 @@ export class AllUsersComponent implements OnInit {
 
   }
 
+  test(){
+
+  }
+
   onSelectUser(user: any[]) {
     this.userService.user = user;
     this.selectedUser = user;
+  const a =   this.selectedUser.fullname.toLowerCase().split(' ')
+  const b = a.join('-');
     localStorage.setItem('selected user', JSON.stringify(this.selectedUser));
-    this.router.navigate(['/user', this.selectedUser.fullname])
+    this.router.navigate(['/', b])
   }
 }
