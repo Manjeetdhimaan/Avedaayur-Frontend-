@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
          const user = this.userService.getSelectedUser();
           const child = this.activatedRoute.firstChild;
           if (child?.snapshot.data['title']) {
-             child.snapshot.data['title'] = user?.fullname +' - EmployeeManagment';
+             child.snapshot.data['title'] = user?.fullname+' - EmployeeManagment';
             return child.snapshot.data['title']
           }
           return appTitle;

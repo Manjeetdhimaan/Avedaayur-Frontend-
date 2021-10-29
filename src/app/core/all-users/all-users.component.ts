@@ -44,6 +44,6 @@ export class AllUsersComponent implements OnInit {
     this.userService.user = user;
     this.selectedUser = user;
     localStorage.setItem('selected user', JSON.stringify(this.selectedUser));
-    this.router.navigateByUrl('/user')
+    this.router.navigate(['/user', this.selectedUser.fullname])
   }
 }

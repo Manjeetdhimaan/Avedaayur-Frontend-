@@ -16,19 +16,19 @@ import { EditAdminProfileComponent } from './edit-admin-profile/edit-admin-profi
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'editProfile', component: UserProfileComponent },
+  { path: 'editProfile/:name', component: UserProfileComponent },
   { path: 'home', component: HomeComponent },
   { path: 'userlogin', component: LoginComponent },
   { path: 'adminlogin', component: AdminLoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'allusers', component: AllUsersComponent},
   { path: 'editAdminProfile', component: EditAdminProfileComponent },
-  { path: 'user', component: UsersComponent, data: {title: 'allusers'} },
+  { path: 'user/:name', component: UsersComponent, data: {title: 'allusers'} },
   { path: 'checkleaves', component: CheckLeavesComponent },
-  { path: 'employeeLeaves', component: EmployeeLeaveComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'employeeLeaves/:name', component: EmployeeLeaveComponent },
+  { path: 'profile/:name', component: ProfileComponent },
   { path: 'tab', component: Tab1Component },
-  { path: 'leaves', component: LeavesComponent },
+  { path: 'leaves/:name', component: LeavesComponent },
 ];
 
 @NgModule({

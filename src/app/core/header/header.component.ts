@@ -8,9 +8,15 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 })
 export class HeaderComponent implements OnInit {
   loggedIn = false;
+  loggedInUser:any
   constructor( private apiService: ApiServiceService) { }
   ngOnInit(): void {
+    const user = localStorage.getItem('User')
+    if(user){
+        this.loggedInUser = JSON.parse(user)
+    }
   }
+
 
   userLogout() {
     this.apiService.userlogout();

@@ -40,7 +40,7 @@ export class CheckLeavesComponent implements OnInit {
   onSelectUser(user: any[]) {
     this.selectedUser = user;
     localStorage.setItem('selected userLeave', JSON.stringify(this.selectedUser));
-    this.router.navigateByUrl('/employeeLeaves');
+    this.router.navigate(['/employeeLeaves', this.selectedUser.fullname]);
   }
 
 }

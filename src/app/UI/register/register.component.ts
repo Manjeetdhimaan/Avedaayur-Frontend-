@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit {
   isServiceProvider: boolean = false;
   isLoading: boolean = false;
   phone: string;
-
+  loggedInUser:any;
   @Input() layout='register';
 
   submitted = false;
@@ -76,8 +76,13 @@ export class RegisterComponent implements OnInit {
       this.isLoading = false;
       
       localStorage.setItem('User', JSON.stringify(res));
+      const user = localStorage.getItem('User');
+      if(user){
+        const parsedData = JSON.parse(user)
+          this.loggedInUser = parsedData
+      }
       localStorage.removeItem('admin');
-      this.router.navigateByUrl('profile', { replaceUrl: true });
+      this.router.navigate(['profile', this.loggedInUser.fullname], { replaceUrl: true });
     }, error => {
       this.isLoading = false;
       Swal.fire('Error!', error.error.error, 'error')

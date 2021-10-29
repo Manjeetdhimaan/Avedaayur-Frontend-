@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div class="col-md-2" *ngIf="editProfile">
-                <input type="button" routerLink="/editProfile" class="profile-edit-btn" name="btnAddMore" value="Edit Profile" />
+                <input type="button" routerLink="/editProfile/{{user?.fullname}}" class="profile-edit-btn" name="btnAddMore" value="Edit Profile" />
             </div>
 
         </div>

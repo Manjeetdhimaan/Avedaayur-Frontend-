@@ -14,7 +14,7 @@
         </div>
     </div>
 
-    <div class='' style="margin-top: 1rem; ">
+    <div class='' style="margin-top: 1rem; " *ngIf="user?.leaves.length>0">
         <div class=''>
             <!-- <p class='lead'>Overview   <a  class='btn btn-success'>Download PDF  <span class='glyphicon glyphicon-download'></span></a></p> 
                 <p></p> -->
@@ -47,4 +47,8 @@
             </div>
         </div>
     </div>
+</div>
+
+<div *ngIf="user?.leaves.length==0" style="text-align: center; color: rgb(216, 22, 22);">
+    <h1>No applied leaves</h1>
 </div>

@@ -66,9 +66,9 @@ export class EditAdminProfileComponent implements OnInit {
     let credentials = {
       email: this.editAdminProfileForm.value.email,
       password: this.editAdminProfileForm.value.password,
-      id:this.id
+      id:this.id.trim()
     }
-    if(!credentials.password){
+    if(!credentials.password ){
       credentials.password= this.user.password
     }
     if (this.password !== this.confirmPassword) {
