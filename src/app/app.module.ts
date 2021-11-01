@@ -3,7 +3,6 @@ import { BrowserModule, Title  } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { IonicModule } from '@ionic/angular';
 import { Tab1Component } from './tab1/tab1.component';
 import { RegisterComponent } from './UI/register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -25,6 +24,7 @@ import { AdminHeaderComponent } from './core/admin-header/admin-header.component
 import { CheckLeavesComponent } from './core/all-users/check-leaves/check-leaves.component';
 import { EmployeeLeaveComponent } from './core/all-users/check-leaves/employee-leave/employee-leave.component';
 import { EditAdminProfileComponent } from './edit-admin-profile/edit-admin-profile.component';
+import { IonicModule } from '@ionic/angular';
 
 @NgModule({
   declarations: [
@@ -54,7 +54,7 @@ import { EditAdminProfileComponent } from './edit-admin-profile/edit-admin-profi
     HttpClientModule,
     NgxSpinnerModule,
     NgxPaginationModule,
-    IonicModule.forRoot()
+    IonicModule.forRoot(),
   ],
   providers: [ApiServiceService, Title],
   bootstrap: [AppComponent],

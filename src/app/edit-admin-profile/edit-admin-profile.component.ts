@@ -71,9 +71,9 @@ export class EditAdminProfileComponent implements OnInit {
     if(!credentials.password ){
       credentials.password= this.user.password
     }
-    if (this.password !== this.confirmPassword) {
+    if (this.editAdminProfileForm.value.password !== this.editAdminProfileForm.value.confirmPassword) {
       this.isLoading = false;
-      Swal.fire('', 'passwords do no match!', 'warning')
+      Swal.fire('', 'Passwords do no match!', 'warning')
       return;
     }
     else if (loggedInUser !== null) {

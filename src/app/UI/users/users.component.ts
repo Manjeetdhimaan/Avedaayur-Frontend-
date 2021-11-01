@@ -1,12 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import {  Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import Swal from 'sweetalert2';
-import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-users',
@@ -14,28 +12,22 @@ import { filter, map } from 'rxjs/operators';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit, OnDestroy {
-
   constructor(private apiService: ApiServiceService,
      private router: Router,
      private http: HttpClient,
-     private spinner:NgxSpinnerService,private titleService: Title,
-     private activatedRoute: ActivatedRoute) { }
+     private spinner:NgxSpinnerService) { }
   @Input() editProfile:boolean=false;
   @Input() editAttendance:boolean = true;
   @Input() user: any
-   
   attendance: any;
   isLoading: boolean = false;
   id: any
   popUp: boolean = false;
   p: number = 1
   paramName:any;
-
   isEmployee:boolean = false;
+  remainingLeaves:any= 24;
   ngOnInit(): void {
-
-
-
     this.popUp=false
     this.spinner.show();
     const item = (localStorage.getItem('selected user'));
@@ -43,7 +35,6 @@ export class UsersComponent implements OnInit, OnDestroy {
     const admin = (localStorage.getItem('admin'));
     if(admin){
       this.isEmployee = false;
-
     }
     if (item !== null && loggedInUser == null) {
       let parsedData = JSON.parse(item);
@@ -86,7 +77,6 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   checkIn() {
     this.isLoading = true;
-    
     this.http.post(`${this.apiService.url}/users/${this.id}/enter`, this.id).subscribe(() => {
       this.isLoading = false;
       Swal.fire('Success!', `${this.user.fullname.toUpperCase()} Checked In!`, 'success');
@@ -100,7 +90,6 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   exitType: string = "Full day";
-
   profileForm = new FormGroup({
     exitType: new FormControl(this.exitType),
   });

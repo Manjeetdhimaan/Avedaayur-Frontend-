@@ -9,14 +9,14 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
   styleUrls: ['./check-leaves.component.scss']
 })
 export class CheckLeavesComponent implements OnInit {
-
   constructor(private router: Router,
     private http: HttpClient,
     private apiService: ApiServiceService) { }
 
-    users: any;
-    selectedUser: any;
-    leaveArray: any[] = [];
+  users: any;
+  selectedUser: any;
+  leaveArray: any[] = [];
+  counter: any = 0
   ngOnInit(): void {
 
     const admin = localStorage.getItem('admin');
@@ -29,22 +29,22 @@ export class CheckLeavesComponent implements OnInit {
         this.users.map((a: any) => {
           this.leaveArray.push(a.leaves)
         })
-        
-        // this.originalServiceProvider = res;
       },
         error => {
           console.log(error);
         })
     }
-  }
+    
+      
+ 
+  } 
 
   onSelectUser(user: any[]) {
-
     this.selectedUser = user;
     localStorage.setItem('selected userLeave', JSON.stringify(this.selectedUser));
-    const a =   this.selectedUser.fullname.toLowerCase().split(' ')
-        const b = a.join('-');
+    const a = this.selectedUser.fullname.toLowerCase().split(' ')
+    const b = a.join('-');
     this.router.navigate(['/employeeLeaves', b]);
+    console.log(this.leaveArray.slice(0,1))
   }
-
 }

@@ -37,7 +37,6 @@ export class AllUsersComponent implements OnInit {
           console.log(error)
         })
     }
-
   }
 
   test(){

@@ -103,8 +103,11 @@
                         <div class="col-md-6">
                             <label>Remaining Leaves</label>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6" *ngIf="user?.remainingLeaves">
                             <p>{{user?.remainingLeaves}}</p>
+                        </div>
+                        <div class="col-md-6" *ngIf="!user?.remainingLeaves">
+                            <p>{{remainingLeaves}}</p>
                         </div>
                     </div>
                     <!-- <div class="row">

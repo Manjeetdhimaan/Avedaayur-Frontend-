@@ -42,7 +42,7 @@
                     </tr>
                 </tbody>
             </table>
-            <div>
+            <div *ngIf="user?.leaves.length>5">
                 <pagination-controls (pageChange)="p = $event"></pagination-controls>
             </div>
         </div>

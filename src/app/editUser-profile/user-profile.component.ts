@@ -73,10 +73,6 @@ export class UserProfileComponent implements OnInit {
       const loggedInUser = JSON.parse(user)
       this.id = loggedInUser._id
       delete loggedInUser.password
-      // this.http.get(`${this.apiService.url}/users/enter/${this.id}`).subscribe(res=>{
-      //   this.attendance = res;
-      //   console.log(this.attendance)
-      // })
       this.http.get(`${this.apiService.url}/users/${this.id}`).subscribe(res => {
         //logged in user
         this.user = res;
@@ -113,6 +109,7 @@ export class UserProfileComponent implements OnInit {
           console.log(error);
         })
     }
+
   }
 
   // onServiceSelect(e: any) {
@@ -180,12 +177,18 @@ export class UserProfileComponent implements OnInit {
       status: this.status
     }
       if(!this.user.appliedLeaves){
-      this.user.appliedLeaves = (+this.to.slice(8) - +this.from.slice(8))
+      this.user.appliedLeaves = (+this.applyLeaveForm.value.to.slice(8) - +this.applyLeaveForm.value.from.slice(8))
     }
     const remainingLeaves = {
-      totalLeaves: this.totalLeaves,
-      remainingLeaves: this.remainingLeaves,
+      totalLeaves: this.user.totalLeaves,
+      remainingLeaves: this.user.remainingLeaves,
       appliedLeaves: Number(this.user.appliedLeaves)+ Number(this.appliedLeaves)
+    }
+    if(!this.user.totalLeaves){
+      remainingLeaves.totalLeaves = this.totalLeaves;
+    }
+    if(!this.user.remainingLeaves){
+      remainingLeaves.remainingLeaves = this.remainingLeaves;
     }
   
     if (loggedInUser !== null) {

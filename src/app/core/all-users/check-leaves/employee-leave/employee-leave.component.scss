@@ -1,12 +1,26 @@
-.success{
+.success {
     color: green;
-    font-weight:bold;
+    font-weight: bold;
 }
-.danger{
+
+.danger {
     color: red;
-    font-weight:bold;
+    font-weight: bold;
 }
-.warn{
+
+.warn {
     color: rgb(224, 224, 24);
-    font-weight:bold;
+    font-weight: bold;
+}
+
+.notifications {
+    color: blue;
+    background: orange;
+    border-radius: 50%;
+    padding: 4px;
+    font-size: 14px;
+    font-weight: 800;
+    width: 25%;
+    margin: auto;
+    margin-top: 2px;
 }

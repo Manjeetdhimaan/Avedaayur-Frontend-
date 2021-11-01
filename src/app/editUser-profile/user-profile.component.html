@@ -62,8 +62,7 @@
                                 </div>
                             </div>
                             <ul class="nav nav-tabs">
-                                <li class="nav-item" (click)="onGetSettings()"><a [ngClass]="{'active' : !getAttendance&&!getApplyLeave}" class="nav-link">user
-                                        Details</a></li>
+                                <li class="nav-item" (click)="onGetSettings()"><a [ngClass]="{'active' : !getAttendance&&!getApplyLeave}" class="nav-link">User Details</a></li>
                                 <li class="nav-item" (click)="onGetAttendance()"><a [ngClass]="{'active' : getAttendance&&!getApplyLeave}" class="nav-link">Attendance</a></li>
                                 <li class="nav-item" (click)="onGetApplyLeave()"><a [ngClass]="{'active' : !getAttendance&&getApplyLeave}" class="nav-link">Apply
                                         Leave</a></li>
@@ -134,7 +133,11 @@
                                                         <!---->
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-6 leave-col">
+                                                <div class="col-sm-6 leave-col" *ngIf="user?.remainingLeaves">
+                                                    <div class="form-group"><label>Remaining
+                                                            Leaves</label><input type="text" placeholder="{{user?.remainingLeaves}}" disabled="" class="form-control"></div>
+                                                </div>
+                                                <div class="col-sm-6 leave-col" *ngIf="!user?.remainingLeaves">
                                                     <div class="form-group"><label>Remaining
                                                             Leaves</label><input type="text" placeholder="{{remainingLeaves}}" disabled="" class="form-control"></div>
                                                 </div>
@@ -157,14 +160,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div class="form-group mb-0"><label>Reason</label><textarea rows="4" class="form-control ng-untouched ng-pristine ng-invalid"></textarea>
-                                                        <!---->
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <div class="text-center">
                                                 <button type="submit" class="btn btn-theme button-1 text-white ctm-border-radius mt-4 mr-2">
                                                     Apply
@@ -173,7 +168,7 @@
                                                     <p style="color: white"> Loading... </p>
                                                 </ngx-spinner>
 
-                                                <a class="btn btn-danger text-white ctm-border-radius mt-4">Cancel</a>
+                                                <a routerLink="" class="btn btn-danger text-white ctm-border-radius mt-4">Cancel</a>
                                             </div>
                                             <!-- form -->
                                         </form>

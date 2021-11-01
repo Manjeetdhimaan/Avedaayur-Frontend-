@@ -30,7 +30,6 @@ export class LeavesComponent implements OnInit {
         error => {
           console.log(error);
         })
-
     }
   }
 

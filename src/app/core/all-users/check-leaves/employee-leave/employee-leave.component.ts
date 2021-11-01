@@ -18,6 +18,7 @@ export class EmployeeLeaveComponent implements OnInit, OnDestroy {
   p: number = 1;
   status: any;
   isLoading: boolean = false;
+
   ngOnInit(): void {
     this.spinner.show();
     const selecetdUser = localStorage.getItem('selected userLeave');
@@ -40,6 +41,7 @@ export class EmployeeLeaveComponent implements OnInit, OnDestroy {
 
   onRespondLeave(selected: any, event: any) {
     let matched = false;
+    let b = ''
     this.leaves.map((a: any) => {
       if (a._id == selected._id && a.status == event.target.value) {
         Swal.fire('', `Already ${event.target.value}`, 'warning')
@@ -47,15 +49,20 @@ export class EmployeeLeaveComponent implements OnInit, OnDestroy {
            return
       }
     })
+    this.leaves.map((n: any) => {
+      if (n._id == selected._id) {
+        b = n.status
+      }
+    })
     if(matched==false){
       this.isLoading = true;
       let credentials = {
         id: selected._id,
         event: event.target.value,
-        appliedLeaves: this.user.appliedLeaves
+        appliedLeaves: this.user.appliedLeaves,
+        prevStatus:b
       }
   
-      console.log(selected.from, this.leaves);
       this.http.put(`${this.apiService.url}/users/updateLeaveStatus/${this.id}`, credentials).subscribe(res => {
         //logged in user
         this.isLoading = false;

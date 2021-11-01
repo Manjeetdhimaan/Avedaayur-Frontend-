@@ -6,21 +6,25 @@ import { ApiServiceService } from './api-service.service';
   providedIn: 'root'
 })
 export class UsersService {
+  //getting 'user' from all-users-component's 'onSelectUser' function;
   user: any
+
+  users:any
+  leaveArray:any[]=[];
 
   constructor(private http: HttpClient, private apiService: ApiServiceService) {
 
-    //  this.http.get(`${this.apiService.url}/users`).subscribe(res => {
-    //   this.users = res;
-    //   // this.users.map((a: any) => {
-    //   //   this.leaveArray.push(a.leaves)
-    //   // })
-    //   // console.log(this.leaveArray) 
-    //   // this.originalServiceProvider = res;
-    // },
-    //   error => {
-    //     console.log(error)
-    //   })
+     this.http.get(`${this.apiService.url}/users`).subscribe(res => {
+      this.users = res;
+      [res].map((a: any) => {
+        this.leaveArray.push(a.leaves)
+      })
+      // console.log(this.leaveArray) 
+      // this.originalServiceProvider = res;
+    },
+      error => {
+        console.log(error)
+      })
   }
 
   getSelectedUser() {

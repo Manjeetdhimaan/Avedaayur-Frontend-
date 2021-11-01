@@ -35,12 +35,16 @@
                         </td>
                         <td>
                             <span [ngClass]="getCustomCss(leave.status)">{{leave.status}}</span>
+
                             <div aria-required="true" class="">
+
                                 <button style="font-size: 10px; margin-left: 2px; margin-top: 4px;" class="btn btn-success" value="Approved" (click)="onRespondLeave(leave, $event)">Approve</button>
                                 <button style="font-size: 10px; margin-left: 2px; margin-top: 4px;" class="btn btn-danger" value="Denied" (click)="onRespondLeave(leave, $event)">Deny</button>
                                 <ngx-spinner *ngIf="isLoading" bdColor="rgba(0, 0, 0, 0.8)" size="default" color="#fff" type="line-spin-fade" [fullScreen]="true">
                                     <p style="color: white"> Loading... </p>
                                 </ngx-spinner>
+                                <div class="notifications" *ngIf="leave.status=='Pending'">new
+                                </div>
                             </div>
                         </td>
                     </tr>
