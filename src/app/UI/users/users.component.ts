@@ -84,8 +84,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     }, error => {
       // Error 
       this.isLoading = false;
-      Swal.fire('', `${this.user.fullname.toUpperCase()} already checked in today!`, 'warning');
-      this.router.navigateByUrl('/allusers');
+      Swal.fire('', `${error.error.text}`, 'warning');
     })
   }
 
@@ -113,7 +112,7 @@ export class UsersComponent implements OnInit, OnDestroy {
       }, error => {
         // Error 
         this.isLoading = false;
-        Swal.fire('', `${this.user.fullname.toUpperCase()} already checked out today`, 'warning');
+        Swal.fire('', `${error.error.text}`, 'warning');
       })
     }
   }

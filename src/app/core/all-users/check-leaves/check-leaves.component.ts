@@ -45,6 +45,5 @@ export class CheckLeavesComponent implements OnInit {
     const a = this.selectedUser.fullname.toLowerCase().split(' ')
     const b = a.join('-');
     this.router.navigate(['/employeeLeaves', b]);
-    console.log(this.leaveArray.slice(0,1))
   }
 }

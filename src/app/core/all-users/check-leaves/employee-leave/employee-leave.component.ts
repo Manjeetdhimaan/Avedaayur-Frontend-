@@ -49,6 +49,7 @@ export class EmployeeLeaveComponent implements OnInit, OnDestroy {
            return
       }
     })
+    //getting previous leave status
     this.leaves.map((n: any) => {
       if (n._id == selected._id) {
         b = n.status
@@ -81,12 +82,12 @@ export class EmployeeLeaveComponent implements OnInit, OnDestroy {
   getCustomCss(status: any) {
     //Logic here;
     if (status == "Approved") {
-      return 'success'
+      return 'success';
     }
     if (status == "Denied") {
-      return 'danger'
+      return 'danger';
     }
-    return 'warn'
+    return 'warn';
   }
   ngOnDestroy() {
     localStorage.removeItem('selected userLeave');

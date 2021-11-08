@@ -35,7 +35,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   totalLeaves = 24;
-  remainingLeaves= 24;
+  remainingLeaves = 24;
   appliedLeaves: number;
   reason?: string;
   from: any;
@@ -83,9 +83,9 @@ export class UserProfileComponent implements OnInit {
         // getting attendance of logged in user
         this.attendance = this.user.attendance;
         this.attendance = this.attendance.reverse();
-        this.attendance.map((a:any)=>{
-          if(a.exit == undefined){
-            a.exit=''
+        this.attendance.map((a: any) => {
+          if (a.exit == undefined) {
+            a.exit = ''
           }
         });
         this.leaves = this.user.leaves;
@@ -160,10 +160,10 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-  
+
   applyLeaveForm = new FormGroup({
-    from : new FormControl(),
-    to : new FormControl(),
+    from: new FormControl(),
+    to: new FormControl(),
     reason: new FormControl(this.reason)
   })
 
@@ -176,43 +176,54 @@ export class UserProfileComponent implements OnInit {
       to: this.applyLeaveForm.value.to,
       status: this.status
     }
-      if(!this.user.appliedLeaves){
-      this.user.appliedLeaves = (+this.applyLeaveForm.value.to.slice(8) - +this.applyLeaveForm.value.from.slice(8))
+    if (leaves.to <= leaves.from) {
+      Swal.fire('', 'Please provide valid dates', 'warning')
     }
-    const remainingLeaves = {
-      totalLeaves: this.user.totalLeaves,
-      remainingLeaves: this.user.remainingLeaves,
-      appliedLeaves: Number(this.user.appliedLeaves)+ Number(this.appliedLeaves)
-    }
-    if(!this.user.totalLeaves){
-      remainingLeaves.totalLeaves = this.totalLeaves;
-    }
-    if(!this.user.remainingLeaves){
-      remainingLeaves.remainingLeaves = this.remainingLeaves;
-    }
-  
-    if (loggedInUser !== null) {
-      let parsedData = JSON.parse(loggedInUser);
-      this.id = parsedData["_id"];
-      this.isLoading = true;
-      this.http.post(`${this.apiService.url}/users/${this.id}/apply`, leaves).subscribe(res => {
-        this.isLoading = false;
-        this.router.navigateByUrl('/leaves')
-        Swal.fire('Success!', 'Applied leave succesfully!', 'success')
-      }, error => {
-        Swal.fire('Error!', error.statusText, 'error')
-      })
-      
-      this.http.post(`${this.apiService.url}/users/insert/${this.id}`, remainingLeaves).subscribe(res => {
-        this.isLoading = false;
-      }, error => {
-        Swal.fire('Error!', error.statusText, 'error')
-      })
+    else {
+      if (!leaves.reason) {
+        Swal.fire('', 'Please give a reason for leave', 'warning')
+      }
+      else {
+        if (!this.user.appliedLeaves) {
+          this.user.appliedLeaves = (+this.applyLeaveForm.value.to.slice(8) - +this.applyLeaveForm.value.from.slice(8))
+        }
+        const remainingLeaves = {
+          totalLeaves: this.user.totalLeaves,
+          remainingLeaves: this.user.remainingLeaves,
+          appliedLeaves: Number(this.user.appliedLeaves) + Number(this.appliedLeaves)
+        }
+        if (!this.user.totalLeaves) {
+          remainingLeaves.totalLeaves = this.totalLeaves;
+        }
+        if (!this.user.remainingLeaves) {
+          remainingLeaves.remainingLeaves = this.remainingLeaves;
+        }
+
+        if (loggedInUser !== null) {
+          let parsedData = JSON.parse(loggedInUser);
+          this.id = parsedData["_id"];
+          this.isLoading = true;
+          this.http.post(`${this.apiService.url}/users/${this.id}/apply`, leaves).subscribe(res => {
+            this.isLoading = false;
+            this.router.navigateByUrl('/leaves')
+            Swal.fire('Success!', 'Applied leave succesfully!', 'success')
+          }, error => {
+            Swal.fire('Error!', error.statusText, 'error')
+          })
+
+          this.http.post(`${this.apiService.url}/users/insert/${this.id}`, remainingLeaves).subscribe(res => {
+            this.isLoading = false;
+          }, error => {
+            Swal.fire('Error!', error.statusText, 'error')
+          })
+        }
+      }
     }
   }
 
 
- 
+
+
   getAttendance: boolean = false;
   getApplyLeave: boolean = false;
   popUp: boolean = false;
