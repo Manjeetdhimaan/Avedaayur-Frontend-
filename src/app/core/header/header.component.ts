@@ -31,15 +31,6 @@ export class HeaderComponent implements OnInit, DoCheck {
           console.log(error);
         })
     }
-    let reverse = this.loggedInUser?.leaves.reverse();
-    console.log(reverse)
-        for (let i = 0; i < reverse?.length; i++) {
-          if (reverse[i].status != "Pending" && (reverse[i].status == "Approved" || reverse[i].status == "Denied") &&(reverse[i+1]?.status == "Approved" || reverse[i+1]?.status == "Denied") ) {
-            this.isNewNotification = true;
-            break;
-          }
-        }
-   
   }
   ngDoCheck(){
   

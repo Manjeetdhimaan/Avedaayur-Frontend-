@@ -168,7 +168,7 @@ export class UserProfileComponent implements OnInit {
   })
 
   applyLeave() {
-    this.appliedLeaves = (+this.applyLeaveForm.value.to.slice(8) - +this.applyLeaveForm.value.from.slice(8));
+    this.appliedLeaves = (+this.applyLeaveForm.value.to.slice(8) - +this.applyLeaveForm.value.from.slice(8) + 1);
     const loggedInUser = localStorage.getItem('User');
     const leaves = {
       reason: this.applyLeaveForm.value.reason,
@@ -176,7 +176,7 @@ export class UserProfileComponent implements OnInit {
       to: this.applyLeaveForm.value.to,
       status: this.status
     }
-    if (leaves.to <= leaves.from) {
+    if (leaves.to < leaves.from) {
       Swal.fire('', 'Please provide valid dates', 'warning')
     }
     else {
@@ -187,16 +187,16 @@ export class UserProfileComponent implements OnInit {
         if (!this.user.appliedLeaves) {
           this.user.appliedLeaves = (+this.applyLeaveForm.value.to.slice(8) - +this.applyLeaveForm.value.from.slice(8))
         }
-        const remainingLeaves = {
+        const leaveManagement = {
           totalLeaves: this.user.totalLeaves,
           remainingLeaves: this.user.remainingLeaves,
           appliedLeaves: Number(this.user.appliedLeaves) + Number(this.appliedLeaves)
         }
         if (!this.user.totalLeaves) {
-          remainingLeaves.totalLeaves = this.totalLeaves;
+          leaveManagement.totalLeaves = this.totalLeaves;
         }
         if (!this.user.remainingLeaves) {
-          remainingLeaves.remainingLeaves = this.remainingLeaves;
+          leaveManagement.remainingLeaves = this.remainingLeaves;
         }
 
         if (loggedInUser !== null) {
@@ -211,7 +211,7 @@ export class UserProfileComponent implements OnInit {
             Swal.fire('Error!', error.statusText, 'error')
           })
 
-          this.http.post(`${this.apiService.url}/users/insert/${this.id}`, remainingLeaves).subscribe(res => {
+          this.http.post(`${this.apiService.url}/users/insert/${this.id}`, leaveManagement).subscribe(res => {
             this.isLoading = false;
           }, error => {
             Swal.fire('Error!', error.statusText, 'error')
