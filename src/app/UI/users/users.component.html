@@ -110,22 +110,6 @@
                             <p>{{remainingLeaves}}</p>
                         </div>
                     </div>
-                    <!-- <div class="row">
-                        <div class="col-md-6">
-                            <label>Total Projects</label>
-                        </div>
-                        <div class="col-md-6">
-                            <p>230</p>
-                        </div>
-                    </div> -->
-                    <!-- <div class="row">
-                        <div class="col-md-6">
-                            <label>English Level</label>
-                        </div>
-                        <div class="col-md-6">
-                            <p>Expert</p>
-                        </div>
-                    </div> -->
                     <div class="row">
                         <div class="col-md-6">
                             <label>Job type</label>
@@ -184,8 +168,8 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        <div *ngIf="attendance?.length>5">
-                                            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                                        <div>
+                                            <pagination-controls *ngIf="attendance?.length>5" (pageChange)="p = $event"></pagination-controls>
                                         </div>
                                     </div>
                                 </div>

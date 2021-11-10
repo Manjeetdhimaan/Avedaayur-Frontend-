@@ -24,3 +24,7 @@
     margin: auto;
     margin-top: 2px;
 }
+
+button:disabled {
+    cursor: not-allowed;
+}
