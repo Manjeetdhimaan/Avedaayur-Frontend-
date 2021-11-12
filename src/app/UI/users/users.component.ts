@@ -44,7 +44,7 @@ export class UsersComponent implements OnInit, OnDestroy {
         this.user = res;
         this.attendance = this.user.attendance.reverse();
         this.attendance.map((a: any) => {
-          if (a.exit == undefined) {
+          if (a.exit == undefined || !a.exit) {
             a.exit = ''
           }
         });
@@ -64,7 +64,7 @@ export class UsersComponent implements OnInit, OnDestroy {
         this.user = res;
         this.attendance = this.user.attendance.reverse();
         this.attendance.map((a: any) => {
-          if (a.exit == undefined) {
+          if (a.exit == undefined || !a.exit) {
             a.exit = ''
           }
         });

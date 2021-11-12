@@ -84,7 +84,7 @@ export class UserProfileComponent implements OnInit {
         this.attendance = this.user.attendance;
         this.attendance = this.attendance.reverse();
         this.attendance.map((a: any) => {
-          if (a.exit == undefined) {
+          if (a.exit == undefined || !a.exit) {
             a.exit = ''
           }
         });
