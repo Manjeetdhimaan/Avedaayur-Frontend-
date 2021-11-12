@@ -60,7 +60,6 @@ export class EmployeeLeaveComponent implements OnInit, OnDestroy {
       let credentials = {
         id: selected._id,
         event: event.target.value,
-        appliedLeaves: this.user.appliedLeaves,
         prevStatus:b
       }
   

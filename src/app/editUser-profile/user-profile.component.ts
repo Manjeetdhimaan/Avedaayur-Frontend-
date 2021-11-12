@@ -185,7 +185,7 @@ export class UserProfileComponent implements OnInit {
       }
       else {
         if (!this.user.appliedLeaves) {
-          this.user.appliedLeaves = (+this.applyLeaveForm.value.to.slice(8) - +this.applyLeaveForm.value.from.slice(8))+1;
+          this.user.appliedLeaves = (+this.applyLeaveForm.value.to.slice(8) - +this.applyLeaveForm.value.from.slice(8));
         }
         const leaveManagement = {
           totalLeaves: this.user.totalLeaves,
