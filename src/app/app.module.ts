@@ -3,7 +3,6 @@ import { BrowserModule, Title  } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { Tab1Component } from './tab1/tab1.component';
 import { RegisterComponent } from './UI/register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -29,7 +28,6 @@ import { IonicModule } from '@ionic/angular';
 @NgModule({
   declarations: [
     AppComponent,
-    Tab1Component,
     LoginComponent,
     RegisterComponent,
     UserProfileComponent,

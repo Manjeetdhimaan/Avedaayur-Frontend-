@@ -60,7 +60,6 @@ export class EditAdminProfileComponent implements OnInit {
   }
 
   onUpdateValues() {
-
     this.isLoading = true;
     const loggedInUser = localStorage.getItem('admin');
     let credentials = {
@@ -73,14 +72,14 @@ export class EditAdminProfileComponent implements OnInit {
     }
     if (this.editAdminProfileForm.value.password !== this.editAdminProfileForm.value.confirmPassword) {
       this.isLoading = false;
-      Swal.fire('', 'Passwords do no match!', 'warning')
+      Swal.fire({title:'', text:'Passwords do no match!', icon:'warning', timer:1000})
       return;
     }
     else if (loggedInUser !== null) {
       this.http.post(`${this.apiService.url}/admin/updateAdminCredentials/${this.id}`, credentials).subscribe(res => {
         this.isLoading = false;
         this.user = res
-        Swal.fire('Success!', 'Data saved succussfully!', 'success')
+        Swal.fire({title:'Success!', text:'Data saved succussfully!', icon:'success', timer:1000})
       }, error => {
         // Error 
         this.isLoading = false;

@@ -83,14 +83,12 @@ export class RegisterComponent implements OnInit {
         this.loggedInUser = parsedData
         const a = parsedData.fullname.toLowerCase().split(' ')
         this.paramName = a.join('-');
-
       }
       localStorage.removeItem('admin');
       this.router.navigate(['profile', this.paramName], { replaceUrl: true });
     }, error => {
       this.isLoading = false;
       Swal.fire('Error!', error.error.error, 'error')
-      // this.presentAlert('Login failed', error.error.error);
     })
   }
 
@@ -129,7 +127,6 @@ export class RegisterComponent implements OnInit {
           localStorage.setItem('User', JSON.stringify(res));
           // Success
           Swal.fire('Registeration successfull!', 'Login Now!', 'success')
-          // this.presentAlert('Registration successfull', 'Login Now');
           this.router.navigateByUrl('userlogin');
         },
           error => {

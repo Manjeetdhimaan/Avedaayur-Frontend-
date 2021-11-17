@@ -8,7 +8,6 @@ import { RegisterComponent } from './UI/register/register.component';
 import { UsersComponent } from './UI/users/users.component';
 import { ProfileComponent } from './loggedInUserProfile/profile.component';
 import { UserProfileComponent } from './editUser-profile/user-profile.component';
-import { Tab1Component } from './tab1/tab1.component';
 import { LeavesComponent } from './core/leaves/leaves.component';
 import { CheckLeavesComponent } from './core/all-users/check-leaves/check-leaves.component';
 import { EmployeeLeaveComponent } from './core/all-users/check-leaves/employee-leave/employee-leave.component';
@@ -27,7 +26,6 @@ const routes: Routes = [
   { path: ':name', component: UsersComponent, data: {title: 'allusers'} },
   { path: 'employeeLeaves/:name', component: EmployeeLeaveComponent },
   { path: 'profile/:name', component: ProfileComponent },
-  { path: 'tab', component: Tab1Component },
   { path: 'leaves/:name', component: LeavesComponent },
 ];
 

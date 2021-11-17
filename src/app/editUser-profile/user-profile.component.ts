@@ -140,9 +140,9 @@ export class UserProfileComponent implements OnInit {
       password: this.editProfileForm.value.password,
       bio: this.editProfileForm.value.bio,
     }
-    if (this.password !== this.confirmPassword) {
+    if (this.editProfileForm.value.password !== this.editProfileForm.value.confirmPassword) {
       this.isLoading = false;
-      Swal.fire('', 'passwords do not match!', 'warning')
+      Swal.fire({title:'', text:'Passwords do no match!', icon:'warning', timer:1000})
       return;
     }
     else if (loggedInUser !== null) {
@@ -150,7 +150,7 @@ export class UserProfileComponent implements OnInit {
       this.id = parsedData["_id"];
       this.http.put(`${this.apiService.url}/users/update/${this.id}`, user).subscribe(res => {
         this.isLoading = false;
-        Swal.fire('Success!', 'Data saved succussfully!', 'success')
+        Swal.fire({title:'Success!', text:'Data saved succussfully!', icon:'success', timer:1000})
       }, error => {
         // Error 
         this.isLoading = false;

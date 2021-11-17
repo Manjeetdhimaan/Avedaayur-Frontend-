@@ -11,14 +11,14 @@ export class ApiServiceService {
   url:string='http://localhost:5000'
 
   userlogout() {
-    Swal.fire({  
+    Swal.fire({ 
       title: 'You will be logged out',  
       text: 'Are you sure you wish to sign out?',  
       icon: 'question',  
       showCancelButton: true,  
       confirmButtonText: 'Yes, log me out!',  
-      cancelButtonText: 'No, keep me sign in'  
-    }).then((result) => {  
+      cancelButtonText: 'No, keep me sign in'
+    }).then((result) => {
       if (result.value) {  
         // Swal.fire(  
         //   'Logged out!',  
