@@ -142,7 +142,7 @@ export class UserProfileComponent implements OnInit {
     }
     if (this.editProfileForm.value.password !== this.editProfileForm.value.confirmPassword) {
       this.isLoading = false;
-      Swal.fire({title:'', text:'Passwords do no match!', icon:'warning', timer:1000})
+      Swal.fire({title:'', text:'Passwords do no match!', icon:'warning', timer:1000});
       return;
     }
     else if (loggedInUser !== null) {
@@ -150,16 +150,15 @@ export class UserProfileComponent implements OnInit {
       this.id = parsedData["_id"];
       this.http.put(`${this.apiService.url}/users/update/${this.id}`, user).subscribe(res => {
         this.isLoading = false;
-        Swal.fire({title:'Success!', text:'Data saved succussfully!', icon:'success', timer:1000})
+        Swal.fire({title:'Success!', text:'Data saved succussfully!', icon:'success', timer:1000});
       }, error => {
         // Error 
         this.isLoading = false;
-        Swal.fire('Error!', error, 'error')
+        Swal.fire('Error!', error, 'error');
         console.log(error);
       })
     }
   }
-
 
   applyLeaveForm = new FormGroup({
     from: new FormControl(),
@@ -177,11 +176,11 @@ export class UserProfileComponent implements OnInit {
       status: this.status
     }
     if (leaves.to < leaves.from) {
-      Swal.fire('', 'Please provide valid dates', 'warning')
+      Swal.fire({title:'', text:'Please provide valid dates', icon:'warning', timer:1000});
     }
     else {
       if (!leaves.reason) {
-        Swal.fire('', 'Please give a reason for leave', 'warning')
+        Swal.fire('', 'Please give a reason for leave', 'warning');
       }
       else {
         if (!this.user.appliedLeaves) {
@@ -203,25 +202,23 @@ export class UserProfileComponent implements OnInit {
           let parsedData = JSON.parse(loggedInUser);
           this.id = parsedData["_id"];
           this.isLoading = true;
-          this.http.post(`${this.apiService.url}/users/${this.id}/apply`, leaves).subscribe(res => {
+          this.http.post(`${this.apiService.url}/users/${this.id}/apply`, leaves).subscribe(() => {
             this.isLoading = false;
-            this.router.navigateByUrl('/leaves')
-            Swal.fire('Success!', 'Applied leave succesfully!', 'success')
+            this.router.navigateByUrl('/leaves');
+            Swal.fire('Success!', 'Applied leave succesfully!', 'success');
           }, error => {
-            Swal.fire('Error!', error.statusText, 'error')
+            Swal.fire('Error!', error.statusText, 'error');
           })
 
-          this.http.post(`${this.apiService.url}/users/insert/${this.id}`, leaveManagement).subscribe(res => {
+          this.http.post(`${this.apiService.url}/users/insert/${this.id}`, leaveManagement).subscribe(() => {
             this.isLoading = false;
           }, error => {
-            Swal.fire('Error!', error.statusText, 'error')
+            Swal.fire('Error!', error.statusText, 'error');
           })
         }
       }
     }
   }
-
-
 
 
   getAttendance: boolean = false;

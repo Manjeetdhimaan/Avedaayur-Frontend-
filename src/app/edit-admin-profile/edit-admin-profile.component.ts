@@ -13,8 +13,8 @@ import { ApiServiceService } from '../services/api-service.service';
 })
 export class EditAdminProfileComponent implements OnInit {
 
-  constructor(private router: Router, 
-    private http: HttpClient, 
+  constructor(private router: Router,
+    private http: HttpClient,
     private apiService: ApiServiceService,
     private spinner: NgxSpinnerService) { }
   email: string;
@@ -33,28 +33,27 @@ export class EditAdminProfileComponent implements OnInit {
     })
 
     const admin = localStorage.getItem('admin');
-
     if (admin == null) {
-      this.router.navigateByUrl('/adminlogin', { replaceUrl: true })
+      this.router.navigateByUrl('/adminlogin', { replaceUrl: true });
     }
 
     if (admin !== null) {
       this.isLoading = true;
-      const loggedInUser = JSON.parse(admin)
+      const loggedInUser = JSON.parse(admin);
       this.user = loggedInUser;
-      this.id = loggedInUser.id
-      delete loggedInUser.password
+      this.id = loggedInUser.id;
+      delete loggedInUser.password;
       this.http.get(`${this.apiService.url}/admin`).subscribe(res => {
         //logged in user
         this.user = res;
         this.email = this.user.email;
-        this.isLoading = false
+        this.isLoading = false;
         // getting attendance of logged in user
-      
+
       },
         error => {
           console.log(error);
-            this.isLoading = false
+          this.isLoading = false;
         })
     }
   }
@@ -65,21 +64,21 @@ export class EditAdminProfileComponent implements OnInit {
     let credentials = {
       email: this.editAdminProfileForm.value.email,
       password: this.editAdminProfileForm.value.password,
-      id:this.id.trim()
+      id: this.id.trim()
     }
-    if(!credentials.password ){
-      credentials.password= this.user.password
+    if (!credentials.password) {
+      credentials.password = this.user.password
     }
     if (this.editAdminProfileForm.value.password !== this.editAdminProfileForm.value.confirmPassword) {
       this.isLoading = false;
-      Swal.fire({title:'', text:'Passwords do no match!', icon:'warning', timer:1000})
+      Swal.fire({ title: '', text: 'Passwords do no match!', icon: 'warning', timer: 1000 });
       return;
     }
     else if (loggedInUser !== null) {
       this.http.post(`${this.apiService.url}/admin/updateAdminCredentials/${this.id}`, credentials).subscribe(res => {
         this.isLoading = false;
-        this.user = res
-        Swal.fire({title:'Success!', text:'Data saved succussfully!', icon:'success', timer:1000})
+        this.user = res;
+        Swal.fire({ title: 'Success!', text: 'Data saved succussfully!', icon: 'success', timer: 1000 });
       }, error => {
         // Error 
         this.isLoading = false;

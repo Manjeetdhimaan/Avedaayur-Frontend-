@@ -57,7 +57,7 @@ export class RegisterComponent implements OnInit {
       this.router.navigateByUrl('/allusers', { replaceUrl: true });
     }, error => {
       this.isLoading = false;
-      Swal.fire('Error!', error.error.error, 'error')
+      Swal.fire('Error!', error.error.error, 'error');
       // this.presentAlert('Login failed', error.error.error)
     })
   }
@@ -79,16 +79,16 @@ export class RegisterComponent implements OnInit {
       localStorage.setItem('User', JSON.stringify(res));
       const user = localStorage.getItem('User');
       if (user) {
-        const parsedData = JSON.parse(user)
-        this.loggedInUser = parsedData
-        const a = parsedData.fullname.toLowerCase().split(' ')
+        const parsedData = JSON.parse(user);
+        this.loggedInUser = parsedData;
+        const a = parsedData.fullname.toLowerCase().split(' ');
         this.paramName = a.join('-');
       }
       localStorage.removeItem('admin');
       this.router.navigate(['profile', this.paramName], { replaceUrl: true });
     }, error => {
       this.isLoading = false;
-      Swal.fire('Error!', error.error.error, 'error')
+      Swal.fire('Error!', error.error.error, 'error');
     })
   }
 
@@ -126,12 +126,12 @@ export class RegisterComponent implements OnInit {
           this.isLoading = false;
           localStorage.setItem('User', JSON.stringify(res));
           // Success
-          Swal.fire('Registeration successfull!', 'Login Now!', 'success')
+          Swal.fire('Registeration successfull!', 'Login Now!', 'success');
           this.router.navigateByUrl('userlogin');
         },
           error => {
             this.isLoading = false;
-            Swal.fire('Registeration Failed!', error.error.error, 'error')
+            Swal.fire('Registeration Failed!', error.error.error, 'error');
           })
     }
 

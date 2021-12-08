@@ -23,7 +23,7 @@ export class UsersService {
       // this.originalServiceProvider = res;
     },
       error => {
-        console.log(error)
+        console.log(error);
       })
   }
 
@@ -31,16 +31,14 @@ export class UsersService {
     const user = localStorage.getItem('selected user');
     let parsedData;
     if (user) {
-      parsedData = JSON.parse(user)
+      parsedData = JSON.parse(user);
     }
     if (!this.user) {
-      return parsedData
+      return parsedData;
     }
     else {
       return this.user;
     }
-
   }
-
 }
 
